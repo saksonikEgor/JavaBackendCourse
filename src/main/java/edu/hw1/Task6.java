@@ -18,8 +18,8 @@ public class Task6 {
      */
     public static int countK(int num) {
         if (num <= 1000 || num >= 9999) {
-            throw new IllegalArgumentException("It is impossible to execute the Kaprekar " +
-                "function because the \"num\" is not valid");
+            throw new IllegalArgumentException("It is impossible to execute the Kaprekar "
+                + "function because the \"num\" is not valid");
         }
 
         boolean correctInput = false;
@@ -31,8 +31,8 @@ public class Task6 {
         }
 
         if (!correctInput) {
-            throw new IllegalArgumentException("It is impossible to execute the Kaprekar " +
-                "function because the \"num\" is not valid");
+            throw new IllegalArgumentException("It is impossible to execute the Kaprekar "
+                + "function because the \"num\" is not valid");
         }
 
         int[] digits = String.valueOf(num).chars().map(c -> c - '0').toArray();

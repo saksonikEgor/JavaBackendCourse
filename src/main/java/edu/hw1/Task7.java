@@ -19,10 +19,10 @@ public class Task7 {
         char[] binary = Integer.toBinaryString(n).toCharArray();
         int length = binary.length;
         char[] result = new char[length];
-        shift %= length;
+        int s = shift % length;
 
         for (int i = 0; i < length; i++) {
-            result[(length + i - shift) % length] = binary[i];
+            result[(length + i - s) % length] = binary[i];
         }
         return Long.parseLong(String.join("", new String(result)), 2);
     }

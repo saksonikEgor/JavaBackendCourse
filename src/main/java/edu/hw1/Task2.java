@@ -15,17 +15,18 @@ public class Task2 {
             return 1;
         }
 
+        long n = num;
         if (num < 0) {
             if (num == Long.MIN_VALUE) {
                 return 19;
             }
 
-            num *= -1;
+            n *= -1;
         }
 
         int result = 0;
-        while (num > 0) {
-            num /= 10;
+        while (n > 0) {
+            n /= 10;
             result++;
         }
         return result;

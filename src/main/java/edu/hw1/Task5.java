@@ -16,11 +16,12 @@ public class Task5 {
      * @return true if the input number or any of its descendants of length > 1 is a palindrome, false otherwise
      */
     public static boolean isPalindromeDescendant(long num) {
+        long n = num;
         if (num < 0) {
-            num *= -1;
+            n *= -1;
         }
 
-        List<Integer> digits = String.valueOf(num).chars().map(c -> c - '0').boxed().collect(Collectors.toList());
+        List<Integer> digits = String.valueOf(n).chars().map(c -> c - '0').boxed().collect(Collectors.toList());
 
         if (isPalindrome(digits)) {
             return true;
@@ -60,7 +61,7 @@ public class Task5 {
 
         for (int i = 1; i < parent.size(); i += 2) {
             int curSum = parent.get(i - 1) + parent.get(i);
-            if (curSum < 9) {
+            if (curSum < 10) {
                 descendant.add(curSum);
             } else {
                 descendant.add(curSum / 10);

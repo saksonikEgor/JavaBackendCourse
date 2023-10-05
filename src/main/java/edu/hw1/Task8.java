@@ -14,25 +14,25 @@ public class Task8 {
      */
     public static boolean knightBoardCapture(int[][] board) {
         if (board.length != 8) {
-            throw new IllegalArgumentException("\"board\" is invalid because " +
-                "the \"board.length\" is not equals 8");
+            throw new IllegalArgumentException("\"board\" is invalid because "
+                + "the \"board.length\" is not equals 8");
         }
         int boardSize = 8;
 
         for (int i = 0; i < boardSize; i++) {
             if (board[i].length != 8) {
-                throw new IllegalArgumentException("\"board\" is invalid because " +
-                    "the \"board[" + i + "].length\" is not equals 8");
+                throw new IllegalArgumentException("\"board\" is invalid because "
+                    + "the \"board[" + i + "].length\" is not equals 8");
             }
         }
 
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                if (board[i][j] == 1 && (knightExist(board, i + 2, j + 1, boardSize) ||
-                    knightExist(board, i + 2, j - 1, boardSize) || knightExist(board, i - 2, j + 1, boardSize) ||
-                    knightExist(board, i - 2, j - 1, boardSize) || knightExist(board, i + 1, j + 2, boardSize) ||
-                    knightExist(board, i - 1, j + 2, boardSize) || knightExist(board, i + 1, j - 2, boardSize) ||
-                    knightExist(board, i - 1, j - 2, boardSize))) {
+                if (board[i][j] == 1 && (knightExist(board, i + 2, j + 1, boardSize)
+                    || knightExist(board, i + 2, j - 1, boardSize) || knightExist(board, i - 2, j + 1, boardSize)
+                    || knightExist(board, i - 2, j - 1, boardSize) || knightExist(board, i + 1, j + 2, boardSize)
+                    || knightExist(board, i - 1, j + 2, boardSize) || knightExist(board, i + 1, j - 2, boardSize)
+                    || knightExist(board, i - 1, j - 2, boardSize))) {
                     return false;
                 }
             }
