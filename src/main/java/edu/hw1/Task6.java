@@ -16,6 +16,7 @@ public class Task6 {
      * @return number of steps required to get number 6174
      * @throws IllegalArgumentException if the input number is invalid
      */
+    @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
     public static int countK(int num) {
         if (num <= 1000 || num >= 9999) {
             throw new IllegalArgumentException("It is impossible to execute the Kaprekar "
@@ -44,7 +45,8 @@ public class Task6 {
     /**
      * Counts the number of steps that need to be taken to get target.
      *
-     * @param digits an array of numbers for which it is necessary to count the number of steps before obtaining the target
+     * @param digits an array of numbers for which it is necessary to count the number of
+     *               steps before obtaining the target
      * @param target an array of digits which as a result must be equal to the input array
      * @return number of steps required to get number target
      * @throws NullPointerException if the input arrays of digits are null
@@ -65,6 +67,7 @@ public class Task6 {
      *     which are composed of elements of the input array
      * @throws NullPointerException if the input array of digits is null
      */
+    @SuppressWarnings("MagicNumber")
     private static int[] kaprecarFunc(int[] digits) {
         int[] incr = digits.clone();
         int[] desc = Arrays.stream(digits).boxed()

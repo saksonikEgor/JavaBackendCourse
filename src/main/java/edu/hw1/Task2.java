@@ -10,6 +10,7 @@ public class Task2 {
      * @param num is input number
      * @return the count of digits in an input number
      */
+    @SuppressWarnings("MagicNumber")
     public static int countDigits(long num) {
         if (num == 0) {
             return 1;

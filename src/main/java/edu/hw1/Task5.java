@@ -56,6 +56,7 @@ public class Task5 {
      * @return a list of digits that is a descendant of the input parent
      * @throws NullPointerException if the input list of digits is null
      */
+    @SuppressWarnings("MagicNumber")
     private static List<Integer> calculateDescendant(List<Integer> parent) {
         List<Integer> descendant = new ArrayList<>();
 

@@ -17,6 +17,7 @@ public class Task1 {
      * @throws NumberFormatException if the number of minutes or seconds in the input string is not long type
      * @throws NullPointerException  if the input string is null
      */
+    @SuppressWarnings("MagicNumber")
     public static long minutesToSeconds(String s) {
         String[] params = s.split(":");
 

@@ -12,6 +12,7 @@ public class Task8 {
      * @throws NullPointerException     if the input two-dimensional array or if any of its nested arrays are null
      * @throws IllegalArgumentException if the input two-dimensional array is of invalid size
      */
+    @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
     public static boolean knightBoardCapture(int[][] board) {
         if (board.length != 8) {
             throw new IllegalArgumentException("\"board\" is invalid because "
