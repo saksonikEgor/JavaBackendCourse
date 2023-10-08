@@ -33,31 +33,33 @@ public class ConsoleHangman {
 
     @SuppressWarnings("RegexpSinglelineJava")
     private void printState(GuessResult guess) {
-        if (guess.getClass().equals(GuessResult.Defeat.class)) {
-            printState(new GuessResult.FailedGuess(
-                guess.state(),
-                guess.attempt(),
-                guess.maxAttempts(),
-                GameParams.FAILED_GUESS_MESSAGE
-            ));
+        switch (guess) {
+            case GuessResult.Defeat defeat -> {
+                printState(new GuessResult.FailedGuess(
+                    defeat.state(),
+                    defeat.attempt(),
+                    defeat.maxAttempts(),
+                    GameParams.FAILED_GUESS_MESSAGE
+                ));
 
-            printWordState(guess);
-            System.out.println(guess.message());
-            gameOver = true;
-        } else if (guess.getClass().equals(GuessResult.Win.class)) {
-            printWordState(new GuessResult.SuccessfulGuess(
-                guess.state(),
-                guess.attempt(),
-                guess.maxAttempts(),
-                GameParams.SUCCESSFUL_GUESS_MESSAGE
-            ));
+                System.out.println(defeat.message());
+                gameOver = true;
+            }
+            case GuessResult.Win win -> {
+                printWordState(new GuessResult.SuccessfulGuess(
+                    win.state(),
+                    win.attempt(),
+                    win.maxAttempts(),
+                    GameParams.SUCCESSFUL_GUESS_MESSAGE
+                ));
 
-            printWordState(guess);
-            System.out.println(guess.message());
-            gameOver = true;
-        } else {
-            System.out.println(guess.message() + "\n");
-            printWordState(guess);
+                System.out.println(win.message());
+                gameOver = true;
+            }
+            default -> {
+                System.out.println(guess.message() + "\n");
+                printWordState(guess);
+            }
         }
     }
 
