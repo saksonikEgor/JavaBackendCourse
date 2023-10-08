@@ -1,6 +1,6 @@
 package edu.project1.util;
 
-import edu.project1.params.GameParams;
+import edu.project1.parameter.GameParams;
 import edu.project1.service.GuessResult;
 import edu.project1.service.Session;
 import java.util.Scanner;

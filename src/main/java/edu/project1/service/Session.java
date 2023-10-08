@@ -1,6 +1,8 @@
 package edu.project1.service;
 
-import edu.project1.params.GameParams;
+import edu.project1.exception.WrongGameParamsException;
+import edu.project1.exception.WrongMaxAttemptsException;
+import edu.project1.parameter.GameParams;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +23,10 @@ public class Session {
         Arrays.fill(state, GameParams.UNGUESSED_CHAR);
 
         maxAttempts = GameParams.MAX_ATTEMPTS;
+        if (maxAttempts < 1) {
+            throw new WrongMaxAttemptsException("\"maxAttempts\" must be greater than zero");
+        }
+
         attempts = 0;
         unguessedCharactersLeft = answer.length();
         previousCharacters = new HashSet<>();

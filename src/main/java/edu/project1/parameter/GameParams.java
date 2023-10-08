@@ -1,4 +1,4 @@
-package edu.project1.params;
+package edu.project1.parameter;
 
 public class GameParams {
     public static final int MAX_ATTEMPTS = 10;

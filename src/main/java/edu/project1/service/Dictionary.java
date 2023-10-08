@@ -1,6 +1,7 @@
 package edu.project1.service;
 
-import edu.project1.params.GameParams;
+import edu.project1.exception.WrongDictionaryException;
+import edu.project1.parameter.GameParams;
 import java.util.Random;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,6 +11,20 @@ public class Dictionary {
 
     public static @NotNull String getRandomWord() {
         String[] wordPool = GameParams.WORD_POOL;
-        return wordPool[new Random().nextInt(wordPool.length)];
+
+        int refIndex = new Random().nextInt(wordPool.length);
+        int curIndex = refIndex;
+        while (!stringLengthIsCorrect(wordPool[curIndex])) {
+            curIndex = (curIndex + 1) % wordPool.length;
+
+            if (curIndex == refIndex) {
+                throw new WrongDictionaryException("All words in the dictionary have incorrect length");
+            }
+        }
+        return wordPool[curIndex];
+    }
+
+    private static boolean stringLengthIsCorrect(String str) {
+        return str != null && !str.isEmpty();
     }
 }
