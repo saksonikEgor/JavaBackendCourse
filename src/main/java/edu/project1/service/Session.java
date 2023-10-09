@@ -15,7 +15,7 @@ public class Session {
     private int unguessedCharactersLeft;
     private final Set<Character> previousCharacters;
 
-    public Session() {
+    public Session() throws WrongGameParamsException {
         answer = Dictionary.getRandomWord();
         state = new char[answer.length()];
 

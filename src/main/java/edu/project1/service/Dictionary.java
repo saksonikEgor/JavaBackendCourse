@@ -9,7 +9,7 @@ public class Dictionary {
     private Dictionary() {
     }
 
-    public static @NotNull String getRandomWord() {
+    public static @NotNull String getRandomWord() throws WrongGameParamsException.WrongDictionaryException {
         String[] wordPool = GameParams.WORD_POOL;
 
         int refIndex = new Random().nextInt(wordPool.length);

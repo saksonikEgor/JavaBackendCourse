@@ -1,6 +1,6 @@
 package edu.project1.exception;
 
-public abstract sealed class WrongGameParamsException extends RuntimeException {
+public abstract sealed class WrongGameParamsException extends Exception {
     protected WrongGameParamsException(String message) {
         super(message);
     }

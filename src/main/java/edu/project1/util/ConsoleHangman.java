@@ -1,5 +1,6 @@
 package edu.project1.util;
 
+import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
 import edu.project1.service.GuessResult;
 import edu.project1.service.Session;
@@ -9,14 +10,18 @@ public class ConsoleHangman {
     private boolean gameOver = false;
 
     public void run() {
-        Session session = new Session();
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Session session = new Session();
+            Scanner scanner = new Scanner(System.in);
 
-        while (!gameOver) {
-            displayASuggestionForEnteringACharacter();
-            printState(tryGuess(session, scanner.nextLine()));
+            while (!gameOver) {
+                displayASuggestionForEnteringACharacter();
+                printState(tryGuess(session, scanner.nextLine()));
+            }
+            printFarewellMessage();
+        } catch (WrongGameParamsException e) {
+            e.printStackTrace();
         }
-        printFarewellMessage();
     }
 
     @SuppressWarnings("RegexpSinglelineJava")

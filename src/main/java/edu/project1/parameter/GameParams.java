@@ -3,6 +3,8 @@ package edu.project1.parameter;
 public class GameParams {
     public static final int MAX_ATTEMPTS = 10;
     public static final String[] WORD_POOL = new String[] {"hello", "help", "road", "helicopter", "cucumber"};
+    public static final char GIVE_UP_CHAR = '0';
+    public static final char UNGUESSED_CHAR = '*';
     public static final String DEFEAT_MESSAGE = "You lost!";
     public static final String WIN_MASSAGE = "You won!";
     public static final String SUCCESSFUL_GUESS_MESSAGE = "Hit!";
@@ -17,8 +19,6 @@ public class GameParams {
         + "have incorrect length";
     public static final String WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE = "\"giveUp\" must be lowercase";
     public static final String WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE = "\"maxAttempts\" must be greater than zero";
-    public static final char UNGUESSED_CHAR = '*';
-    public static final char GIVE_UP_CHAR = '0';
 
     private GameParams() {
     }
