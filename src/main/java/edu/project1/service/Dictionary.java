@@ -18,7 +18,7 @@ public class Dictionary {
             curIndex = (curIndex + 1) % wordPool.length;
 
             if (curIndex == refIndex) {
-                throw new WrongDictionaryException("All words in the dictionary have incorrect length");
+                throw new WrongDictionaryException(GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE);
             }
         }
         return wordPool[curIndex];
