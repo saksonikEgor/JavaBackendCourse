@@ -1,6 +1,6 @@
 package edu.project1.service;
 
-import edu.project1.exception.WrongDictionaryException;
+import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
 import java.util.Random;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ public class Dictionary {
             curIndex = (curIndex + 1) % wordPool.length;
 
             if (curIndex == refIndex) {
-                throw new WrongDictionaryException(GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE);
+                throw new WrongGameParamsException.WrongDictionaryException(GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE);
             }
         }
         return wordPool[curIndex];
