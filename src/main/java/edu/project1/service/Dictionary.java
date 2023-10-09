@@ -18,7 +18,8 @@ public class Dictionary {
             curIndex = (curIndex + 1) % wordPool.length;
 
             if (curIndex == refIndex) {
-                throw new WrongGameParamsException.WrongDictionaryException(GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE);
+                throw new WrongGameParamsException
+                    .WrongDictionaryException(GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE);
             }
         }
         return wordPool[curIndex];

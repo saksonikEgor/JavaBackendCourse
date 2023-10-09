@@ -19,6 +19,7 @@ public class GameParams {
         + "have incorrect length";
     public static final String WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE = "\"giveUp\" must be lowercase";
     public static final String WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE = "\"maxAttempts\" must be greater than zero";
+    public static final String WRONG_GAME_PARAMS_MESSAGE = "Wrong game params";
 
     private GameParams() {
     }

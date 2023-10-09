@@ -23,11 +23,13 @@ public class Session {
 
         maxAttempts = GameParams.MAX_ATTEMPTS;
         if (maxAttempts < 1) {
-            throw new WrongGameParamsException.WrongMaxAttemptsException(GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE);
+            throw new WrongGameParamsException
+                .WrongMaxAttemptsException(GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE);
         }
 
         if (Character.isUpperCase(GameParams.GIVE_UP_CHAR)) {
-            throw new WrongGameParamsException.WrongGiveUpCharException(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
+            throw new WrongGameParamsException
+                .WrongGiveUpCharException(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
         }
 
         attempts = 0;

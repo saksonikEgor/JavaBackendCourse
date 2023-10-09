@@ -5,9 +5,12 @@ import edu.project1.parameter.GameParams;
 import edu.project1.service.GuessResult;
 import edu.project1.service.Session;
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
     private boolean gameOver = false;
+    private final Logger logger = LogManager.getLogger();
 
     public void run() {
         try {
@@ -20,7 +23,7 @@ public class ConsoleHangman {
             }
             printFarewellMessage();
         } catch (WrongGameParamsException e) {
-            e.printStackTrace();
+            logger.error(GameParams.WRONG_GAME_PARAMS_MESSAGE, e);
         }
     }
 
