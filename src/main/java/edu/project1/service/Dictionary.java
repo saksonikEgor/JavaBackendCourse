@@ -9,10 +9,13 @@ public class Dictionary {
     private Dictionary() {
     }
 
-    public static @NotNull String getRandomWord() throws WrongGameParamsException.WrongDictionaryException {
-        String[] wordPool = GameParams.WORD_POOL;
+    public static @NotNull String getRandomWord(String[] wordPool, Random random)
+        throws WrongGameParamsException.WrongDictionaryException {
+        if (wordPool.length == 0) {
+            throw new WrongGameParamsException.WrongDictionaryException(GameParams.WRONG_DICTIONARY_SIZE_EXCEPTION);
+        }
 
-        int refIndex = new Random().nextInt(wordPool.length);
+        int refIndex = random.nextInt(wordPool.length);
         int curIndex = refIndex;
         while (!stringLengthIsCorrect(wordPool[curIndex])) {
             curIndex = (curIndex + 1) % wordPool.length;

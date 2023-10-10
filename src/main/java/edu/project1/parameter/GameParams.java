@@ -15,8 +15,10 @@ public class GameParams {
     public static final String THIS_CHARACTER_HAS_ALREADY_BEEN_ENTERED_MESSAGE = "This character has "
         + "already been entered, try again.";
     public static final String FAREWELL_MESSAGE = "Bye!";
+    public static final String GIVE_UP_CHAR_IS_MESSAGE = "Press '0' to give up";
     public static final String WRONG_DICTIONARY_EXCEPTION_MESSAGE = "All words in the dictionary "
         + "have incorrect length";
+    public static final String WRONG_DICTIONARY_SIZE_EXCEPTION = "The dictionary is empty";
     public static final String WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE = "\"giveUp\" must be lowercase";
     public static final String WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE = "\"maxAttempts\" must be greater than zero";
     public static final String WRONG_GAME_PARAMS_MESSAGE = "Wrong game params";

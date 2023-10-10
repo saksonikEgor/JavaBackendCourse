@@ -4,6 +4,7 @@ import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,19 +16,20 @@ public class Session {
     private int unguessedCharactersLeft;
     private final Set<Character> previousCharacters;
 
-    public Session() throws WrongGameParamsException {
-        answer = Dictionary.getRandomWord();
+    public Session(int maxAttempts, String[] wordPool, char unguessedChar, char giveUpChar)
+        throws WrongGameParamsException {
+        answer = Dictionary.getRandomWord(wordPool, new Random());
         state = new char[answer.length()];
 
-        Arrays.fill(state, GameParams.UNGUESSED_CHAR);
+        Arrays.fill(state, unguessedChar);
 
-        maxAttempts = GameParams.MAX_ATTEMPTS;
+        this.maxAttempts = maxAttempts;
         if (maxAttempts < 1) {
             throw new WrongGameParamsException
                 .WrongMaxAttemptsException(GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE);
         }
 
-        if (Character.isUpperCase(GameParams.GIVE_UP_CHAR)) {
+        if (Character.isUpperCase(giveUpChar)) {
             throw new WrongGameParamsException
                 .WrongGiveUpCharException(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
         }
@@ -52,37 +54,35 @@ public class Session {
         previousCharacters.add(guess);
 
         if (answer.contains(String.valueOf(guess))) {
-            int index = -1;
-            while (true) {
-                index = answer.indexOf(guess, index + 1);
+            upgradeState(guess);
 
-                if (index == -1) {
-                    break;
-                }
-
-                state[index] = guess;
-                unguessedCharactersLeft--;
-            }
-
-            if (unguessedCharactersLeft == 0) {
-                guessResult = new GuessResult.Win(state, attempts, maxAttempts, GameParams.WIN_MASSAGE);
-            } else {
-                guessResult =
-                    new GuessResult.SuccessfulGuess(state, attempts, maxAttempts, GameParams.SUCCESSFUL_GUESS_MESSAGE);
-            }
+            guessResult = unguessedCharactersLeft == 0
+                ? new GuessResult.Win(state, attempts, maxAttempts, GameParams.WIN_MASSAGE)
+                : new GuessResult.SuccessfulGuess(state, attempts, maxAttempts, GameParams.SUCCESSFUL_GUESS_MESSAGE);
         } else {
-            if (++attempts == maxAttempts) {
-                guessResult = new GuessResult.Defeat(state, attempts, maxAttempts, GameParams.DEFEAT_MESSAGE);
-            } else {
-                guessResult =
-                    new GuessResult.FailedGuess(state, attempts, maxAttempts, GameParams.FAILED_GUESS_MESSAGE);
-            }
+            guessResult = ++attempts == maxAttempts
+                ? new GuessResult.Defeat(state, attempts, maxAttempts, GameParams.DEFEAT_MESSAGE)
+                : new GuessResult.FailedGuess(state, attempts, maxAttempts, GameParams.FAILED_GUESS_MESSAGE);
         }
         return guessResult;
     }
 
     private @NotNull GuessResult giveUp() {
         return new GuessResult.Defeat(state, attempts, maxAttempts, GameParams.DEFEAT_MESSAGE);
+    }
+
+    private void upgradeState(char guess) {
+        int index = -1;
+        while (true) {
+            index = answer.indexOf(guess, index + 1);
+
+            if (index == -1) {
+                break;
+            }
+
+            state[index] = guess;
+            unguessedCharactersLeft--;
+        }
     }
 
     public char[] getState() {

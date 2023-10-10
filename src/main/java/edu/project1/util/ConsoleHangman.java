@@ -14,8 +14,13 @@ public class ConsoleHangman {
 
     public void run() {
         try {
-            Session session = new Session();
+            Session session = new Session(
+                GameParams.MAX_ATTEMPTS, GameParams.WORD_POOL,
+                GameParams.UNGUESSED_CHAR, GameParams.GIVE_UP_CHAR
+            );
             Scanner scanner = new Scanner(System.in);
+
+            printGiveUpCharIsMessage();
 
             while (!gameOver) {
                 displayASuggestionForEnteringACharacter();
@@ -27,11 +32,6 @@ public class ConsoleHangman {
         }
     }
 
-    @SuppressWarnings("RegexpSinglelineJava")
-    private void displayASuggestionForEnteringACharacter() {
-        System.out.println(GameParams.GUESS_MESSAGE);
-    }
-
     private GuessResult tryGuess(Session session, String input) {
         if (input == null || input.length() != 1 || input.charAt(0) == ' ') {
             return new GuessResult.WrongInput(session.getState(), 0, 0, GameParams.WRONG_INPUT_MESSAGE);
@@ -39,7 +39,6 @@ public class ConsoleHangman {
         return session.guess(Character.toLowerCase(input.charAt(0)));
     }
 
-    @SuppressWarnings("RegexpSinglelineJava")
     private void printState(GuessResult guess) {
         switch (guess) {
             case GuessResult.Defeat defeat -> {
@@ -50,7 +49,7 @@ public class ConsoleHangman {
                     GameParams.FAILED_GUESS_MESSAGE
                 ));
 
-                System.out.println(defeat.message());
+                logger.info(defeat.message());
                 gameOver = true;
             }
             case GuessResult.Win win -> {
@@ -61,23 +60,29 @@ public class ConsoleHangman {
                     GameParams.SUCCESSFUL_GUESS_MESSAGE
                 ));
 
-                System.out.println(win.message());
+                logger.info(win.message());
                 gameOver = true;
             }
             default -> {
-                System.out.println(guess.message() + "\n");
+                logger.info(guess.message() + "\n");
                 printWordState(guess);
             }
         }
     }
 
-    @SuppressWarnings("RegexpSinglelineJava")
-    private void printWordState(GuessResult guess) {
-        System.out.println(GameParams.PRINT_WORD_STATE_MESSAGE + " " + String.valueOf(guess.state()) + "\n");
+    private void displayASuggestionForEnteringACharacter() {
+        logger.info(GameParams.GUESS_MESSAGE);
     }
 
-    @SuppressWarnings("RegexpSinglelineJava")
+    private void printWordState(GuessResult guess) {
+        logger.info(GameParams.PRINT_WORD_STATE_MESSAGE + " " + String.valueOf(guess.state()) + "\n");
+    }
+
+    private void printGiveUpCharIsMessage() {
+        logger.info(GameParams.GIVE_UP_CHAR_IS_MESSAGE);
+    }
+
     private void printFarewellMessage() {
-        System.out.println(GameParams.FAREWELL_MESSAGE);
+        logger.info(GameParams.FAREWELL_MESSAGE);
     }
 }
