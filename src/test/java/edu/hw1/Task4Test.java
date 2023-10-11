@@ -20,7 +20,7 @@ public class Task4Test {
         assertThat(Task4.fixString("  ")).isEqualTo("  ");
 
         Assertions.assertEquals(
-            "Cannot invoke \"String.toCharArray()\" because \"str\" is null",
+            "String \"str\" cannot be null",
             Assertions.assertThrows(NullPointerException.class,
                 () -> Task4.fixString(null), "NullPointerException was expected"
             ).getMessage()

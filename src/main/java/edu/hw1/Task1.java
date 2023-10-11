@@ -1,6 +1,8 @@
 package edu.hw1;
 
 public class Task1 {
+    private static final int SECONDS_IN_MINUTES = 60;
+
     private Task1() {
     }
 
@@ -17,7 +19,6 @@ public class Task1 {
      * @throws NumberFormatException if the number of minutes or seconds in the input string is not long type
      * @throws NullPointerException  if the input string is null
      */
-    @SuppressWarnings("MagicNumber")
     public static long minutesToSeconds(String s) {
         String[] params = s.split(":");
 
@@ -25,17 +26,17 @@ public class Task1 {
             return -1;
         }
 
-        long sec = Long.parseLong(params[1]);
         long min = Long.parseLong(params[0]);
+        long sec = Long.parseLong(params[1]);
 
-        if (sec >= 60 || sec < 0 || min < 0) {
+        if (sec >= SECONDS_IN_MINUTES || sec < 0 || min < 0) {
             return -1;
         }
 
-        long result = sec + min * 60;
+        long result = sec + min * SECONDS_IN_MINUTES;
         if (result < min) {
             return -1;
         }
-        return sec + min * 60;
+        return result;
     }
 }

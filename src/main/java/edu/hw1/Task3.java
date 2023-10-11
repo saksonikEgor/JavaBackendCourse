@@ -13,6 +13,10 @@ public class Task3 {
      * @throws NullPointerException if the input arrays are null
      */
     public static boolean isNestable(int[] arr1, int[] arr2) {
+        if (arr1 == null || arr2 == null) {
+            throw new NullPointerException("Arrays cannot be null");
+        }
+
         int max1 = Integer.MIN_VALUE;
         int max2 = Integer.MIN_VALUE;
         int min1 = Integer.MAX_VALUE;

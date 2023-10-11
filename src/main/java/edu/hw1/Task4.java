@@ -12,13 +12,17 @@ public class Task4 {
      * @throws NullPointerException if the input string is null
      */
     public static String fixString(String str) {
-        char[] chars = str.toCharArray();
-
-        for (int i = 1; i < chars.length; i += 2) {
-            char tmp = chars[i];
-            chars[i] = chars[i - 1];
-            chars[i - 1] = tmp;
+        if (str == null) {
+            throw new NullPointerException("String \"str\" cannot be null");
         }
-        return new String(chars);
+
+        StringBuilder sb = new StringBuilder(str);
+
+        for (int i = 1; i < sb.length(); i += 2) {
+            char tmp = sb.charAt(i);
+            sb.setCharAt(i, sb.charAt(i - 1));
+            sb.setCharAt(i - 1, tmp);
+        }
+        return sb.toString();
     }
 }

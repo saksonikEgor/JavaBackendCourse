@@ -18,18 +18,12 @@ public class Task3Test {
         assertThat(Task3.isNestable(new int[] {0}, new int[] {0})).isEqualTo(false);
         assertThat(Task3.isNestable(new int[] {3}, new int[] {1, 2, 6})).isEqualTo(true);
 
-        String message = Assertions.assertThrows(NullPointerException.class,
+        Assertions.assertEquals("Arrays cannot be null", Assertions.assertThrows(NullPointerException.class,
             () -> Task3.isNestable(new int[] {3}, null), "NullPointerException was expected"
-        ).getMessage();
+        ).getMessage());
 
-        Assertions.assertTrue(message.contains("Cannot read the array length because ")
-            && message.contains(" is null"));
-
-        message = Assertions.assertThrows(NullPointerException.class,
-            () -> Task3.isNestable(null, null), "NullPointerException was expected"
-        ).getMessage();
-
-        Assertions.assertTrue(message.contains("Cannot read the array length because ")
-            && message.contains(" is null"));
+        Assertions.assertEquals("Arrays cannot be null", Assertions.assertThrows(NullPointerException.class,
+                () -> Task3.isNestable(null, null), "NullPointerException was expected"
+        ).getMessage());
     }
 }

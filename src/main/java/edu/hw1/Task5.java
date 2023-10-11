@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Task5 {
+    private static final int DECIMAL_BASE = 10;
+
     private Task5() {
     }
 
@@ -56,17 +58,16 @@ public class Task5 {
      * @return a list of digits that is a descendant of the input parent
      * @throws NullPointerException if the input list of digits is null
      */
-    @SuppressWarnings("MagicNumber")
     private static List<Integer> calculateDescendant(List<Integer> parent) {
         List<Integer> descendant = new ArrayList<>();
 
         for (int i = 1; i < parent.size(); i += 2) {
             int curSum = parent.get(i - 1) + parent.get(i);
-            if (curSum < 10) {
+            if (curSum < DECIMAL_BASE) {
                 descendant.add(curSum);
             } else {
-                descendant.add(curSum / 10);
-                descendant.add(curSum % 10);
+                descendant.add(curSum / DECIMAL_BASE);
+                descendant.add(curSum % DECIMAL_BASE);
             }
         }
 

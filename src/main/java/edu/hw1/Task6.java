@@ -4,6 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Task6 {
+    private static final int LOWER_BOUND = 1000;
+    private static final int UPPER_BOUND = 9999;
+    private static final int DECIMAL_BASE = 10;
+    private static final int[] TARGET = new int[] {6, 1, 7, 4};
+    private static final String ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "It is impossible to execute the Kaprekar "
+        + "function because the \"num\" is not valid";
+
     private Task6() {
     }
 
@@ -16,30 +23,26 @@ public class Task6 {
      * @return number of steps required to get number 6174
      * @throws IllegalArgumentException if the input number is invalid
      */
-    @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
     public static int countK(int num) {
-        if (num <= 1000 || num >= 9999) {
-            throw new IllegalArgumentException("It is impossible to execute the Kaprekar "
-                + "function because the \"num\" is not valid");
+        if (num <= LOWER_BOUND || num >= UPPER_BOUND) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
         boolean correctInput = false;
-        for (int i = 10; i <= 1000; i *= 10) {
-            if (num % 10 != (num / i) % 10) {
+        for (int i = DECIMAL_BASE; i <= LOWER_BOUND; i *= DECIMAL_BASE) {
+            if (num % DECIMAL_BASE != (num / i) % DECIMAL_BASE) {
                 correctInput = true;
                 break;
             }
         }
 
         if (!correctInput) {
-            throw new IllegalArgumentException("It is impossible to execute the Kaprekar "
-                + "function because the \"num\" is not valid");
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
         int[] digits = String.valueOf(num).chars().map(c -> c - '0').toArray();
-        int[] target = new int[] {6, 1, 7, 4};
 
-        return countK(digits, target);
+        return countK(digits);
     }
 
     /**
@@ -47,15 +50,14 @@ public class Task6 {
      *
      * @param digits an array of numbers for which it is necessary to count the number of
      *               steps before obtaining the target
-     * @param target an array of digits which as a result must be equal to the input array
      * @return number of steps required to get number target
      * @throws NullPointerException if the input arrays of digits are null
      */
-    private static int countK(int[] digits, int[] target) {
-        if (Arrays.equals(digits, target)) {
+    private static int countK(int[] digits) {
+        if (Arrays.equals(digits, TARGET)) {
             return 0;
         }
-        return 1 + countK(kaprecarFunc(digits), target);
+        return 1 + countK(kaprecarFunc(digits));
     }
 
     /**
@@ -67,7 +69,6 @@ public class Task6 {
      *     which are composed of elements of the input array
      * @throws NullPointerException if the input array of digits is null
      */
-    @SuppressWarnings("MagicNumber")
     private static int[] kaprecarFunc(int[] digits) {
         int[] incr = digits.clone();
         int[] desc = Arrays.stream(digits).boxed()
@@ -78,13 +79,13 @@ public class Task6 {
 
         int larger = 0;
         for (int el : desc) {
-            larger *= 10;
+            larger *= DECIMAL_BASE;
             larger += el;
         }
 
         int smaller = 0;
         for (int el : incr) {
-            smaller *= 10;
+            smaller *= DECIMAL_BASE;
             smaller += el;
         }
 
@@ -93,8 +94,8 @@ public class Task6 {
 
         int idx = result.length - 1;
         while (diff > 0) {
-            result[idx--] = diff % 10;
-            diff /= 10;
+            result[idx--] = diff % DECIMAL_BASE;
+            diff /= DECIMAL_BASE;
         }
         return result;
     }

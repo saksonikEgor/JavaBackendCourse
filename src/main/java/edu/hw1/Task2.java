@@ -1,6 +1,8 @@
 package edu.hw1;
 
 public class Task2 {
+    private static final int NUMBER_OF_DIGITS_IN_LONG_MIN_VALUE = 19;
+
     private Task2() {
     }
 
@@ -19,7 +21,7 @@ public class Task2 {
         long n = num;
         if (num < 0) {
             if (num == Long.MIN_VALUE) {
-                return 19;
+                return NUMBER_OF_DIGITS_IN_LONG_MIN_VALUE;
             }
 
             n *= -1;
