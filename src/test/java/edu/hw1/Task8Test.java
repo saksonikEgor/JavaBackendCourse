@@ -76,7 +76,7 @@ public class Task8Test {
         })).isEqualTo(true);
 
         Assertions.assertEquals(
-            "\"board\" is invalid because the \"board.length\" is not equals 8",
+            "\"board\" is invalid because the \"board.length\" is not equals \"BOARD_SIZE\"",
             Assertions.assertThrows(IllegalArgumentException.class,
                 () -> Task8.knightBoardCapture(new int[][] {
                     {0, 0, 0, 0, 0, 0, 0, 0},
@@ -88,7 +88,7 @@ public class Task8Test {
         );
 
         Assertions.assertEquals(
-            "\"board\" is invalid because the \"board[2].length\" is not equals 8",
+            "\"board\" is invalid because the \"board[2].length\" is not equals \"BOARD_SIZE\"",
             Assertions.assertThrows(IllegalArgumentException.class,
                 () -> Task8.knightBoardCapture(new int[][] {
                     {0, 0, 0, 0, 0, 0, 0, 0},

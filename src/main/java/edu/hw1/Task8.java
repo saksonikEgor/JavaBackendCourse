@@ -1,6 +1,8 @@
 package edu.hw1;
 
 public class Task8 {
+    private static final int BOARD_SIZE = 8;
+
     private Task8() {
     }
 
@@ -12,18 +14,18 @@ public class Task8 {
      * @throws NullPointerException     if the input two-dimensional array or if any of its nested arrays are null
      * @throws IllegalArgumentException if the input two-dimensional array is of invalid size
      */
-    @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
+    @SuppressWarnings("MultipleStringLiterals")
     public static boolean knightBoardCapture(int[][] board) {
-        if (board.length != 8) {
+        if (board.length != BOARD_SIZE) {
             throw new IllegalArgumentException("\"board\" is invalid because "
-                + "the \"board.length\" is not equals 8");
+                + "the \"board.length\" is not equals \"BOARD_SIZE\"");
         }
-        int boardSize = 8;
+        int boardSize = BOARD_SIZE;
 
         for (int i = 0; i < boardSize; i++) {
-            if (board[i].length != 8) {
+            if (board[i].length != BOARD_SIZE) {
                 throw new IllegalArgumentException("\"board\" is invalid because "
-                    + "the \"board[" + i + "].length\" is not equals 8");
+                    + "the \"board[" + i + "].length\" is not equals \"BOARD_SIZE\"");
             }
         }
 
