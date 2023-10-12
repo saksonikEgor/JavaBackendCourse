@@ -4,11 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PopularCommandExecutor {
-    private final static String FAILED_EXECUTE_MASSAGE = "All executions failed";
-    private final static String FAILED_UPDATE_PACKAGES = "Failed update packages";
+    private static final String FAILED_EXECUTE_MASSAGE = "All executions failed";
+    private static final String FAILED_UPDATE_PACKAGES = "Failed update packages";
     private final ConnectionManager manager;
     private final int maxAttempts;
-    private final static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public PopularCommandExecutor(ConnectionManager manager, int maxAttempts) {
         this.manager = manager;

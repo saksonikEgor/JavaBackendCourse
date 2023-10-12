@@ -6,7 +6,7 @@ public sealed interface ConnectionManager {
     Connection getConnection();
 
     final class DefaultConnectionManager implements ConnectionManager {
-        private final static int UPPER_BOUND = 2;
+        private static final int UPPER_BOUND = 2;
         private final Random random;
 
         public DefaultConnectionManager() {

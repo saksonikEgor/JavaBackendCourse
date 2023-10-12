@@ -18,8 +18,8 @@ public sealed interface Connection extends AutoCloseable {
     }
 
     final class FaultyConnection implements Connection {
-        private final static String CONNECTION_EXCEPTION_MESSAGE = "Faulty execute";
-        private final static int UPPER_BOUND = 2;
+        private static final String CONNECTION_EXCEPTION_MESSAGE = "Faulty execute";
+        private static final int UPPER_BOUND = 2;
         private final Random random;
 
         public FaultyConnection() {
