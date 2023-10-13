@@ -8,38 +8,39 @@ public sealed interface Connection extends AutoCloseable {
     final class StableConnection implements Connection {
         @Override
         public void execute(String command) {
-
         }
 
         @Override
         public void close() throws Exception {
-
         }
     }
 
     final class FaultyConnection implements Connection {
-        private static final String CONNECTION_EXCEPTION_MESSAGE = "Faulty execute";
-        private static final int UPPER_BOUND = 2;
-        private final Random random;
+        private final String connectionExceptionMessage;
+        private final int connectionUpperBound;
+        private final Random connectionRandom;
 
-        public FaultyConnection() {
-            random = new Random();
+        public FaultyConnection(int connectionUpperBound, String connectionExceptionMessage) {
+            this.connectionUpperBound = connectionUpperBound;
+            this.connectionExceptionMessage = connectionExceptionMessage;
+            connectionRandom = new Random();
         }
 
-        public FaultyConnection(Random random) {
-            this.random = random;
+        public FaultyConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
+            this.connectionUpperBound = connectionUpperBound;
+            this.connectionExceptionMessage = connectionExceptionMessage;
+            this.connectionRandom = connectionRandom;
         }
 
         @Override
         public void execute(String command) {
-            if (random.nextInt(UPPER_BOUND) == 0) {
-                throw new ConnectionException(CONNECTION_EXCEPTION_MESSAGE);
+            if (connectionRandom.nextInt(connectionUpperBound) == 0) {
+                throw new ConnectionException(connectionExceptionMessage);
             }
         }
 
         @Override
         public void close() throws Exception {
-
         }
     }
 }

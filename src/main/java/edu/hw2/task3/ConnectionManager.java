@@ -3,10 +3,10 @@ package edu.hw2.task3;
 import java.util.Random;
 
 public sealed interface ConnectionManager {
-    Connection getConnection();
+    Connection getConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom);
 
     final class DefaultConnectionManager implements ConnectionManager {
-        private static final int UPPER_BOUND = 2;
+        private static final int CONNECTION_MANAGER_UPPER_BOUND = 2;
         private final Random random;
 
         public DefaultConnectionManager() {
@@ -18,17 +18,17 @@ public sealed interface ConnectionManager {
         }
 
         @Override
-        public Connection getConnection() {
-            return random.nextInt(UPPER_BOUND) == 0
-                ? new Connection.FaultyConnection()
+        public Connection getConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
+            return this.random.nextInt(CONNECTION_MANAGER_UPPER_BOUND) == 0
+                ? new Connection.FaultyConnection(connectionUpperBound, connectionExceptionMessage, connectionRandom)
                 : new Connection.StableConnection();
         }
     }
 
     final class FaultyConnectionManager implements ConnectionManager {
         @Override
-        public Connection getConnection() {
-            return new Connection.FaultyConnection();
+        public Connection getConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
+            return new Connection.FaultyConnection(connectionUpperBound, connectionExceptionMessage, connectionRandom);
         }
     }
 }

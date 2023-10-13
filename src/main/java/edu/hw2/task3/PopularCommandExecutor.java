@@ -2,29 +2,35 @@ package edu.hw2.task3;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Random;
 
 public class PopularCommandExecutor {
-    private static final String FAILED_EXECUTE_MASSAGE = "All executions failed";
+    private static final String ALL_EXECUTIONS_FAILED_MESSAGE = "All executions failed";
+    private static final String FAULTY_EXECUTE_MESSAGE = "Faulty execute";
     private static final String FAILED_UPDATE_PACKAGES = "Failed update packages";
+    private static final String EXECUTE_COMMAND = "apt update && apt upgrade -y";
+    private static final int CONNECTION_UPPER_BOUND = 2;
     private final ConnectionManager manager;
     private final int maxAttempts;
     private static final Logger LOGGER = LogManager.getLogger();
+    private final Random connectionRandom;
 
-    public PopularCommandExecutor(ConnectionManager manager, int maxAttempts) {
+    public PopularCommandExecutor(ConnectionManager manager, int maxAttempts, Random connectionRandom) {
         this.manager = manager;
         this.maxAttempts = maxAttempts;
+        this.connectionRandom = connectionRandom;
     }
 
     public void updatePackages() {
         try {
-            tryExecute("apt update && apt upgrade -y");
+            tryExecute(EXECUTE_COMMAND);
         } catch (ConnectionException e) {
             LOGGER.error(FAILED_UPDATE_PACKAGES, e);
         }
     }
 
-    private void tryExecute(String command) {
-        Connection connection = manager.getConnection();
+    void tryExecute(String command) {
+        Connection connection = manager.getConnection(CONNECTION_UPPER_BOUND, FAULTY_EXECUTE_MESSAGE, connectionRandom);
         ConnectionException exception = null;
 
         int attempt = 0;
@@ -39,6 +45,6 @@ public class PopularCommandExecutor {
                 throw new RuntimeException(e);
             }
         }
-        throw (ConnectionException) new ConnectionException(FAILED_EXECUTE_MASSAGE).initCause(exception);
+        throw (ConnectionException) new ConnectionException(ALL_EXECUTIONS_FAILED_MESSAGE).initCause(exception);
     }
 }
