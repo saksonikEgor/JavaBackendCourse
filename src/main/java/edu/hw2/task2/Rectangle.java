@@ -4,15 +4,35 @@ public class Rectangle {
     private int width;
     private int height;
 
-    void setWidth(int width) {
-        this.width = width;
+    public Rectangle() {
+        width = 0;
+        height = 0;
     }
 
-    void setHeight(int height) {
+    public Rectangle(int width, int height) {
+        this.width = width;
         this.height = height;
     }
 
-    double area() {
+    public Rectangle setWidth(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public Rectangle setHeight(int height) {
+        this.height = height;
+        return this;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public double area() {
         return width * height;
     }
 }
