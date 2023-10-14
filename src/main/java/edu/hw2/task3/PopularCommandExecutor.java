@@ -29,7 +29,7 @@ public class PopularCommandExecutor {
         }
     }
 
-    void tryExecute(String command) {
+    public void tryExecute(String command) {
         Connection connection = manager.getConnection(CONNECTION_UPPER_BOUND, FAULTY_EXECUTE_MESSAGE, connectionRandom);
         ConnectionException exception = null;
 
