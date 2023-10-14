@@ -48,6 +48,7 @@ public class ConsoleHangman {
         return session.guess(Character.toLowerCase(input.charAt(0)));
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void printState(GuessResult guess) {
         switch (guess) {
             case GuessResult.Defeat defeat -> {
@@ -79,18 +80,22 @@ public class ConsoleHangman {
         }
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displayASuggestionForEnteringACharacter() {
         System.out.println(GameParams.GUESS_MESSAGE);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void printWordState(GuessResult guess) {
         System.out.println(GameParams.PRINT_WORD_STATE_MESSAGE + " " + String.valueOf(guess.state()) + "\n");
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void printGiveUpCharIsMessage() {
         System.out.println(GameParams.GIVE_UP_CHAR_IS_MESSAGE);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void printFarewellMessage() {
         System.out.println(GameParams.FAREWELL_MESSAGE);
     }
