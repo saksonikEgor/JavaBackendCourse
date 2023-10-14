@@ -18,7 +18,11 @@ public sealed interface ConnectionManager {
         }
 
         @Override
-        public Connection getConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
+        public Connection getConnection(
+            int connectionUpperBound,
+            String connectionExceptionMessage,
+            Random connectionRandom
+        ) {
             return this.random.nextInt(CONNECTION_MANAGER_UPPER_BOUND) == 0
                 ? new Connection.FaultyConnection(connectionUpperBound, connectionExceptionMessage, connectionRandom)
                 : new Connection.StableConnection();
@@ -27,7 +31,11 @@ public sealed interface ConnectionManager {
 
     final class FaultyConnectionManager implements ConnectionManager {
         @Override
-        public Connection getConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
+        public Connection getConnection(
+            int connectionUpperBound,
+            String connectionExceptionMessage,
+            Random connectionRandom
+        ) {
             return new Connection.FaultyConnection(connectionUpperBound, connectionExceptionMessage, connectionRandom);
         }
     }

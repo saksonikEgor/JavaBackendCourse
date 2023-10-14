@@ -15,11 +15,23 @@ public class ExponentTest {
         Assertions.assertEquals(1, new Expr.Exponent(new Expr.Constant(1), 78).evaluate());
         Assertions.assertEquals(25, new Expr.Exponent(new Expr.Constant(-5), 2).evaluate());
         Assertions.assertEquals(-125, new Expr.Exponent(new Expr.Constant(-5), 3).evaluate());
-        Assertions.assertEquals(Math.pow(Double.MAX_VALUE, 3), new Expr.Exponent(new Expr.Constant(Double.MAX_VALUE), 3).evaluate());
-        Assertions.assertEquals(Math.pow(Double.MIN_VALUE, -3), new Expr.Exponent(new Expr.Constant(Double.MIN_VALUE), -3).evaluate());
+        Assertions.assertEquals(
+            Math.pow(Double.MAX_VALUE, 3),
+            new Expr.Exponent(new Expr.Constant(Double.MAX_VALUE), 3).evaluate()
+        );
+        Assertions.assertEquals(
+            Math.pow(Double.MIN_VALUE, -3),
+            new Expr.Exponent(new Expr.Constant(Double.MIN_VALUE), -3).evaluate()
+        );
         Assertions.assertEquals(256, new Expr.Exponent(new Expr.Constant(2), 8).evaluate());
         Assertions.assertEquals(0.25, new Expr.Exponent(new Expr.Constant(4), -1).evaluate());
-        Assertions.assertEquals(Math.pow(-233.233, -233.233), new Expr.Exponent(new Expr.Constant(-233.233), -233.233).evaluate());
-        Assertions.assertEquals(Math.pow(789.789, -123.123), new Expr.Exponent(new Expr.Constant(789.789), -123.123).evaluate());
+        Assertions.assertEquals(
+            Math.pow(-233.233, -233.233),
+            new Expr.Exponent(new Expr.Constant(-233.233), -233.233).evaluate()
+        );
+        Assertions.assertEquals(
+            Math.pow(789.789, -123.123),
+            new Expr.Exponent(new Expr.Constant(789.789), -123.123).evaluate()
+        );
     }
 }
