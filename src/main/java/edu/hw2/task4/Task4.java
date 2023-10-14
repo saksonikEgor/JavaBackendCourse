@@ -6,9 +6,6 @@ public class Task4 {
     private Task4() {
     }
 
-    public record CallingInfo(String className, String methodName) {
-    }
-
     public static CallingInfo callingInfo(String methodName) {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         for (StackTraceElement element : stackTraceElements) {
@@ -17,5 +14,8 @@ public class Task4 {
             }
         }
         return new CallingInfo(NO_ONE_CALLED_THIS_METHOD_MESSAGE, methodName);
+    }
+
+    public record CallingInfo(String className, String methodName) {
     }
 }

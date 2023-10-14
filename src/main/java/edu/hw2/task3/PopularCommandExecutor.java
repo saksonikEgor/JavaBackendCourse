@@ -1,8 +1,8 @@
 package edu.hw2.task3;
 
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.Random;
 
 public class PopularCommandExecutor {
     private static final String ALL_EXECUTIONS_FAILED_MESSAGE = "All executions failed";
@@ -10,9 +10,9 @@ public class PopularCommandExecutor {
     private static final String FAILED_UPDATE_PACKAGES = "Failed update packages";
     private static final String EXECUTE_COMMAND = "apt update && apt upgrade -y";
     private static final int CONNECTION_UPPER_BOUND = 2;
+    private static final Logger LOGGER = LogManager.getLogger();
     private final ConnectionManager manager;
     private final int maxAttempts;
-    private static final Logger LOGGER = LogManager.getLogger();
     private final Random connectionRandom;
 
     public PopularCommandExecutor(ConnectionManager manager, int maxAttempts, Random connectionRandom) {
