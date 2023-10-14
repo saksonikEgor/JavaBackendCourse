@@ -3,10 +3,10 @@ package edu.project1;
 import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
 import edu.project1.service.Dictionary;
+import java.util.Random;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DictionaryTest {

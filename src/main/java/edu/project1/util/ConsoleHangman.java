@@ -9,9 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
-    private boolean gameOver = false;
     private final Logger logger = LogManager.getLogger();
     private final Scanner scanner;
+    private boolean gameOver = false;
     private Session session;
 
     public ConsoleHangman() {

@@ -12,9 +12,9 @@ public class Session {
     private final String answer;
     private final char[] state;
     private final int maxAttempts;
+    private final Set<Character> previousCharacters;
     private int attempts;
     private int unguessedCharactersLeft;
-    private final Set<Character> previousCharacters;
 
     public Session(int maxAttempts, String[] wordPool, char unguessedChar, char giveUpChar)
         throws WrongGameParamsException {
