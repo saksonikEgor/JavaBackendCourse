@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task2Test {
     @Test
     @DisplayName("Кластеризация скобок")
-    void atbashEncryption() {
+    void clusterize() {
         assertArrayEquals(new String[] {"()", "()", "()"}, Task2.clusterize("()()()"));
         assertArrayEquals(new String[] {"((()))"}, Task2.clusterize("((()))"));
         assertArrayEquals(new String[] {"((())())", "(()(()()))"}, Task2.clusterize("((())())(()(()()))"));
