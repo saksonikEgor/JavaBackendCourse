@@ -20,9 +20,15 @@ public class Task1 {
             int ascii = sb.charAt(i);
 
             if (isLowerCaseLatinCharacter(ascii)) {
-                sb.setCharAt(i, (char) (LATIN_LOWERCASE_ASCII_UPPER_BOUND - (ascii - LATIN_LOWERCASE_ASCII_LOWER_BOUND)));
+                sb.setCharAt(
+                    i,
+                    (char) (LATIN_LOWERCASE_ASCII_UPPER_BOUND - (ascii - LATIN_LOWERCASE_ASCII_LOWER_BOUND))
+                );
             } else if (isUppercaseLatinCharacter(ascii)) {
-                sb.setCharAt(i, (char) (LATIN_UPPERCASE_ASCII_UPPER_BOUND - (ascii - LATIN_UPPERCASE_ASCII_LOWER_BOUND)));
+                sb.setCharAt(
+                    i,
+                    (char) (LATIN_UPPERCASE_ASCII_UPPER_BOUND - (ascii - LATIN_UPPERCASE_ASCII_LOWER_BOUND))
+                );
             }
         }
         return sb.toString();
