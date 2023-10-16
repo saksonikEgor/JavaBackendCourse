@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Task5 {
     public static final String KEY_WORD_IS_NULL_EXCEPTION_MESSAGE = "String \"keyWord\" cant be null";
     public static final String NAME_IS_INVALID_EXCEPTION_MESSAGE = "String \"name\" is array \"names\" is invalid";
+    public static final int MAXIMUM_NAME_LENGTH = 3;
 
     private Task5() {
     }
@@ -37,7 +38,7 @@ public class Task5 {
             return false;
         }
         int wordCount = name.split(" ").length;
-        return wordCount > 0 && wordCount < 3;
+        return wordCount > 0 && wordCount < MAXIMUM_NAME_LENGTH;
     }
 
     private static Contact[] ascendingSort(Contact[] contacts) {
