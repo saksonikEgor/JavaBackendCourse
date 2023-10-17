@@ -10,7 +10,7 @@ public class Square extends Rectangle {
         if (this.height == width) {
             return this;
         }
-        return new Rectangle(width, this.height);
+        return super.setWidth(width);
     }
 
     @Override
@@ -18,6 +18,6 @@ public class Square extends Rectangle {
         if (height == this.width) {
             return this;
         }
-        return new Rectangle(this.width, height);
+        return super.setHeight(height);
     }
 }
