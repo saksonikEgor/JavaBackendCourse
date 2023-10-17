@@ -67,11 +67,11 @@ public class Task5 {
         return contacts;
     }
 
-    public record Contact(String name) {
-    }
-
     public enum Key {
         ASC,
         DESC
+    }
+
+    public record Contact(String name) {
     }
 }
