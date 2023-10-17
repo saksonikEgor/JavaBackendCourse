@@ -16,26 +16,29 @@ public sealed interface Connection extends AutoCloseable {
     }
 
     final class FaultyConnection implements Connection {
-        private final String connectionExceptionMessage;
-        private final int connectionUpperBound;
+        public static final String CONNECTION_EXCEPTION_MESSAGE = "Faulty execute";
+        public static final String ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "Seed must be greater than 0";
+        public static final int CONNECTION_UPPER_BOUND = 2;
         private final Random connectionRandom;
 
-        public FaultyConnection(int connectionUpperBound, String connectionExceptionMessage) {
-            this.connectionUpperBound = connectionUpperBound;
-            this.connectionExceptionMessage = connectionExceptionMessage;
+        public FaultyConnection() {
+            if (CONNECTION_UPPER_BOUND < 1) {
+                throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+            }
             connectionRandom = new Random();
         }
 
-        public FaultyConnection(int connectionUpperBound, String connectionExceptionMessage, Random connectionRandom) {
-            this.connectionUpperBound = connectionUpperBound;
-            this.connectionExceptionMessage = connectionExceptionMessage;
+        public FaultyConnection(Random connectionRandom) {
+            if (CONNECTION_UPPER_BOUND < 1) {
+                throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+            }
             this.connectionRandom = connectionRandom;
         }
 
         @Override
         public void execute(String command) {
-            if (connectionRandom.nextInt(connectionUpperBound) == 0) {
-                throw new ConnectionException(connectionExceptionMessage);
+            if (connectionRandom.nextInt(CONNECTION_UPPER_BOUND) == 0) {
+                throw new ConnectionException(CONNECTION_EXCEPTION_MESSAGE);
             }
         }
 
