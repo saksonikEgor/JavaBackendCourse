@@ -3,7 +3,7 @@ package edu.hw2.task3Test;
 import edu.hw2.task3.Connection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class StableConnectionTest {
     @Test

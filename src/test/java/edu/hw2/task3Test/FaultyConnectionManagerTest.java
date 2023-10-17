@@ -2,9 +2,9 @@ package edu.hw2.task3Test;
 
 import edu.hw2.task3.Connection;
 import edu.hw2.task3.ConnectionManager;
+import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FaultyConnectionManagerTest {
@@ -15,8 +15,8 @@ public class FaultyConnectionManagerTest {
             assertEquals(
                 Connection.FaultyConnection.class,
                 new ConnectionManager
-                    .FaultyConnectionManager()
-                    .getConnection(2, "some message", new Random(i)).getClass()
+                    .FaultyConnectionManager(new Random(i))
+                    .getConnection().getClass()
             );
         }
     }
