@@ -10,13 +10,13 @@ public class ConsoleMaze {
     private Maze maze;
     private boolean isMazeAvailable = false;
 
-    public void start() {
+    public void run() {
         scanner = new Scanner(System.in);
         while (true) {
             help();
             try {
-                var choice = scanner.nextInt();
-                scanner.nextLine(); // nextInt
+                int choice = scanner.nextInt();
+                scanner.nextLine();
                 switch (choice) {
                     case 0 -> {
                         exit();
@@ -52,14 +52,14 @@ public class ConsoleMaze {
 
     private void generate() {
         System.out.println("Enter the size of the new maze (in the [size] or [height width] format)");
-        var line = scanner.nextLine();
-        var split = line.split(" ");
+        String line = scanner.nextLine();
+        String[] split = line.split(" ");
         if (split.length == 1) {
-            var size = parseInt(split[0]);
+            int size = parseInt(split[0]);
             maze = new Maze(size);
         } else if (split.length == 2) {
-            var height = parseInt(split[0]);
-            var width = parseInt(split[1]);
+            int height = parseInt(split[0]);
+            int width = parseInt(split[1]);
             maze = new Maze(height, width);
         } else {
             System.out.println("Cannot generate a maze. Invalid size");
