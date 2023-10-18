@@ -25,12 +25,11 @@ public class PopularCommandExecutor {
     }
 
     public void tryExecute(String command) {
-        Connection connection = manager.getConnection();
         Exception cause = null;
-
         int attempt = 0;
+
         while (attempt < maxAttempts) {
-            try (connection) {
+            try (Connection connection = manager.getConnection()) {
                 connection.execute(command);
                 return;
             } catch (Exception e) {
