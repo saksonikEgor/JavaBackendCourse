@@ -34,16 +34,16 @@ public class ConsoleMaze {
     public void run() {
         while (true) {
             while (!selectGenerator()) {
-                System.out.println("Incorrect option. Please try again");
+                System.out.println(ApplicationOptions.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
             }
 
             while (!selectMazeSizeAndGenerateTheMaze()) {
-                System.out.println("Incorrect option. Please try again");
+                System.out.println(ApplicationOptions.INVALID_MAZE_SIZE_MESSAGE);
             }
             displayGeneratedMaze();
 
             while (!selectSolverAndSolveTheMaze()) {
-                System.out.println("Cannot generate a maze. Invalid size. Please try again");
+                System.out.println(ApplicationOptions.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
             }
             displaySolvedMaze();
         }
@@ -119,7 +119,6 @@ public class ConsoleMaze {
                 return false;
             }
 
-//            Solver solver = solvingAlgorithms[choice].getSolver()
             Solver solver = solvingAlgorithms[choice - 1].getSolver();
             path = solver.solve(maze, maze.getEntrance(), maze.getExit());
         } catch (InputMismatchException e) {
@@ -129,27 +128,28 @@ public class ConsoleMaze {
     }
 
     private void displaySuggestionToSelectAGenerationAlgorithm() {
-        System.out.println("=== Select a maze generation algorithm ===");
+        System.out.println(ApplicationOptions.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
         ApplicationOptions.GenerationAlgorithm[] algorithms = ApplicationOptions.GenerationAlgorithm.values();
+
         for (int i = 1; i <= algorithms.length; i++) {
             System.out.println(i + ". " + algorithms[i - 1]);
         }
-        System.out.println("0. Exit");
+        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     private void displaySuggestionToSelectASolvingAlgorithm() {
-        System.out.println("=== Select a maze solving algorithm ===");
+        System.out.println(ApplicationOptions.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
         ApplicationOptions.SolvingAlgorithm[] algorithms = ApplicationOptions.SolvingAlgorithm.values();
+
         for (int i = 1; i <= algorithms.length; i++) {
             System.out.println(i + ". " + algorithms[i - 1]);
         }
-        System.out.println("0. Exit");
+        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     private void displaySuggestionToSelectAMazeSize() {
-        System.out.println("=== Enter the size of the new maze in the [size] or [height width] format "
-            + "for example: 8 12 ===");
-        System.out.println("0. Exit");
+        System.out.println(ApplicationOptions.SUGGESTION_TO_SELECT_A_MAZE_SIZE_MESSAGE);
+        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     private void displayGeneratedMaze() {
@@ -162,7 +162,7 @@ public class ConsoleMaze {
 
     private void exit() {
         scanner.close();
-        System.out.println("Bye!");
+        System.out.println(ApplicationOptions.FAREWELL_MESSAGE);
         System.exit(0);
     }
 }

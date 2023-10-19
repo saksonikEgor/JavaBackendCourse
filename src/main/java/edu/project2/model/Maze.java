@@ -1,10 +1,12 @@
 package edu.project2.model;
 
+import edu.project2.options.ApplicationOptions;
 import java.util.List;
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static edu.project2.model.Cell.Type.WALL;
 
 public class Maze {
+    private static final int SIZE_LOWER_BOUND = 3;
     private final int height;
     private final int width;
     private final Cell[][] grid;
@@ -12,11 +14,10 @@ public class Maze {
     private Cell exit;
 
     public Maze(int height, int width) {
-        if (height < 3 || width < 3) {
-            throw new IllegalArgumentException(
-                "Both the height and the width " +
-                    "of the maze must be at least 3");
+        if (height < SIZE_LOWER_BOUND || width < SIZE_LOWER_BOUND) {
+            throw new IllegalArgumentException(ApplicationOptions.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
+
         this.height = height;
         this.width = width;
         grid = new Cell[height][width];
