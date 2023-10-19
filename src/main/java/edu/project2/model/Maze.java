@@ -1,6 +1,7 @@
 package edu.project2.model;
 
 import edu.project2.generation.kruskal.KruskalGenerator;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -11,6 +12,8 @@ public class Maze {
     private final int height;
     private final int width;
     private final Cell[][] grid;
+    private Cell entrance;
+    private Cell exit;
 
     public Maze(int height, int width) {
         if (height < 3 || width < 3) {
@@ -21,18 +24,14 @@ public class Maze {
         this.height = height;
         this.width = width;
         grid = new Cell[height][width];
-        fillGrid();
-    }
 
-    public Maze(int size) {
-        this(size, size);
+        fillGrid();
     }
 
     private void fillGrid() {
         fillAlternately();
         fillGaps();
         makeEntranceAndExit();
-        generatePassages();
     }
 
     private void putCell(int row, int column, Cell.Type type) {
@@ -78,36 +77,38 @@ public class Maze {
 
     private void makeEntranceAndExit() {
         putCell(0, 1, PASSAGE);
+        setEntrance(grid[0][1]);
+
         putCell(height - 1, getExitColumn(), PASSAGE);
+        setExit(grid[height - 1][getExitColumn()]);
+
         if (height % 2 == 0) {
             putCell(height - 2, getExitColumn(), PASSAGE);
+            setExit(grid[height - 2][getExitColumn()]);
         }
     }
 
-    private void generatePassages() {
-        new KruskalGenerator(new Random())
-            .generate(height, width)
-            .forEach(putCell());
+    private void setEntrance(Cell entrance) {
+        this.entrance = entrance;
     }
 
-    private Consumer<Cell> putCell() {
-        return cell -> grid[cell.row()][cell.column()] = cell;
+    private void setExit(Cell exit) {
+        this.exit = exit;
     }
 
-    private String toString(boolean showEscape) {
-        var sb = new StringBuilder();
-        for (var row : grid) {
-            for (var cell : row) {
-                if (cell.isWall()) {
-                    sb.append("██");
-                } else if (showEscape && cell.isEscape()) {
-                    sb.append("XX");
-                } else {
-                    sb.append("  ");
-                }
-            }
-            sb.append('\n');
-        }
-        return sb.toString();
+    public Cell getEntrance() {
+        return entrance;
+    }
+
+    public Cell getExit() {
+        return exit;
+    }
+
+    public void putCells(List<Cell> passages) {
+        passages.forEach(cell -> grid[cell.row()][cell.column()] = cell);
+    }
+
+    public Cell[][] getGrid() {
+        return grid;
     }
 }

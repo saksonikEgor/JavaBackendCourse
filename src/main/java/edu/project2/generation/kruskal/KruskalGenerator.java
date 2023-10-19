@@ -2,6 +2,7 @@ package edu.project2.generation.kruskal;
 
 import edu.project2.generation.Generator;
 import edu.project2.model.Cell;
+import edu.project2.model.Maze;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,20 +15,24 @@ public class KruskalGenerator implements Generator {
     private int height;
     private int width;
     private final Random random;
+    private Maze maze;
 
     public KruskalGenerator(Random random) {
         this.random = random;
     }
 
     @Override
-    public List<Cell> generate(int height, int width) {
+    public Maze generate(int height, int width) {
+        maze = new Maze(height, width);
+
         this.height = (height - 1) / 2;
         this.width = (width - 1) / 2;
 
         List<Edge> edges = createEdges();
         Collections.shuffle(edges, random);
 
-        return createPassages(buildRandomSpanningTree(edges));
+        maze.putCells(createPassages(buildRandomSpanningTree(edges)));
+        return maze;
     }
 
     private List<Edge> createEdges() {
