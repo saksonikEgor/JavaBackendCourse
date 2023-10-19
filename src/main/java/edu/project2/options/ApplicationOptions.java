@@ -5,6 +5,7 @@ import edu.project2.generation.kruskal.KruskalGenerator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.solving.Solver;
+import edu.project2.solving.aStar.AStarSolver;
 import java.util.List;
 import java.util.Random;
 
@@ -24,12 +25,7 @@ public class ApplicationOptions {
 
         public Solver getSolver() {
             return switch (this) {
-                case AStar -> new Solver() {
-                    @Override
-                    public List<Cell> solve(Maze maze, Cell entrance, Cell exit) {
-                        return null;
-                    }
-                };
+                case AStar -> new AStarSolver();
             };
         }
     }
