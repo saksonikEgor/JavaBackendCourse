@@ -69,7 +69,7 @@ public class Maze {
     }
 
     private int getExitColumn() {
-        return width - 3 + width % 2;
+        return width - SIZE_LOWER_BOUND + width % 2;
     }
 
     private void makeEntranceAndExit() {
@@ -85,20 +85,20 @@ public class Maze {
         }
     }
 
-    private void setEntrance(Cell entrance) {
-        this.entrance = entrance;
-    }
-
-    private void setExit(Cell exit) {
-        this.exit = exit;
-    }
-
     public Cell getEntrance() {
         return entrance;
     }
 
+    private void setEntrance(Cell entrance) {
+        this.entrance = entrance;
+    }
+
     public Cell getExit() {
         return exit;
+    }
+
+    private void setExit(Cell exit) {
+        this.exit = exit;
     }
 
     public void putCells(List<Cell> passages) {

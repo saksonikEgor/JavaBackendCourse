@@ -3,20 +3,18 @@ package edu.project2.generation.kruskal;
 import edu.project2.generation.Generator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class KruskalGenerator implements Generator {
+    private final Random random;
     private int height;
     private int width;
-    private final Random random;
 
     public KruskalGenerator(Random random) {
         this.random = random;
@@ -111,7 +109,7 @@ public class KruskalGenerator implements Generator {
         private final int[] parent;
         private final int[] rank;
 
-        public DisjointSet(int size) {
+        DisjointSet(int size) {
             parent = new int[size];
             rank = new int[size];
             range(0, size).forEach(this::makeSet);

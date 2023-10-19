@@ -15,11 +15,11 @@ import static java.lang.Integer.parseInt;
 
 public class ConsoleMaze {
     private final Scanner scanner;
+    private final Renderer renderer = new ConsoleRenderer();
+    private final Random generationRandom;
     private Maze maze;
     private List<Cell> path;
     private Generator generator;
-    private final Renderer renderer = new ConsoleRenderer();
-    private final Random generationRandom;
 
     public ConsoleMaze() {
         scanner = new Scanner(System.in);
@@ -31,6 +31,7 @@ public class ConsoleMaze {
         this.generationRandom = generationRandom;
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     public void run() {
         while (true) {
             while (!selectGenerator()) {
@@ -72,6 +73,7 @@ public class ConsoleMaze {
         return true;
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private boolean selectMazeSizeAndGenerateTheMaze() {
         displaySuggestionToSelectAMazeSize();
 
@@ -79,19 +81,17 @@ public class ConsoleMaze {
         String[] split = line.split(" ");
 
         try {
-            switch (split.length) {
-                case 1 -> {
-                    int choice = parseInt(split[0]);
+            if (split.length == 1) {
+                int choice = parseInt(split[0]);
 
-                    if (choice == 0) {
-                        exit();
-                    }
-                    maze = generator.generate(choice, choice);
+                if (choice == 0) {
+                    exit();
                 }
-                case 2 -> maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
-                default -> {
-                    return false;
-                }
+                maze = generator.generate(choice, choice);
+            } else if (split.length == 2) {
+                maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
+            } else {
+                return false;
             }
         } catch (InputMismatchException | NumberFormatException e) {
             return false;
@@ -127,6 +127,7 @@ public class ConsoleMaze {
         return true;
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectAGenerationAlgorithm() {
         System.out.println(ApplicationOptions.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
         ApplicationOptions.GenerationAlgorithm[] algorithms = ApplicationOptions.GenerationAlgorithm.values();
@@ -137,6 +138,7 @@ public class ConsoleMaze {
         System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectASolvingAlgorithm() {
         System.out.println(ApplicationOptions.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
         ApplicationOptions.SolvingAlgorithm[] algorithms = ApplicationOptions.SolvingAlgorithm.values();
@@ -147,19 +149,23 @@ public class ConsoleMaze {
         System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectAMazeSize() {
         System.out.println(ApplicationOptions.SUGGESTION_TO_SELECT_A_MAZE_SIZE_MESSAGE);
         System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displayGeneratedMaze() {
         System.out.println(renderer.render(maze));
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void displaySolvedMaze() {
         System.out.println(renderer.render(maze, path));
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private void exit() {
         scanner.close();
         System.out.println(ApplicationOptions.FAREWELL_MESSAGE);

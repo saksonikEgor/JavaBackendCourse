@@ -7,8 +7,8 @@ import edu.project2.solving.aStar.AStarSolver;
 import java.util.Random;
 
 public class ApplicationOptions {
-    public static final String MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "Both the height and the width " +
-        "of the maze must be at least 3";
+    public static final String MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "Both the height and the width "
+        + "of the maze must be at least 3";
     public static final String INVALID_MAZE_SIZE_MESSAGE = "Cannot generate a maze. Invalid size. Please try again";
     public static final String INVALID_NUMBER_OF_ALGORITHM_MESSAGE = "Incorrect option. Please try again";
     public static final String SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE =
