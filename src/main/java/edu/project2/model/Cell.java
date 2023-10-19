@@ -7,10 +7,6 @@ public record Cell(int row, int column, Type type) {
         ESCAPE
     }
 
-    public boolean isPassage() {
-        return type == Type.PASSAGE;
-    }
-
     public boolean isWall() {
         return type == Type.WALL;
     }

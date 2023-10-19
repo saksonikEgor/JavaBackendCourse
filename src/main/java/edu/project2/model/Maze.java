@@ -1,10 +1,6 @@
 package edu.project2.model;
 
-import edu.project2.generation.kruskal.KruskalGenerator;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
-
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static edu.project2.model.Cell.Type.WALL;
 

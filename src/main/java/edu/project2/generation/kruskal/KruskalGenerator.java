@@ -3,10 +3,12 @@ package edu.project2.generation.kruskal;
 import edu.project2.generation.Generator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -15,7 +17,6 @@ public class KruskalGenerator implements Generator {
     private int height;
     private int width;
     private final Random random;
-    private Maze maze;
 
     public KruskalGenerator(Random random) {
         this.random = random;
@@ -23,7 +24,7 @@ public class KruskalGenerator implements Generator {
 
     @Override
     public Maze generate(int height, int width) {
-        maze = new Maze(height, width);
+        Maze maze = new Maze(height, width);
 
         this.height = (height - 1) / 2;
         this.width = (width - 1) / 2;

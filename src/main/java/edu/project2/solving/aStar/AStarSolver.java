@@ -173,7 +173,7 @@ public class AStarSolver implements Solver {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
-            var node = (Node) o;
+            Node node = (Node) o;
             return row == node.row &&
                 column == node.column &&
                 isWall == node.isWall;
