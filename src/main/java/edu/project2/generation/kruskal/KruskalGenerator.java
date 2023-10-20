@@ -1,13 +1,12 @@
 package edu.project2.generation.kruskal;
 
 import edu.project2.generation.Generator;
-import edu.project2.model.Cell;
+import edu.project2.model.Edge;
 import edu.project2.model.Maze;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import static edu.project2.model.Cell.Type.PASSAGE;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
@@ -30,7 +29,7 @@ public class KruskalGenerator implements Generator {
         List<Edge> edges = createEdges();
         Collections.shuffle(edges, random);
 
-        maze.putCells(createPassages(buildRandomSpanningTree(edges)));
+        maze.putSpanningTree(buildRandomSpanningTree(edges), this.width);
         return maze;
     }
 
@@ -81,28 +80,6 @@ public class KruskalGenerator implements Generator {
 
     private boolean connects(Edge edge, DisjointSet disjointSet) {
         return disjointSet.union(edge.firstCell(), edge.secondCell());
-    }
-
-    private List<Cell> createPassages(List<Edge> spanningTree) {
-        return spanningTree
-            .stream()
-            .map(edge -> getPassage(fromIndex(edge.firstCell()), fromIndex(edge.secondCell())))
-            .collect(toList());
-    }
-
-    private Cell fromIndex(int index) {
-        return new Cell(index / width, index % width, PASSAGE);
-    }
-
-    private Cell getPassage(Cell first, Cell second) {
-        return new Cell(
-            first.row() + second.row() + 1,
-            first.column() + second.column() + 1,
-            PASSAGE
-        );
-    }
-
-    record Edge(int firstCell, int secondCell) {
     }
 
     static class DisjointSet {

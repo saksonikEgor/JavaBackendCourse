@@ -4,6 +4,7 @@ import edu.project2.options.ApplicationOptions;
 import java.util.List;
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static edu.project2.model.Cell.Type.WALL;
+import static java.util.stream.Collectors.toList;
 
 public class Maze {
     private static final int SIZE_LOWER_BOUND = 3;
@@ -107,5 +108,28 @@ public class Maze {
 
     public Cell[][] getGrid() {
         return grid;
+    }
+
+    public void putSpanningTree(List<Edge> spanningTree, int width) {
+        putCells(createPassages(spanningTree, width));
+    }
+
+    private List<Cell> createPassages(List<Edge> spanningTree, int width) {
+        return spanningTree
+            .stream()
+            .map(edge -> getPassage(fromIndex(edge.firstCell(), width), fromIndex(edge.secondCell(), width)))
+            .collect(toList());
+    }
+
+    private Cell fromIndex(int index, int width) {
+        return new Cell(index / width, index % width, PASSAGE);
+    }
+
+    private Cell getPassage(Cell first, Cell second) {
+        return new Cell(
+            first.row() + second.row() + 1,
+            first.column() + second.column() + 1,
+            PASSAGE
+        );
     }
 }
