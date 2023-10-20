@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class AlternatingCell {
     private final int cellId;
@@ -36,4 +37,24 @@ public class AlternatingCell {
     public int getCellId() {
         return cellId;
     }
+
+//    public static List<AlternatingCell> createAlternatingCells(int width, int height) {
+//        List<AlternatingCell> alternatingCells = new ArrayList<>();
+//
+//        IntStream.range(0, width * height).forEach(idx -> alternatingCells.add(new AlternatingCell(idx)));
+//
+//        for (int i = 0; i < width * height - width; i++) {
+//            alternatingCells.get(i).addNeighbor(alternatingCells.get(i + width));
+//
+//            if ((i + 1) % width != 0) {
+//                alternatingCells.get(i).addNeighbor(alternatingCells.get(i + 1));
+//            }
+//        }
+//
+//        IntStream.range(width * height - width, width * height - 1).forEach(idx ->
+//            alternatingCells.get(idx).addNeighbor(alternatingCells.get(idx + 1))
+//        );
+//
+//        return alternatingCells;
+//    }
 }
