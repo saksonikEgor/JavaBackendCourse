@@ -3,6 +3,7 @@ package edu.project2.solving.dfs;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.model.Node;
+import edu.project2.options.ApplicationOptions;
 import edu.project2.solving.Solver;
 import java.util.ArrayDeque;
 import java.util.Collections;
@@ -13,7 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public class DFSSolver implements Solver {
-    private static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
     private final Deque<Node> stack;
     private final Set<Node> visited;
     private int height;
@@ -68,7 +68,7 @@ public class DFSSolver implements Solver {
     }
 
     private Optional<Node> getFirstNeighbor(Node cur) {
-        for (int[] delta : DELTAS) {
+        for (int[] delta : ApplicationOptions.DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
 

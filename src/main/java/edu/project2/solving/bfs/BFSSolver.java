@@ -3,6 +3,7 @@ package edu.project2.solving.bfs;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.model.Node;
+import edu.project2.options.ApplicationOptions;
 import edu.project2.solving.Solver;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.Queue;
 import java.util.Set;
 
 public class BFSSolver implements Solver {
-    private static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
     private final Queue<Node> queue;
     private final Set<Node> visited;
     private int height;
@@ -66,7 +66,7 @@ public class BFSSolver implements Solver {
     private List<Node> getAllNeighbors(Node cur) {
         List<Node> neighbors = new ArrayList<>();
 
-        for (int[] delta : DELTAS) {
+        for (int[] delta : ApplicationOptions.DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
 

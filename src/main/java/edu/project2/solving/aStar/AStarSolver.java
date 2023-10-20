@@ -2,6 +2,7 @@ package edu.project2.solving.aStar;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
+import edu.project2.options.ApplicationOptions;
 import edu.project2.solving.Solver;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,7 +14,6 @@ import java.util.Set;
 import static java.util.Comparator.comparingInt;
 
 public class AStarSolver implements Solver {
-    private static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
     private final PriorityQueue<Node> unvisited;
     private final Set<Node> visited;
     private int height;
@@ -93,7 +93,7 @@ public class AStarSolver implements Solver {
     }
 
     private void updateNeighbors(Node cur) {
-        for (int[] delta : DELTAS) {
+        for (int[] delta : ApplicationOptions.DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
 
