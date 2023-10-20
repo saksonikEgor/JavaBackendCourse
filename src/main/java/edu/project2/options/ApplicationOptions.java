@@ -1,6 +1,7 @@
 package edu.project2.options;
 
 import edu.project2.generation.Generator;
+import edu.project2.generation.bfs.BFSGenerator;
 import edu.project2.generation.dfs.DFSGenerator;
 import edu.project2.generation.kruskal.KruskalGenerator;
 import edu.project2.solving.Solver;
@@ -30,12 +31,14 @@ public class ApplicationOptions {
 
     public enum GenerationAlgorithm {
         Kruskal,
-        DFS;
+        DFS,
+        BFS;
 
         public Generator getGenerator(Random random) {
             return switch (this) {
                 case Kruskal -> new KruskalGenerator(random);
                 case DFS -> new DFSGenerator(random);
+                case BFS -> new BFSGenerator(random);
             };
         }
     }
