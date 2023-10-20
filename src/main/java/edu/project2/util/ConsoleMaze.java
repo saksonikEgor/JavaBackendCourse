@@ -7,6 +7,7 @@ import edu.project2.options.ApplicationOptions;
 import edu.project2.solving.Solver;
 import edu.project2.view.Renderer;
 import edu.project2.view.console.ConsoleRenderer;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class ConsoleMaze {
+    private static final String NUMBER_REGEX = "^\\d+$";
     private final Scanner scanner;
     private final Renderer renderer = new ConsoleRenderer();
     private final Random generationRandom;
@@ -52,16 +54,20 @@ public class ConsoleMaze {
 
     private boolean selectGenerator() {
         displaySuggestionToSelectAGenerationAlgorithm();
-        try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
+        try {
+            ApplicationOptions.GenerationAlgorithm[] generationAlgorithms =
+                ApplicationOptions.GenerationAlgorithm.values();
+
+            String line = scanner.nextLine();
+            if (!line.matches(NUMBER_REGEX)) {
+                return false;
+            }
+
+            int choice = Integer.parseInt(line);
             if (choice == 0) {
                 exit();
             }
-
-            ApplicationOptions.GenerationAlgorithm[] generationAlgorithms =
-                ApplicationOptions.GenerationAlgorithm.values();
 
             if (choice < 0 || choice > generationAlgorithms.length) {
                 return false;
@@ -77,10 +83,14 @@ public class ConsoleMaze {
     private boolean selectMazeSizeAndGenerateTheMaze() {
         displaySuggestionToSelectAMazeSize();
 
-        String line = scanner.nextLine();
-        String[] split = line.split(" ");
-
         try {
+            String line = scanner.nextLine();
+            String[] split = line.split(" ");
+
+            if (!Arrays.stream(split).allMatch(str -> str.matches(NUMBER_REGEX))
+                || split.length < 1 || split.length > 2) {
+                return false;
+            }
             if (split.length == 1) {
                 int choice = parseInt(split[0]);
 
@@ -88,15 +98,10 @@ public class ConsoleMaze {
                     exit();
                 }
                 maze = generator.generate(choice, choice);
-            } else if (split.length == 2) {
-                maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
             } else {
-                return false;
+                maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
             }
-        } catch (InputMismatchException | NumberFormatException e) {
-            return false;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (InputMismatchException e) {
             return false;
         }
         return true;
@@ -105,20 +110,22 @@ public class ConsoleMaze {
     private boolean selectSolverAndSolveTheMaze() {
         displaySuggestionToSelectASolvingAlgorithm();
         try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            ApplicationOptions.SolvingAlgorithm[] solvingAlgorithms =
+                ApplicationOptions.SolvingAlgorithm.values();
 
+            String line = scanner.nextLine();
+            if (!line.matches(NUMBER_REGEX)) {
+                return false;
+            }
+
+            int choice = Integer.parseInt(line);
             if (choice == 0) {
                 exit();
             }
 
-            ApplicationOptions.SolvingAlgorithm[] solvingAlgorithms =
-                ApplicationOptions.SolvingAlgorithm.values();
-
             if (choice < 0 || choice > solvingAlgorithms.length) {
                 return false;
             }
-
             Solver solver = solvingAlgorithms[choice - 1].getSolver();
             path = solver.solve(maze, maze.getEntrance(), maze.getExit());
         } catch (InputMismatchException e) {
