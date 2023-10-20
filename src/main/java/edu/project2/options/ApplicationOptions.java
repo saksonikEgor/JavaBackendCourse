@@ -6,6 +6,7 @@ import edu.project2.generation.dfs.DFSGenerator;
 import edu.project2.generation.kruskal.KruskalGenerator;
 import edu.project2.solving.Solver;
 import edu.project2.solving.aStar.AStarSolver;
+import edu.project2.solving.bfs.BFSSolver;
 import edu.project2.solving.dfs.DFSSolver;
 import java.util.Random;
 
@@ -45,12 +46,14 @@ public class ApplicationOptions {
 
     public enum SolvingAlgorithm {
         AStar,
-        DFS;
+        DFS,
+        BFS;
 
         public Solver getSolver() {
             return switch (this) {
                 case AStar -> new AStarSolver();
                 case DFS -> new DFSSolver();
+                case BFS -> new BFSSolver();
             };
         }
     }
