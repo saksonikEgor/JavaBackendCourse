@@ -1,20 +1,21 @@
-package edu.project2.solving.aStar;
+package edu.project2.solving.dfs;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.solving.Solver;
+import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Deque;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.PriorityQueue;
+import java.util.Optional;
 import java.util.Set;
-import static java.util.Comparator.comparingInt;
 
-public class AStarSolver implements Solver {
+public class DFSSolver implements Solver {
     private static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
-    private final PriorityQueue<Node> unvisited;
+    private final Deque<Node> stack;
     private final Set<Node> visited;
     private int height;
     private int width;
@@ -22,9 +23,9 @@ public class AStarSolver implements Solver {
     private Node start;
     private Node end;
 
-    public AStarSolver() {
-        unvisited = new PriorityQueue<>(comparingInt(Node::getTotalCost));
-        visited = new HashSet<>();
+    public DFSSolver() {
+        stack = new ArrayDeque<>();
+        visited = new LinkedHashSet<>();
     }
 
     @Override
@@ -46,25 +47,33 @@ public class AStarSolver implements Solver {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Node node = new Node(i, j, mazeGrid[i][j].isWall());
-                node.calcHeuristicTo(end);
-
                 this.grid[i][j] = node;
             }
         }
     }
 
     private List<Cell> findPath() {
-        unvisited.add(start);
+        Node cur = start;
+        stack.push(cur);
 
-        while (!unvisited.isEmpty()) {
-            Node cur = unvisited.poll();
-
+        while (!stack.isEmpty()) {
             if (cur.equals(end)) {
                 return reconstructPath(cur);
             }
 
             visited.add(cur);
-            updateNeighbors(cur);
+            Optional<Node> neighborOpt = getFirstNeighbor(cur);
+
+            if (neighborOpt.isPresent()) {
+                Node neighbor = neighborOpt.get();
+                neighbor.setParent(cur);
+                cur = neighbor;
+
+                stack.push(cur);
+            } else {
+                stack.poll();
+                cur = stack.peek();
+            }
         }
         return Collections.emptyList();
     }
@@ -87,7 +96,7 @@ public class AStarSolver implements Solver {
         return new Cell(node.getRow(), node.getColumn(), Cell.Type.ESCAPE);
     }
 
-    private void updateNeighbors(Node cur) {
+    private Optional<Node> getFirstNeighbor(Node cur) {
         for (int[] delta : DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
@@ -96,22 +105,11 @@ public class AStarSolver implements Solver {
                 Node node = grid[row][column];
 
                 if (!node.isWall() && !visited.contains(node)) {
-                    compareNodeAndCur(node, cur);
+                    return Optional.of(node);
                 }
             }
         }
-    }
-
-    private void compareNodeAndCur(Node node, Node cur) {
-        if (unvisited.contains(node)) {
-            if (node.hasBetterPath(cur)) {
-                unvisited.remove(node);
-            } else {
-                return;
-            }
-        }
-        node.updatePath(cur);
-        unvisited.add(node);
+        return Optional.empty();
     }
 
     private boolean inBounds(int row, int column) {
@@ -120,14 +118,10 @@ public class AStarSolver implements Solver {
     }
 
     static class Node {
-        private static final int EDGE_COST = 1;
         private final int row;
         private final int column;
         private final boolean isWall;
         private Node parent;
-        private int costFromStart;
-        private int estimatedCostToTheEnd;
-        private int totalCost;
 
         Node(int row, int column, boolean isWall) {
             this.row = row;
@@ -152,23 +146,8 @@ public class AStarSolver implements Solver {
             return parent;
         }
 
-        int getTotalCost() {
-            return totalCost;
-        }
-
-        void calcHeuristicTo(Node node) {
-            this.estimatedCostToTheEnd = Math.abs(node.row - this.row)
-                + Math.abs(node.column - this.column);
-        }
-
-        boolean hasBetterPath(Node node) {
-            return node.costFromStart + EDGE_COST < this.costFromStart;
-        }
-
-        void updatePath(Node node) {
-            this.parent = node;
-            this.costFromStart = node.costFromStart + EDGE_COST;
-            totalCost = costFromStart + estimatedCostToTheEnd;
+        void setParent(Node parent) {
+            this.parent = parent;
         }
 
         @Override
