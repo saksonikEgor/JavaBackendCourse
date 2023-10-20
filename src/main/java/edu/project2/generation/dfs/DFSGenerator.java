@@ -3,14 +3,20 @@ package edu.project2.generation.dfs;
 import edu.project2.generation.Generator;
 import edu.project2.model.Edge;
 import edu.project2.model.Maze;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public class DFSGenerator implements Generator {
     private final Random random;
+    private final Deque<InitialCell> stack = new ArrayDeque<>();
     private int height;
     private int width;
-    private final Deque<InitialCell> stack = new ArrayDeque<>();
 
     public DFSGenerator(Random random) {
         this.random = random;
