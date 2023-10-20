@@ -4,8 +4,12 @@ import edu.project2.generation.Generator;
 import edu.project2.model.AlternatingCell;
 import edu.project2.model.Edge;
 import edu.project2.model.Maze;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class DFSGenerator implements Generator {
     private final Random random;

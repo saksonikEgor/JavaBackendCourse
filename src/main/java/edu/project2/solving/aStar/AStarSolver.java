@@ -83,6 +83,11 @@ public class AStarSolver implements Solver {
         return path;
     }
 
+    private boolean inBounds(int row, int column) {
+        return row >= 0 && row < height
+            && column >= 0 && column < width;
+    }
+
     private Cell toCell(Node node) {
         return new Cell(node.getRow(), node.getColumn(), Cell.Type.ESCAPE);
     }
@@ -112,11 +117,6 @@ public class AStarSolver implements Solver {
         }
         node.updatePath(cur);
         unvisited.add(node);
-    }
-
-    private boolean inBounds(int row, int column) {
-        return row >= 0 && row < height
-            && column >= 0 && column < width;
     }
 
     static class Node {

@@ -8,7 +8,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -34,22 +33,12 @@ public class BFSSolver implements Solver {
 
         this.height = mazeGrid.length;
         this.width = mazeGrid[0].length;
-        this.grid = new Node[height][width];
+        grid = Node.createGridOfNodes(mazeGrid);
 
         this.start = new Node(entrance.row(), entrance.column(), false);
         this.end = new Node(exit.row(), exit.column(), false);
 
-        createNodes(mazeGrid);
         return findPath();
-    }
-
-    private void createNodes(Cell[][] mazeGrid) {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Node node = new Node(i, j, mazeGrid[i][j].isWall());
-                this.grid[i][j] = node;
-            }
-        }
     }
 
     private List<Cell> findPath() {
@@ -61,7 +50,7 @@ public class BFSSolver implements Solver {
             cur = queue.poll();
 
             if (cur.equals(end)) {
-                return reconstructPath(cur);
+                return cur.reconstructPath();
             }
 
             for (Node neighbor : getAllNeighbors(cur)) {
@@ -72,24 +61,6 @@ public class BFSSolver implements Solver {
             }
         }
         return Collections.emptyList();
-    }
-
-    private List<Cell> reconstructPath(Node cur) {
-        List<Cell> path = new LinkedList<>();
-        Node node = cur;
-        path.add(toCell(node));
-
-        while (node.getParent() != node) {
-            Node parent = node.getParent();
-
-            path.addFirst(toCell(parent));
-            node = parent;
-        }
-        return path;
-    }
-
-    private Cell toCell(Node node) {
-        return new Cell(node.getRow(), node.getColumn(), Cell.Type.ESCAPE);
     }
 
     private List<Node> getAllNeighbors(Node cur) {

@@ -1,5 +1,7 @@
 package edu.project2.model;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Node {
@@ -13,6 +15,17 @@ public class Node {
         this.column = column;
         this.isWall = isWall;
         parent = this;
+    }
+
+    public static Node[][] createGridOfNodes(Cell[][] mazeGrid) {
+        Node[][] gridOfNodes = new Node[mazeGrid.length][mazeGrid[0].length];
+
+        for (int i = 0; i < gridOfNodes.length; i++) {
+            for (int j = 0; j < gridOfNodes[0].length; j++) {
+                gridOfNodes[i][j] = new Node(i, j, mazeGrid[i][j].isWall());
+            }
+        }
+        return gridOfNodes;
     }
 
     public int getRow() {
@@ -33,6 +46,24 @@ public class Node {
 
     public void setParent(Node parent) {
         this.parent = parent;
+    }
+
+    public Cell toCell() {
+        return new Cell(row, column, Cell.Type.ESCAPE);
+    }
+
+    public List<Cell> reconstructPath() {
+        List<Cell> path = new LinkedList<>();
+        Node node = this;
+        path.add(node.toCell());
+
+        while (node.getParent() != node) {
+            Node parent = node.getParent();
+
+            path.addFirst(parent.toCell());
+            node = parent;
+        }
+        return path;
     }
 
     @Override

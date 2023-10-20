@@ -17,27 +17,6 @@ public class AlternatingCell {
         neighbors = new ArrayList<>();
     }
 
-    public void shuffle(Random random) {
-        Collections.shuffle(neighbors, random);
-    }
-
-    public void addNeighbor(AlternatingCell neighbor) {
-        neighbors.add(neighbor);
-        neighbor.neighbors.add(this);
-    }
-
-    public Optional<AlternatingCell> getRandomUnvisitedNeighbor() {
-        return neighbors.stream().filter(cell -> !cell.visited).findAny();
-    }
-
-    public void makeVisited() {
-        visited = true;
-    }
-
-    public int getCellId() {
-        return cellId;
-    }
-
     public static List<AlternatingCell> createAlternatingCells(int width, int height) {
         List<AlternatingCell> alternatingCells = new ArrayList<>();
 
@@ -60,5 +39,26 @@ public class AlternatingCell {
 
     public static void shuffleAlternatingCells(List<AlternatingCell> alternatingCells, Random random) {
         alternatingCells.forEach(cell -> cell.shuffle(random));
+    }
+
+    public void shuffle(Random random) {
+        Collections.shuffle(neighbors, random);
+    }
+
+    public void addNeighbor(AlternatingCell neighbor) {
+        neighbors.add(neighbor);
+        neighbor.neighbors.add(this);
+    }
+
+    public Optional<AlternatingCell> getRandomUnvisitedNeighbor() {
+        return neighbors.stream().filter(cell -> !cell.visited).findAny();
+    }
+
+    public void makeVisited() {
+        visited = true;
+    }
+
+    public int getCellId() {
+        return cellId;
     }
 }
