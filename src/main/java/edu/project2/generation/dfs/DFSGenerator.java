@@ -1,25 +1,22 @@
 package edu.project2.generation.dfs;
 
 import edu.project2.generation.Generator;
+import edu.project2.model.AlternatingCell;
 import edu.project2.model.Edge;
 import edu.project2.model.Maze;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class DFSGenerator implements Generator {
     private final Random random;
-    private final Deque<InitialCell> stack = new ArrayDeque<>();
+    private final Deque<AlternatingCell> stack;
     private int height;
     private int width;
 
     public DFSGenerator(Random random) {
         this.random = random;
+        stack = new ArrayDeque<>();
     }
 
     @Override
@@ -29,49 +26,49 @@ public class DFSGenerator implements Generator {
         this.height = (height - 1) / 2;
         this.width = (width - 1) / 2;
 
-        List<InitialCell> initialCells = createInitialCells();
-        shuffleInitialCells(initialCells);
+        List<AlternatingCell> alternatingCells = createAlternatingCells();
+        shuffleAlternatingCells(alternatingCells);
 
-        maze.putSpanningTree(buildRandomSpanningTree(initialCells.getFirst()), this.width);
+        maze.putSpanningTree(buildRandomSpanningTree(alternatingCells.getFirst()), this.width);
         return maze;
     }
 
-    private List<InitialCell> createInitialCells() {
-        List<InitialCell> initialCells = new ArrayList<>();
+    private List<AlternatingCell> createAlternatingCells() {
+        List<AlternatingCell> alternatingCells = new ArrayList<>();
 
-        IntStream.range(0, width * height).forEach(idx -> initialCells.add(new InitialCell(idx)));
+        IntStream.range(0, width * height).forEach(idx -> alternatingCells.add(new AlternatingCell(idx)));
 
         for (int i = 0; i < width * height - width; i++) {
-            initialCells.get(i).addNeighbor(initialCells.get(i + width));
+            alternatingCells.get(i).addNeighbor(alternatingCells.get(i + width));
 
             if ((i + 1) % width != 0) {
-                initialCells.get(i).addNeighbor(initialCells.get(i + 1));
+                alternatingCells.get(i).addNeighbor(alternatingCells.get(i + 1));
             }
         }
 
         IntStream.range(width * height - width, width * height - 1).forEach(idx ->
-            initialCells.get(idx).addNeighbor(initialCells.get(idx + 1))
+            alternatingCells.get(idx).addNeighbor(alternatingCells.get(idx + 1))
         );
 
-        return initialCells;
+        return alternatingCells;
     }
 
-    private void shuffleInitialCells(List<InitialCell> initialCells) {
-        initialCells.forEach(cell -> cell.shuffle(random));
+    private void shuffleAlternatingCells(List<AlternatingCell> alternatingCells) {
+        alternatingCells.forEach(cell -> cell.shuffle(random));
     }
 
-    private List<Edge> buildRandomSpanningTree(InitialCell firstCell) {
+    private List<Edge> buildRandomSpanningTree(AlternatingCell firstCell) {
         List<Edge> edges = new ArrayList<>();
-        InitialCell cur = firstCell;
+        AlternatingCell cur = firstCell;
 
         stack.add(cur);
         cur.makeVisited();
 
         while (!stack.isEmpty()) {
-            Optional<InitialCell> neighborOpt = cur.getRandomUnvisitedNeighbor();
+            Optional<AlternatingCell> neighborOpt = cur.getRandomUnvisitedNeighbor();
 
             if (neighborOpt.isPresent()) {
-                InitialCell neighbor = neighborOpt.get();
+                AlternatingCell neighbor = neighborOpt.get();
                 neighbor.makeVisited();
 
                 edges.add(new Edge(cur.getCellId(), neighbor.getCellId()));
@@ -83,37 +80,5 @@ public class DFSGenerator implements Generator {
             }
         }
         return edges;
-    }
-
-    static class InitialCell {
-        private final int cellId;
-        private final List<InitialCell> neighbors;
-        private boolean visited = false;
-
-        InitialCell(int cellId) {
-            this.cellId = cellId;
-            neighbors = new ArrayList<>();
-        }
-
-        void shuffle(Random random) {
-            Collections.shuffle(neighbors, random);
-        }
-
-        void addNeighbor(InitialCell neighbor) {
-            neighbors.add(neighbor);
-            neighbor.neighbors.add(this);
-        }
-
-        Optional<InitialCell> getRandomUnvisitedNeighbor() {
-            return neighbors.stream().filter(cell -> !cell.visited).findAny();
-        }
-
-        void makeVisited() {
-            visited = true;
-        }
-
-        int getCellId() {
-            return cellId;
-        }
     }
 }
