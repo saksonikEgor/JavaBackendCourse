@@ -58,10 +58,10 @@ public class Node {
         path.add(node.toCell());
 
         while (node.getParent() != node) {
-            Node parent = node.getParent();
+            Node parentNode = node.getParent();
 
-            path.addFirst(parent.toCell());
-            node = parent;
+            path.addFirst(parentNode.toCell());
+            node = parentNode;
         }
         return path;
     }
