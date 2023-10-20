@@ -14,8 +14,8 @@ public class ApplicationOptions {
     public static final String INVALID_MAZE_SIZE_MESSAGE = "Cannot generate a maze. Invalid size. Please try again";
     public static final String INVALID_NUMBER_OF_ALGORITHM_MESSAGE = "Incorrect option. Please try again";
     public static final String SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE =
-        "=== Select a maze generation algorithm ===";
-    public static final String SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE = "=== Select a maze solving algorithm ===";
+        "=== Choose a maze generation algorithm ===";
+    public static final String SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE = "=== Choose a maze solving algorithm ===";
     public static final String ENTER_COMMAND_TO_EXIT_MESSAGE = "0. Exit";
     public static final String SUGGESTION_TO_SELECT_A_MAZE_SIZE_MESSAGE =
         "=== Enter the size of the new maze in the [size] or [height width] format "
