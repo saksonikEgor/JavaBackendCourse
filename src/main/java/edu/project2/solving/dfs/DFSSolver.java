@@ -2,14 +2,14 @@ package edu.project2.solving.dfs;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
+import edu.project2.model.Node;
 import edu.project2.solving.Solver;
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class DFSSolver implements Solver {
 
     public DFSSolver() {
         stack = new ArrayDeque<>();
-        visited = new LinkedHashSet<>();
+        visited = new HashSet<>();
     }
 
     @Override
@@ -115,58 +115,5 @@ public class DFSSolver implements Solver {
     private boolean inBounds(int row, int column) {
         return row >= 0 && row < height
             && column >= 0 && column < width;
-    }
-
-    static class Node {
-        private final int row;
-        private final int column;
-        private final boolean isWall;
-        private Node parent;
-
-        Node(int row, int column, boolean isWall) {
-            this.row = row;
-            this.column = column;
-            this.isWall = isWall;
-            parent = this;
-        }
-
-        int getRow() {
-            return row;
-        }
-
-        int getColumn() {
-            return column;
-        }
-
-        boolean isWall() {
-            return isWall;
-        }
-
-        Node getParent() {
-            return parent;
-        }
-
-        void setParent(Node parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            Node node = (Node) o;
-            return row == node.row
-                && column == node.column
-                && isWall == node.isWall;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(row, column, isWall);
-        }
     }
 }
