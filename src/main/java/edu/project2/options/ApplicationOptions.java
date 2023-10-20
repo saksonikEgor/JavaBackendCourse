@@ -1,6 +1,7 @@
 package edu.project2.options;
 
 import edu.project2.generation.Generator;
+import edu.project2.generation.dfs.DFSGenerator;
 import edu.project2.generation.kruskal.KruskalGenerator;
 import edu.project2.solving.Solver;
 import edu.project2.solving.aStar.AStarSolver;
@@ -21,17 +22,19 @@ public class ApplicationOptions {
     public static final String FAREWELL_MESSAGE = "Bye!";
     public static final String WALL_STRING = "██";
     public static final String PASSAGE_STRING = "  ";
-    public static final String PATH_STRING = "XX";
+    public static final String PATH_STRING = "▓▓";
 
     private ApplicationOptions() {
     }
 
     public enum GenerationAlgorithm {
-        Kruskal;
+        Kruskal,
+        DFS;
 
         public Generator getGenerator(Random random) {
             return switch (this) {
                 case Kruskal -> new KruskalGenerator(random);
+                case DFS -> new DFSGenerator(random);
             };
         }
     }
