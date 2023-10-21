@@ -3,7 +3,7 @@ package edu.project2.util;
 import edu.project2.generation.Generator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
-import edu.project2.options.ApplicationOptions;
+import edu.project2.properties.ApplicationProperties;
 import edu.project2.solving.Solver;
 import edu.project2.view.Renderer;
 import edu.project2.view.console.ConsoleRenderer;
@@ -37,16 +37,16 @@ public class ConsoleMaze {
     public void run() {
         while (true) {
             while (!selectGenerator()) {
-                System.out.println(ApplicationOptions.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
+                System.out.println(ApplicationProperties.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
             }
 
             while (!selectMazeSizeAndGenerateTheMaze()) {
-                System.out.println(ApplicationOptions.INVALID_MAZE_SIZE_MESSAGE);
+                System.out.println(ApplicationProperties.INVALID_MAZE_SIZE_MESSAGE);
             }
             displayGeneratedMaze();
 
             while (!selectSolverAndSolveTheMaze()) {
-                System.out.println(ApplicationOptions.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
+                System.out.println(ApplicationProperties.INVALID_NUMBER_OF_ALGORITHM_MESSAGE);
             }
             displaySolvedMaze();
         }
@@ -56,8 +56,8 @@ public class ConsoleMaze {
         displaySuggestionToSelectAGenerationAlgorithm();
 
         try {
-            ApplicationOptions.GenerationAlgorithm[] generationAlgorithms =
-                ApplicationOptions.GenerationAlgorithm.values();
+            ApplicationProperties.GenerationAlgorithm[] generationAlgorithms =
+                ApplicationProperties.GenerationAlgorithm.values();
 
             String line = scanner.nextLine();
             if (!line.matches(NUMBER_REGEX)) {
@@ -110,8 +110,8 @@ public class ConsoleMaze {
     private boolean selectSolverAndSolveTheMaze() {
         displaySuggestionToSelectASolvingAlgorithm();
         try {
-            ApplicationOptions.SolvingAlgorithm[] solvingAlgorithms =
-                ApplicationOptions.SolvingAlgorithm.values();
+            ApplicationProperties.SolvingAlgorithm[] solvingAlgorithms =
+                ApplicationProperties.SolvingAlgorithm.values();
 
             String line = scanner.nextLine();
             if (!line.matches(NUMBER_REGEX)) {
@@ -136,30 +136,30 @@ public class ConsoleMaze {
 
     @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectAGenerationAlgorithm() {
-        System.out.println(ApplicationOptions.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
-        ApplicationOptions.GenerationAlgorithm[] algorithms = ApplicationOptions.GenerationAlgorithm.values();
+        System.out.println(ApplicationProperties.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
+        ApplicationProperties.GenerationAlgorithm[] algorithms = ApplicationProperties.GenerationAlgorithm.values();
 
         for (int i = 1; i <= algorithms.length; i++) {
             System.out.println(i + ". " + algorithms[i - 1]);
         }
-        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
+        System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectASolvingAlgorithm() {
-        System.out.println(ApplicationOptions.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
-        ApplicationOptions.SolvingAlgorithm[] algorithms = ApplicationOptions.SolvingAlgorithm.values();
+        System.out.println(ApplicationProperties.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
+        ApplicationProperties.SolvingAlgorithm[] algorithms = ApplicationProperties.SolvingAlgorithm.values();
 
         for (int i = 1; i <= algorithms.length; i++) {
             System.out.println(i + ". " + algorithms[i - 1]);
         }
-        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
+        System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectAMazeSize() {
-        System.out.println(ApplicationOptions.SUGGESTION_TO_SELECT_A_MAZE_SIZE_MESSAGE);
-        System.out.println(ApplicationOptions.ENTER_COMMAND_TO_EXIT_MESSAGE);
+        System.out.println(ApplicationProperties.SUGGESTION_TO_SELECT_A_MAZE_SIZE_MESSAGE);
+        System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
     @SuppressWarnings("RegexpSinglelineJava")
@@ -175,7 +175,7 @@ public class ConsoleMaze {
     @SuppressWarnings("RegexpSinglelineJava")
     private void exit() {
         scanner.close();
-        System.out.println(ApplicationOptions.FAREWELL_MESSAGE);
+        System.out.println(ApplicationProperties.FAREWELL_MESSAGE);
         System.exit(0);
     }
 }

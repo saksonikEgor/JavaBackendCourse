@@ -1,6 +1,6 @@
 package edu.project2.model;
 
-import edu.project2.options.ApplicationOptions;
+import edu.project2.properties.ApplicationProperties;
 import java.util.List;
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static edu.project2.model.Cell.Type.WALL;
@@ -16,7 +16,7 @@ public class Maze {
 
     public Maze(int height, int width) {
         if (height < SIZE_LOWER_BOUND || width < SIZE_LOWER_BOUND) {
-            throw new IllegalArgumentException(ApplicationOptions.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
         this.height = height;

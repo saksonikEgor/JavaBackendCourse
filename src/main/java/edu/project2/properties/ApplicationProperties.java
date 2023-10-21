@@ -1,4 +1,4 @@
-package edu.project2.options;
+package edu.project2.properties;
 
 import edu.project2.generation.Generator;
 import edu.project2.generation.bfs.BFSGenerator;
@@ -10,7 +10,7 @@ import edu.project2.solving.bfs.BFSSolver;
 import edu.project2.solving.dfs.DFSSolver;
 import java.util.Random;
 
-public class ApplicationOptions {
+public class ApplicationProperties {
     public static final String WALL_STRING = "██";
     public static final String PASSAGE_STRING = "  ";
     public static final String PATH_STRING = "▓▓";
@@ -28,7 +28,7 @@ public class ApplicationOptions {
     public static final String INVALID_NUMBER_OF_ALGORITHM_MESSAGE = "Incorrect option. Please try again";
     public static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 
-    private ApplicationOptions() {
+    private ApplicationProperties() {
     }
 
     public enum GenerationAlgorithm {

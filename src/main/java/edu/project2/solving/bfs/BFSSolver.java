@@ -3,7 +3,7 @@ package edu.project2.solving.bfs;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.model.Node;
-import edu.project2.options.ApplicationOptions;
+import edu.project2.properties.ApplicationProperties;
 import edu.project2.solving.Solver;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class BFSSolver implements Solver {
     private List<Node> getAllNeighbors(Node cur) {
         List<Node> neighbors = new ArrayList<>();
 
-        for (int[] delta : ApplicationOptions.DELTAS) {
+        for (int[] delta : ApplicationProperties.DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
 

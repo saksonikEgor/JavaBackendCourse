@@ -2,7 +2,7 @@ package edu.project2.solving.aStar;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
-import edu.project2.options.ApplicationOptions;
+import edu.project2.properties.ApplicationProperties;
 import edu.project2.solving.Solver;
 import java.util.Collections;
 import java.util.HashSet;
@@ -93,7 +93,7 @@ public class AStarSolver implements Solver {
     }
 
     private void updateNeighbors(Node cur) {
-        for (int[] delta : ApplicationOptions.DELTAS) {
+        for (int[] delta : ApplicationProperties.DELTAS) {
             int row = cur.getRow() + delta[0];
             int column = cur.getColumn() + delta[1];
 
