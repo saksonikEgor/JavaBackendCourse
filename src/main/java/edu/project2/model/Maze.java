@@ -1,7 +1,9 @@
 package edu.project2.model;
 
 import edu.project2.properties.ApplicationProperties;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import static edu.project2.model.Cell.Type.PASSAGE;
 import static edu.project2.model.Cell.Type.WALL;
 import static java.util.stream.Collectors.toList;
@@ -24,6 +26,14 @@ public class Maze {
         grid = new Cell[height][width];
 
         fillGrid();
+    }
+
+    public Maze(Cell[][] grid) {
+        this.grid = grid;
+        this.height = grid.length;
+        this.width = grid[0].length;
+
+        makeEntranceAndExit();
     }
 
     private void fillGrid() {
@@ -132,4 +142,13 @@ public class Maze {
             PASSAGE
         );
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Maze maze = (Maze) o;
+        return height == maze.height && width == maze.width && Arrays.deepEquals(grid, maze.grid) &&
+            Objects.equals(entrance, maze.entrance) && Objects.equals(exit, maze.exit);
+    }
+
 }
