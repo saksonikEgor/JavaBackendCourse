@@ -4,15 +4,40 @@ import edu.project2.model.Cell;
 import edu.project2.model.Edge;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.Collections;
 import java.util.List;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class MazeTest {
+    private static String deleteEverySecondCharacter(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        for (int i = 1; i < sb.length(); i++) {
+            sb.deleteCharAt(i);
+        }
+        return sb.toString();
+    }
+
+    static Cell[][] generateGridByString(String maze, int height, int width) {
+        String[] splits = maze.split("\n");
+        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
+        Cell[][] grid = new Cell[height][width];
+
+        for (int i = 0; i < splits.length; i++) {
+            String row = deleteEverySecondCharacter(splits[i]);
+
+            for (int j = 0; j < row.length(); j++) {
+                if (row.charAt(j) == passageChar) {
+                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
+                } else {
+                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
+                }
+            }
+        }
+        return grid;
+    }
+
     @Test
     @DisplayName("Наложение клеток на лабиринт")
     void putCell() {
@@ -104,32 +129,5 @@ public class MazeTest {
             ██████████
             ██  ██  ██
             ██████  ██""", 5, 5), actualMaze.getGrid());
-    }
-
-    private static String deleteEverySecondCharacter(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        for (int i = 1; i < sb.length(); i++) {
-            sb.deleteCharAt(i);
-        }
-        return sb.toString();
-    }
-
-    static Cell[][] generateGridByString(String maze, int height, int width) {
-        String[] splits = maze.split("\n");
-        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
-        Cell[][] grid = new Cell[height][width];
-
-        for (int i = 0; i < splits.length; i++) {
-            String row = deleteEverySecondCharacter(splits[i]);
-
-            for (int j = 0; j < row.length(); j++) {
-                if (row.charAt(j) == passageChar) {
-                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
-                } else {
-                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
-                }
-            }
-        }
-        return grid;
     }
 }

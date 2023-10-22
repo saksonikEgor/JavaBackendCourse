@@ -11,6 +11,36 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AStarSolvingTest {
+    private static String deleteEverySecondCharacter(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        for (int i = 1; i < sb.length(); i++) {
+            sb.deleteCharAt(i);
+        }
+        return sb.toString();
+    }
+
+    private static Cell[][] generateGridByString(String maze, int height, int width) {
+        String[] splits = maze.split("\n");
+        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
+        char wallChar = ApplicationProperties.WALL_STRING.charAt(0);
+        Cell[][] grid = new Cell[height][width];
+
+        for (int i = 0; i < splits.length; i++) {
+            String row = deleteEverySecondCharacter(splits[i]);
+
+            for (int j = 0; j < row.length(); j++) {
+                if (row.charAt(j) == passageChar) {
+                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
+                } else if (row.charAt(j) == wallChar) {
+                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
+                } else {
+                    grid[i][j] = new Cell(i, j, Cell.Type.ESCAPE);
+                }
+            }
+        }
+        return grid;
+    }
+
     @Test
     @DisplayName("Нахождение пути в квадратном лабиринте алгоритмом A*")
     void aStarSquareSolving() {
@@ -251,36 +281,6 @@ public class AStarSolvingTest {
             20, 45
         ))
             .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
-    }
-
-    private static String deleteEverySecondCharacter(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        for (int i = 1; i < sb.length(); i++) {
-            sb.deleteCharAt(i);
-        }
-        return sb.toString();
-    }
-
-    private static Cell[][] generateGridByString(String maze, int height, int width) {
-        String[] splits = maze.split("\n");
-        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
-        char wallChar = ApplicationProperties.WALL_STRING.charAt(0);
-        Cell[][] grid = new Cell[height][width];
-
-        for (int i = 0; i < splits.length; i++) {
-            String row = deleteEverySecondCharacter(splits[i]);
-
-            for (int j = 0; j < row.length(); j++) {
-                if (row.charAt(j) == passageChar) {
-                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
-                } else if (row.charAt(j) == wallChar) {
-                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
-                } else {
-                    grid[i][j] = new Cell(i, j, Cell.Type.ESCAPE);
-                }
-            }
-        }
-        return grid;
     }
 
     public List<Cell> extractPathByString(String maze, int height, int width) {

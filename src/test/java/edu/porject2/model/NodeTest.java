@@ -10,6 +10,52 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NodeTest {
+    private static String deleteEverySecondCharacter(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        for (int i = 1; i < sb.length(); i++) {
+            sb.deleteCharAt(i);
+        }
+        return sb.toString();
+    }
+
+    static Cell[][] generateGridByString(String maze, int height, int width) {
+        String[] splits = maze.split("\n");
+        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
+        Cell[][] grid = new Cell[height][width];
+
+        for (int i = 0; i < splits.length; i++) {
+            String row = deleteEverySecondCharacter(splits[i]);
+
+            for (int j = 0; j < row.length(); j++) {
+                if (row.charAt(j) == passageChar) {
+                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
+                } else {
+                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
+                }
+            }
+        }
+        return grid;
+    }
+
+    static Node[][] generateNodeGridByString(String maze, int height, int width) {
+        String[] splits = maze.split("\n");
+        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
+        Node[][] grid = new Node[height][width];
+
+        for (int i = 0; i < splits.length; i++) {
+            String row = deleteEverySecondCharacter(splits[i]);
+
+            for (int j = 0; j < row.length(); j++) {
+                if (row.charAt(j) == passageChar) {
+                    grid[i][j] = new Node(i, j, false);
+                } else {
+                    grid[i][j] = new Node(i, j, true);
+                }
+            }
+        }
+        return grid;
+    }
+
     @Test
     @DisplayName("Создание Node[][] по Cell[][]")
     void createGridOfNodes() {
@@ -203,51 +249,5 @@ public class NodeTest {
             ),
             nodeGrid[8][17].reconstructPath()
         );
-    }
-
-    private static String deleteEverySecondCharacter(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        for (int i = 1; i < sb.length(); i++) {
-            sb.deleteCharAt(i);
-        }
-        return sb.toString();
-    }
-
-    static Cell[][] generateGridByString(String maze, int height, int width) {
-        String[] splits = maze.split("\n");
-        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
-        Cell[][] grid = new Cell[height][width];
-
-        for (int i = 0; i < splits.length; i++) {
-            String row = deleteEverySecondCharacter(splits[i]);
-
-            for (int j = 0; j < row.length(); j++) {
-                if (row.charAt(j) == passageChar) {
-                    grid[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
-                } else {
-                    grid[i][j] = new Cell(i, j, Cell.Type.WALL);
-                }
-            }
-        }
-        return grid;
-    }
-
-    static Node[][] generateNodeGridByString(String maze, int height, int width) {
-        String[] splits = maze.split("\n");
-        char passageChar = ApplicationProperties.PASSAGE_STRING.charAt(0);
-        Node[][] grid = new Node[height][width];
-
-        for (int i = 0; i < splits.length; i++) {
-            String row = deleteEverySecondCharacter(splits[i]);
-
-            for (int j = 0; j < row.length(); j++) {
-                if (row.charAt(j) == passageChar) {
-                    grid[i][j] = new Node(i, j, false);
-                } else {
-                    grid[i][j] = new Node(i, j, true);
-                }
-            }
-        }
-        return grid;
     }
 }
