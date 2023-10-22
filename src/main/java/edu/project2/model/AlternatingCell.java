@@ -3,6 +3,7 @@ package edu.project2.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -17,7 +18,7 @@ public class AlternatingCell {
         neighbors = new ArrayList<>();
     }
 
-    public static List<AlternatingCell> createAlternatingCells(int width, int height) {
+    public static List<AlternatingCell> initAlternatingCells(int width, int height) {
         List<AlternatingCell> alternatingCells = new ArrayList<>();
 
         IntStream.range(0, width * height).forEach(idx -> alternatingCells.add(new AlternatingCell(idx)));
@@ -41,7 +42,7 @@ public class AlternatingCell {
         alternatingCells.forEach(cell -> cell.shuffle(random));
     }
 
-    public void shuffle(Random random) {
+    private void shuffle(Random random) {
         Collections.shuffle(neighbors, random);
     }
 
@@ -60,5 +61,16 @@ public class AlternatingCell {
 
     public int getCellId() {
         return cellId;
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AlternatingCell that = (AlternatingCell) o;
+        return cellId == that.cellId && visited == that.visited && Objects.equals(neighbors, that.neighbors);
     }
 }

@@ -144,11 +144,14 @@ public class Maze {
     }
 
     @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Maze maze = (Maze) o;
         return height == maze.height && width == maze.width && Arrays.deepEquals(grid, maze.grid) &&
             Objects.equals(entrance, maze.entrance) && Objects.equals(exit, maze.exit);
     }
-
 }

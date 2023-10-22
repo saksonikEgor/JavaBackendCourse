@@ -27,7 +27,7 @@ public class BFSGenerator implements Generator {
         int bfsHeight = (height - 1) / 2;
         int bfsWidth = (width - 1) / 2;
 
-        List<AlternatingCell> alternatingCells = AlternatingCell.createAlternatingCells(bfsWidth, bfsHeight);
+        List<AlternatingCell> alternatingCells = AlternatingCell.initAlternatingCells(bfsWidth, bfsHeight);
         AlternatingCell.shuffleAlternatingCells(alternatingCells, random);
 
         maze.putSpanningTree(buildRandomSpanningTree(alternatingCells.getFirst()), bfsWidth);

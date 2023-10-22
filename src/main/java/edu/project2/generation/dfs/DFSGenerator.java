@@ -27,7 +27,7 @@ public class DFSGenerator implements Generator {
         int dfsHeight = (height - 1) / 2;
         int dfsWidth = (width - 1) / 2;
 
-        List<AlternatingCell> alternatingCells = AlternatingCell.createAlternatingCells(dfsWidth, dfsHeight);
+        List<AlternatingCell> alternatingCells = AlternatingCell.initAlternatingCells(dfsWidth, dfsHeight);
         AlternatingCell.shuffleAlternatingCells(alternatingCells, random);
 
         maze.putSpanningTree(buildRandomSpanningTree(alternatingCells.getFirst()), dfsWidth);

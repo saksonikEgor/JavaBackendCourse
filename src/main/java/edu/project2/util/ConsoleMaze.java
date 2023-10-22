@@ -25,7 +25,7 @@ public class ConsoleMaze {
 
     public ConsoleMaze() {
         scanner = new Scanner(System.in);
-        generationRandom = new Random();
+        generationRandom = new Random(5);
     }
 
     public ConsoleMaze(Random generationRandom) {
@@ -101,7 +101,7 @@ public class ConsoleMaze {
             } else {
                 maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
             }
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException | IllegalArgumentException e) {
             return false;
         }
         return true;
