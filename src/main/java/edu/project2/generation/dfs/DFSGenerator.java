@@ -28,7 +28,7 @@ public class DFSGenerator implements Generator {
         int dfsWidth = (width - 1) / 2;
 
         List<AlternatingCell> alternatingCells = AlternatingCell.initAlternatingCells(dfsWidth, dfsHeight);
-        AlternatingCell.shuffleAlternatingCells(alternatingCells, random);
+        AlternatingCell.shuffleNeighborsOfAlternatingCells(alternatingCells, random);
 
         maze.putSpanningTree(buildRandomSpanningTree(alternatingCells.getFirst()), dfsWidth);
         return maze;
@@ -42,7 +42,7 @@ public class DFSGenerator implements Generator {
         cur.makeVisited();
 
         while (!stack.isEmpty()) {
-            Optional<AlternatingCell> neighborOpt = cur.getRandomUnvisitedNeighbor();
+            Optional<AlternatingCell> neighborOpt = cur.getFirstUnvisitedNeighbor();
 
             if (neighborOpt.isPresent()) {
                 AlternatingCell neighbor = neighborOpt.get();

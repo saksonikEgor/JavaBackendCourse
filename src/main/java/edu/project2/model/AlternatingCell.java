@@ -2,8 +2,8 @@ package edu.project2.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -38,7 +38,7 @@ public class AlternatingCell {
         return alternatingCells;
     }
 
-    public static void shuffleAlternatingCells(List<AlternatingCell> alternatingCells, Random random) {
+    public static void shuffleNeighborsOfAlternatingCells(List<AlternatingCell> alternatingCells, Random random) {
         alternatingCells.forEach(cell -> cell.shuffle(random));
     }
 
@@ -51,7 +51,7 @@ public class AlternatingCell {
         neighbor.neighbors.add(this);
     }
 
-    public Optional<AlternatingCell> getRandomUnvisitedNeighbor() {
+    public Optional<AlternatingCell> getFirstUnvisitedNeighbor() {
         return neighbors.stream().filter(cell -> !cell.visited).findAny();
     }
 
@@ -70,7 +70,28 @@ public class AlternatingCell {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
         AlternatingCell that = (AlternatingCell) o;
-        return cellId == that.cellId && visited == that.visited && Objects.equals(neighbors, that.neighbors);
+        if (!new HashSet<>(this.neighbors.stream().map(AlternatingCell::getCellId).toList())
+            .equals(new HashSet<>(that.neighbors.stream().map(AlternatingCell::getCellId).toList()))) {
+            return false;
+        }
+        return cellId == that.cellId && visited == that.visited;
+    }
+
+    @Override public String toString() {
+        return "AlternatingCell{" +
+            "cellId=" + cellId +
+            ", neighbors=" + neighborsToString() +
+            ", visited=" + visited +
+            '}';
+    }
+
+    private String neighborsToString() {
+        StringBuilder sb = new StringBuilder();
+        for (AlternatingCell cell : neighbors) {
+            sb.append(cell.cellId).append(" ");
+        }
+        return sb.toString();
     }
 }
