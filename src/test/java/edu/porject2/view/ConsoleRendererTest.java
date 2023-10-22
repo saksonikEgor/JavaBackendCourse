@@ -1,4 +1,4 @@
-package edu.porject2.util;
+package edu.porject2.view;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
