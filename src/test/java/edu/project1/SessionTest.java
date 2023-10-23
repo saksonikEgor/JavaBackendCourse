@@ -4,63 +4,38 @@ import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
 import edu.project1.service.GuessResult;
 import edu.project1.service.Session;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class SessionTest {
     @Test
     @DisplayName("Создание сессии с невалидным \"maxAttempts\"")
     void createSessionWithWrongMaxAttempts() {
-        Assertions.assertEquals(
-            GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                WrongGameParamsException.WrongMaxAttemptsException.class,
-                () -> new Session(-2, new String[] {"word"}, '*', '0'),
-                "WrongMaxAttemptsException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new Session(0, new String[] {"word"}, '*', '0'))
+            .isInstanceOf(WrongGameParamsException.WrongMaxAttemptsException.class)
+            .hasMessageContaining(GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE);
 
-        Assertions.assertEquals(
-            GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                WrongGameParamsException.WrongMaxAttemptsException.class,
-                () -> new Session(0, new String[] {"word"}, '*', '0'),
-                "WrongMaxAttemptsException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new Session(-2, new String[] {"word"}, '*', '0'))
+            .isInstanceOf(WrongGameParamsException.WrongMaxAttemptsException.class)
+            .hasMessageContaining(GameParams.WRONG_MAX_ATTEMPTS_EXCEPTION_MESSAGE);
     }
 
     @Test
     @DisplayName("Создание сессии с невалидным \"giveUpChar\"")
     void createSessionWithWrongGiveUpChar() {
-        Assertions.assertEquals(
-            GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                WrongGameParamsException.WrongGiveUpCharException.class,
-                () -> new Session(10, new String[] {"word"}, '*', 'A'),
-                "WrongGiveUpCharException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new Session(10, new String[] {"word"}, '*', 'A'))
+            .isInstanceOf(WrongGameParamsException.WrongGiveUpCharException.class)
+            .hasMessageContaining(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
 
-        Assertions.assertEquals(
-            GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                WrongGameParamsException.WrongGiveUpCharException.class,
-                () -> new Session(10, new String[] {"word"}, '*', 'U'),
-                "WrongGiveUpCharException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new Session(10, new String[] {"word"}, '*', 'U'))
+            .isInstanceOf(WrongGameParamsException.WrongGiveUpCharException.class)
+            .hasMessageContaining(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
 
-        Assertions.assertEquals(
-            GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                WrongGameParamsException.WrongGiveUpCharException.class,
-                () -> new Session(10, new String[] {"word"}, '*', 'Ю'),
-                "WrongGiveUpCharException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new Session(10, new String[] {"word"}, '*', 'Ю'))
+            .isInstanceOf(WrongGameParamsException.WrongGiveUpCharException.class)
+            .hasMessageContaining(GameParams.WRONG_GIVE_UP_CHAR_EXCEPTION_MESSAGE);
     }
 
     @Test

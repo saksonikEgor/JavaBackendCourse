@@ -2,7 +2,7 @@ package edu.project1;
 
 import edu.project1.exception.WrongGameParamsException;
 import edu.project1.parameter.GameParams;
-import edu.project1.service.Dictionary;
+import edu.project1.service.RandomDictionary;
 import java.util.Random;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,16 +18,16 @@ public class DictionaryTest {
 
         try {
             random.setSeed(-385);
-            assertThat(Dictionary.getRandomWord(stringPool, random)).isEqualTo("first");
+            assertThat(new RandomDictionary(stringPool, random).getRandomWord()).isEqualTo("first");
 
             random.setSeed(-50);
-            assertThat(Dictionary.getRandomWord(stringPool, random)).isEqualTo("second");
+            assertThat(new RandomDictionary(stringPool, random).getRandomWord()).isEqualTo("second");
 
             random.setSeed(0);
-            assertThat(Dictionary.getRandomWord(stringPool, random)).isEqualTo("third");
+            assertThat(new RandomDictionary(stringPool, random).getRandomWord()).isEqualTo("third");
 
             random.setSeed(256);
-            assertThat(Dictionary.getRandomWord(stringPool, random)).isEqualTo("forth");
+            assertThat(new RandomDictionary(stringPool, random).getRandomWord()).isEqualTo("forth");
         } catch (WrongGameParamsException.WrongDictionaryException e) {
             throw new RuntimeException(e);
         }
@@ -37,9 +37,9 @@ public class DictionaryTest {
     @DisplayName("Передача \"stringPull\" = null")
     void selectRandomWordFromNullableStringPool() {
         Assertions.assertEquals(
-            "Cannot read the array length because \"wordPool\" is null",
+            "Cannot read the array length because \"this.wordPool\" is null",
             Assertions.assertThrows(NullPointerException.class,
-                () -> Dictionary.getRandomWord(null, new Random()), "NullPointerException was expected"
+                () -> new RandomDictionary(null, new Random()).getRandomWord(), "NullPointerException was expected"
             ).getMessage()
         );
     }
@@ -48,10 +48,10 @@ public class DictionaryTest {
     @DisplayName("Передача \"random\" = null")
     void selectRandomWordUsingNullableRandom() {
         Assertions.assertEquals(
-            "Cannot invoke \"java.util.Random.nextInt(int)\" because \"random\" is null",
+            "Cannot invoke \"java.util.Random.nextInt(int)\" because \"this.random\" is null",
             Assertions.assertThrows(
                 NullPointerException.class,
-                () -> Dictionary.getRandomWord(new String[] {"first", "second"}, null),
+                () -> new RandomDictionary(new String[] {"first", "second"}, null).getRandomWord(),
                 "NullPointerException was expected"
             ).getMessage()
         );
@@ -64,7 +64,7 @@ public class DictionaryTest {
         Random random = new Random();
         try {
             for (int i = 0; i < 100; i++) {
-                assertThat(Dictionary.getRandomWord(wordPool, random)).isEqualTo("valid");
+                assertThat(new RandomDictionary(wordPool, random).getRandomWord()).isEqualTo("valid");
             }
         } catch (WrongGameParamsException.WrongDictionaryException e) {
             throw new RuntimeException(e);
@@ -78,7 +78,7 @@ public class DictionaryTest {
             GameParams.WRONG_DICTIONARY_SIZE_EXCEPTION,
             Assertions.assertThrows(
                 WrongGameParamsException.WrongDictionaryException.class,
-                () -> Dictionary.getRandomWord(new String[] {}, new Random()),
+                () -> new RandomDictionary(new String[] {}, new Random()).getRandomWord(),
                 "WrongDictionaryException was expected"
             ).getMessage()
         );
@@ -91,7 +91,7 @@ public class DictionaryTest {
             GameParams.WRONG_DICTIONARY_EXCEPTION_MESSAGE,
             Assertions.assertThrows(
                 WrongGameParamsException.WrongDictionaryException.class,
-                () -> Dictionary.getRandomWord(new String[] {null, null, "", "", null}, new Random()),
+                () -> new RandomDictionary(new String[] {null, null, "", "", null}, new Random()).getRandomWord(),
                 "WrongDictionaryException was expected"
             ).getMessage()
         );

@@ -13,12 +13,14 @@ public class Session {
     private final char[] state;
     private final int maxAttempts;
     private final Set<Character> previousCharacters;
+    private final Dictionary dictionary;
     private int attempts;
     private int unguessedCharactersLeft;
 
     public Session(int maxAttempts, String[] wordPool, char unguessedChar, char giveUpChar)
         throws WrongGameParamsException {
-        answer = Dictionary.getRandomWord(wordPool, new Random());
+        dictionary = new RandomDictionary(wordPool, new Random());
+        answer = dictionary.getRandomWord();
         state = new char[answer.length()];
 
         Arrays.fill(state, unguessedChar);
@@ -44,14 +46,13 @@ public class Session {
             return giveUp();
         }
 
-        if (previousCharacters.contains(guess)) {
+        if (!previousCharacters.add(guess)) {
             return new GuessResult.WrongInput(state, attempts, maxAttempts,
                 GameParams.THIS_CHARACTER_HAS_ALREADY_BEEN_ENTERED_MESSAGE
             );
         }
 
         GuessResult guessResult;
-        previousCharacters.add(guess);
 
         if (answer.contains(String.valueOf(guess))) {
             upgradeState(guess);
@@ -72,16 +73,12 @@ public class Session {
     }
 
     private void upgradeState(char guess) {
-        int index = -1;
-        while (true) {
-            index = answer.indexOf(guess, index + 1);
+        int index = answer.indexOf(guess, -1);
 
-            if (index == -1) {
-                break;
-            }
-
-            state[index] = guess;
+        while (index != -1) {
+            state[index++] = guess;
             unguessedCharactersLeft--;
+            index = answer.indexOf(guess, index + 1);
         }
     }
 
