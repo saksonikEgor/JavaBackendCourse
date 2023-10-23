@@ -9,7 +9,6 @@ import static edu.project2.model.Cell.Type.WALL;
 import static java.util.stream.Collectors.toList;
 
 public class Maze {
-    private static final int SIZE_LOWER_BOUND = 3;
     private final int height;
     private final int width;
     private final Cell[][] grid;
@@ -17,7 +16,7 @@ public class Maze {
     private Cell exit;
 
     public Maze(int height, int width) {
-        if (height < SIZE_LOWER_BOUND || width < SIZE_LOWER_BOUND) {
+        if (height < ApplicationProperties.SIZE_LOWER_BOUND || width < ApplicationProperties.SIZE_LOWER_BOUND) {
             throw new IllegalArgumentException(ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
@@ -80,7 +79,7 @@ public class Maze {
     }
 
     private int getExitColumn() {
-        return width - SIZE_LOWER_BOUND + width % 2;
+        return width - ApplicationProperties.SIZE_LOWER_BOUND + width % 2;
     }
 
     private void makeEntranceAndExit() {

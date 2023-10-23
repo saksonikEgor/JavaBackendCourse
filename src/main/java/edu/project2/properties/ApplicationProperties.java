@@ -25,8 +25,10 @@ public class ApplicationProperties {
     public static final String MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "Both the height and the width "
         + "of the maze must be at least 3";
     public static final String INVALID_MAZE_SIZE_MESSAGE = "Cannot generate a maze. Invalid size. Please try again";
-    public static final String INVALID_NUMBER_OF_ALGORITHM_MESSAGE = "Incorrect option. Please try again";
+    public static final String INVALID_NUMBER_INPUT_MESSAGE = "Incorrect option. Please try again";
     public static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    public static final int SIZE_LOWER_BOUND = 3;
+
 
     private ApplicationProperties() {
     }
