@@ -1,5 +1,6 @@
 package edu.hw4;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -108,8 +109,106 @@ public class AnimalUtils {
         return animals.stream().filter(a -> a.age() != a.paws()).collect(Collectors.toList());
     }
 
+    public static List<Animal> getAnimalsThatCanBiteAndHigher100SM(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
 
+        return animals.stream().filter(a -> a.height() > 100 && a.bites()).collect(Collectors.toList());
+    }
 
+    public static int getCountOfAnimalsWhoseWeightExceedsTheirHeight(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        return Math.toIntExact(animals.stream().filter(a -> a.weight() > a.height()).count());
+    }
+
+    public static List<Animal> getAnimalsWhoseNamesConsistOfMoreThanTwoWords(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+        final int WORD_COUNT = 2;
+
+        return animals.stream().filter(a -> a.name().split(" ").length > WORD_COUNT).collect(Collectors.toList());
+    }
+
+    public static boolean isThereADogOnTheListTallerThanKSM(List<Animal> animals, int k) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        return animals.stream().anyMatch(a -> a.height() > k);
+    }
+
+    public static int countTotalWeightOfAnimalsThatAreFromKToLYearsOld(List<Animal> animals, int k, int l) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        if (k > l) {
+            throw new IllegalArgumentException();
+        }
+
+        return animals.stream().filter(a -> a.age() >= k && a.age() <= l).mapToInt(Animal::weight).sum();
+    }
+
+    public static List<Animal> sortAnimalsByTypeSexAndName(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        List<Animal> result = new ArrayList<>(animals);
+        result.sort(Comparator
+            .comparing(Animal::type)
+            .thenComparing(Animal::sex)
+            .thenComparing(Animal::name)
+        );
+
+        return result;
+    }
+
+    public static boolean isSpidersBiteMoreOftenThanDogs(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        return animals.stream().mapToInt(a -> switch (a.type()) {
+            case SPIDER -> 1;
+            case DOG -> -1;
+            default -> 0;
+        }).sum() > 0;
+    }
+
+//    public static Animal getHeaviestFist(List<List<Animal>> lists) {
+//        if (lists == null || lists.size() < 2) {
+//            throw new NullPointerException();
+//        }
+//
+//        for (List<Animal> animals : lists) {
+//            if (animals == null) {
+//                throw new NullPointerException();
+//            }
+//        }
+//
+//        return lists.stream().max((animals1, animals2) -> {
+//            int weight1 = Integer.MIN_VALUE;
+//            int weight2 = Integer.MIN_VALUE;
+//
+//            var fish1 = animals1.stream().max(Comparator.comparingInt(Animal::weight));
+//            var fish2 = animals2.stream().max(Comparator.comparingInt(Animal::weight));
+//
+//            if (fish1.isPresent()) {
+//                weight1 = fish1.get().weight();
+//            }
+//            if (fish2.isPresent()) {
+//                weight2 = fish2.get().weight();
+//            }
+//
+//            return Integer.compare(weight1, weight2);
+//        }).get();
+//    }
 
 }
 
