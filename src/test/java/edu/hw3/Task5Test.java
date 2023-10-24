@@ -1,11 +1,9 @@
 package edu.hw3;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task5Test {
     @Test
@@ -55,45 +53,25 @@ public class Task5Test {
         assertArrayEquals(new Task5.Contact[] {}, Task5.parseContacts(new String[] {}, "ASC"));
         assertArrayEquals(new Task5.Contact[] {}, Task5.parseContacts(null, "ASC"));
 
-        assertEquals(
-            Task5.KEY_WORD_IS_NULL_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(NullPointerException.class,
-                () -> Task5.parseContacts(new String[] {"Sample Name"}, null), "NullPointerException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> Task5.parseContacts(new String[] {}, null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(Task5.KEY_WORD_IS_NULL_EXCEPTION_MESSAGE);
 
-        assertEquals(
-            Task5.KEY_WORD_IS_NULL_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(NullPointerException.class,
-                () -> Task5.parseContacts(new String[] {}, null), "NullPointerException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> Task5.parseContacts(new String[] {}, null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(Task5.KEY_WORD_IS_NULL_EXCEPTION_MESSAGE);
 
-        assertEquals(
-            Task5.NAME_IS_INVALID_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> Task5.parseContacts(new String[] {"Sample Name", null}, "DESC"),
-                "IllegalArgumentException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> Task5.parseContacts(new String[] {"Sample Name", "I Am A Wrong Name"}, "DESC"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task5.NAME_IS_INVALID_EXCEPTION_MESSAGE);
 
-        assertEquals(
-            Task5.NAME_IS_INVALID_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> Task5.parseContacts(new String[] {"Sample Name", "I Am A Wrong Name"}, "DESC"),
-                "IllegalArgumentException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> Task5.parseContacts(new String[] {"Sample Name", "I Am A Wrong Name"}, "DESC"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task5.NAME_IS_INVALID_EXCEPTION_MESSAGE);
 
-        assertTrue(
-            Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> Task5.parseContacts(new String[] {"Sample Name"}, "WRONG"),
-                "IllegalArgumentException was expected"
-            ).getMessage().contains("No enum constant edu.hw3.Task5.Key.")
-        );
+        assertThatThrownBy(() -> Task5.parseContacts(new String[] {"Sample Name"}, "WRONG"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("No enum constant edu.hw3.Task5.Key.");
     }
 }
 

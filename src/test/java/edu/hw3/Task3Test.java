@@ -2,9 +2,9 @@ package edu.hw3;
 
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task3Test {
@@ -63,8 +63,8 @@ public class Task3Test {
             Task3.freqDict(List.of(1, 1, 5, 2.2, 2.2, -0.2, "ds", "ds"))
         );
 
-        assertEquals(Task3.NULL_POINTER_EXCEPTION_MESSAGE, Assertions.assertThrows(NullPointerException.class,
-            () -> Task3.freqDict(null), "NullPointerException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task3.freqDict(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(Task3.NULL_POINTER_EXCEPTION_MESSAGE);
     }
 }

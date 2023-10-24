@@ -1,8 +1,8 @@
 package edu.hw3;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task4Test {
@@ -16,16 +16,16 @@ public class Task4Test {
         assertEquals("MMM", Task4.convertToRoman(3000));
         assertEquals("MMMCMXCIX", Task4.convertToRoman(3999));
 
-        assertEquals(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task4.convertToRoman(0), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task4.convertToRoman(0))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        assertEquals(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task4.convertToRoman(-23), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task4.convertToRoman(-23))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        assertEquals(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task4.convertToRoman(4000), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task4.convertToRoman(4000))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task4.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 }

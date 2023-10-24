@@ -1,10 +1,9 @@
 package edu.hw3;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task2Test {
     @Test
@@ -27,20 +26,20 @@ public class Task2Test {
             Task2.clusterize("[(()){}][]{}{}((())({}))(()(()())){}[{()}]")
         );
 
-        assertEquals(Task2.NULL_POINTER_EXCEPTION_MESSAGE, Assertions.assertThrows(NullPointerException.class,
-            () -> Task2.clusterize(null), "NullPointerException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task2.clusterize(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(Task2.NULL_POINTER_EXCEPTION_MESSAGE);
 
-        assertEquals(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task2.clusterize("(]"), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task2.clusterize("(]"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        assertEquals(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task2.clusterize("(())[]{(wrong)}"), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task2.clusterize("(())[]{(wrong)}"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        assertEquals(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, Assertions.assertThrows(IllegalArgumentException.class,
-            () -> Task2.clusterize("(())[]{(1)}"), "IllegalArgumentException was expected"
-        ).getMessage());
+        assertThatThrownBy(() -> Task2.clusterize("(())[]{(1)}"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(Task2.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 }
