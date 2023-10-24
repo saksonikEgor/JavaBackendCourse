@@ -5,9 +5,9 @@ import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
 import java.util.Random;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DFSGenerationTest {
@@ -190,25 +190,16 @@ public class DFSGenerationTest {
     @Test
     @DisplayName("Генерация невалидных лабиринтов алгоритмом dfs")
     void bfsInvalidGeneration() {
-        Assertions.assertEquals(
-            ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new DFSGenerator(new Random()).generate(2, 3), "IllegalArgumentException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new DFSGenerator(new Random()).generate(2, 3))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        Assertions.assertEquals(
-            ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new DFSGenerator(new Random()).generate(-2, 20), "IllegalArgumentException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new DFSGenerator(new Random()).generate(-2, 20))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
 
-        Assertions.assertEquals(
-            ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE,
-            Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new DFSGenerator(new Random()).generate(12, 2), "IllegalArgumentException was expected"
-            ).getMessage()
-        );
+        assertThatThrownBy(() -> new DFSGenerator(new Random()).generate(12, 2))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(ApplicationProperties.MAZE_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 }
