@@ -25,7 +25,7 @@ public class ConsoleMaze {
 
     public ConsoleMaze() {
         scanner = new Scanner(System.in);
-        generationRandom = new Random(5);
+        generationRandom = new Random();
     }
 
     public ConsoleMaze(Scanner scanner, Random generationRandom) {
@@ -97,11 +97,9 @@ public class ConsoleMaze {
                     }
                     case EnterMazeSize -> {
                         if (isCorrectInputForCreatingMaze(lines)) {
-                            if (lines.length == 2) {
-                                return List.of(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]));
-                            } else {
-                                return List.of(Integer.parseInt(lines[0]), Integer.parseInt(lines[0]));
-                            }
+                            return lines.length == 2
+                                ? List.of(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]))
+                                : List.of(Integer.parseInt(lines[0]), Integer.parseInt(lines[0]));
                         }
                     }
                     default -> throw new IllegalArgumentException();

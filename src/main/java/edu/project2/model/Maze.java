@@ -150,7 +150,14 @@ public class Maze {
             return false;
         }
         Maze maze = (Maze) o;
-        return height == maze.height && width == maze.width && Arrays.deepEquals(grid, maze.grid) &&
-            Objects.equals(entrance, maze.entrance) && Objects.equals(exit, maze.exit);
+        return height == maze.height && width == maze.width && Arrays.deepEquals(grid, maze.grid)
+            && Objects.equals(entrance, maze.entrance) && Objects.equals(exit, maze.exit);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(height, width, entrance, exit);
+        result = 31 * result + Arrays.deepHashCode(grid);
+        return result;
     }
 }

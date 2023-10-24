@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -79,19 +80,8 @@ public class AlternatingCell {
         return cellId == that.cellId && visited == that.visited;
     }
 
-    @Override public String toString() {
-        return "AlternatingCell{" +
-            "cellId=" + cellId +
-            ", neighbors=" + neighborsToString() +
-            ", visited=" + visited +
-            '}';
-    }
-
-    private String neighborsToString() {
-        StringBuilder sb = new StringBuilder();
-        for (AlternatingCell cell : neighbors) {
-            sb.append(cell.cellId).append(" ");
-        }
-        return sb.toString();
+    @Override
+    public int hashCode() {
+        return Objects.hash(cellId, neighbors, visited);
     }
 }
