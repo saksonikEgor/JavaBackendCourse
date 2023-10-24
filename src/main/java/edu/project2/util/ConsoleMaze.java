@@ -17,11 +17,11 @@ public class ConsoleMaze {
     private static final String NUMBER_REGEX = "^\\d+$";
     private final Scanner scanner;
     private final Random generationRandom;
+    private final Renderer renderer = new ConsoleRenderer();
     private Maze maze;
     private List<Cell> path;
     private Generator generator;
     private Solver solver;
-    private final Renderer renderer = new ConsoleRenderer();
 
     public ConsoleMaze() {
         scanner = new Scanner(System.in);
@@ -31,12 +31,6 @@ public class ConsoleMaze {
     public ConsoleMaze(Scanner scanner, Random generationRandom) {
         this.scanner = scanner;
         this.generationRandom = generationRandom;
-    }
-
-    enum InputType {
-        SelectGenerator,
-        SelectSolver,
-        EnterMazeSize
     }
 
     public void run() {
@@ -67,8 +61,11 @@ public class ConsoleMaze {
             solveTheMaze();
             displaySolvedMaze();
         }
+
+        displayFarewellMessage();
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     private List<Integer> formatInput(InputType type) {
         while (true) {
             try {
@@ -80,7 +77,7 @@ public class ConsoleMaze {
 
                 if (!Arrays.stream(lines).allMatch(s -> s.matches(NUMBER_REGEX))) {
                     System.out.println(ApplicationProperties.INVALID_NUMBER_INPUT_MESSAGE);
-                    continue; // wrong
+                    continue;
                 }
 
                 if (lines.length == 1 && Integer.parseInt(lines[0]) == 0) {
@@ -167,6 +164,17 @@ public class ConsoleMaze {
 
     private void solveTheMaze() {
         path = solver.solve(maze, maze.getEntrance(), maze.getExit());
+    }
+
+    @SuppressWarnings("RegexpSinglelineJava")
+    private void displaySuggestionToSelectAGenerationAlgorithm() {
+        System.out.println(ApplicationProperties.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
+        ApplicationProperties.GenerationAlgorithm[] algorithms = ApplicationProperties.GenerationAlgorithm.values();
+
+        for (int i = 1; i <= algorithms.length; i++) {
+            System.out.println(i + ". " + algorithms[i - 1]);
+        }
+        System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
 //    @SuppressWarnings("RegexpSinglelineJava")
@@ -271,17 +279,6 @@ public class ConsoleMaze {
 //    }
 
     @SuppressWarnings("RegexpSinglelineJava")
-    private void displaySuggestionToSelectAGenerationAlgorithm() {
-        System.out.println(ApplicationProperties.SELECT_A_MAZE_GENERATION_ALGORITHM_MESSAGE);
-        ApplicationProperties.GenerationAlgorithm[] algorithms = ApplicationProperties.GenerationAlgorithm.values();
-
-        for (int i = 1; i <= algorithms.length; i++) {
-            System.out.println(i + ". " + algorithms[i - 1]);
-        }
-        System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
-    }
-
-    @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectASolvingAlgorithm() {
         System.out.println(ApplicationProperties.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
         ApplicationProperties.SolvingAlgorithm[] algorithms = ApplicationProperties.SolvingAlgorithm.values();
@@ -309,9 +306,20 @@ public class ConsoleMaze {
     }
 
     @SuppressWarnings("RegexpSinglelineJava")
-    private void exit() {
+    private void displayFarewellMessage() {
         System.out.println(ApplicationProperties.FAREWELL_MESSAGE);
-        scanner.close();
-        System.exit(0);
     }
+
+    enum InputType {
+        SelectGenerator,
+        SelectSolver,
+        EnterMazeSize
+    }
+
+//    @SuppressWarnings("RegexpSinglelineJava")
+//    private void exit() {
+//        displayFarewellMessage();
+//        scanner.close();
+//        System.exit(0);
+//    }
 }
