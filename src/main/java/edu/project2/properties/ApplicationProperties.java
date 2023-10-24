@@ -29,7 +29,6 @@ public class ApplicationProperties {
     public static final int[][] DELTAS = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
     public static final int SIZE_LOWER_BOUND = 3;
 
-
     private ApplicationProperties() {
     }
 

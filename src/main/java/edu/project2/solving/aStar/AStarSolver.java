@@ -4,13 +4,7 @@ import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
 import edu.project2.solving.Solver;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 import static java.util.Comparator.comparingInt;
 
 public class AStarSolver implements Solver {

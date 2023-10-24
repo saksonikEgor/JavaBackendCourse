@@ -5,7 +5,6 @@ import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
 import java.util.Random;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
