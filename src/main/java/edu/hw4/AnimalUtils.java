@@ -1,6 +1,5 @@
 package edu.hw4;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -18,32 +17,43 @@ public class AnimalUtils {
     private static final int LATIN_LOWERCASE_ASCII_UPPER_BOUND = 122;
     private static final int LATIN_UPPERCASE_ASCII_LOWER_BOUND = 65;
     private static final int LATIN_UPPERCASE_ASCII_UPPER_BOUND = 90;
+    public static final String ANIMALS_IS_NULL_MESSAGE = "List of animals cant be null";
+    public static final String LIST_OF_ANIMAL_LISTS_IS_NULL_MESSAGE = "List of animal lists cant be null";
+    public static final String WRONG_K_MESSAGE = "Wrong k value";
+    public static final String WRONG_K_AND_L_MESSAGE = "Wrong k and l value";
+    public static final String WRONG_LIST_COUNT_MESSAGE = "Wrong list count";
+
 
     private AnimalUtils() {
     }
 
-    public static void sortByHeight(List<Animal> animals) {
+    @NotNull
+    public static List<Animal> sortByHeight(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
-        animals.sort(Comparator.comparingInt(Animal::height));
+        return animals.stream().sorted(Comparator.comparingInt(Animal::height)).collect(Collectors.toList());
     }
 
     @NotNull
     public static List<Animal> getFirstKHeaviest(List<Animal> animals, int k) {
-        if (k < 0) {
-            throw new IllegalArgumentException();
+        if (animals == null) {
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
-        animals.sort(Comparator.comparingInt(Animal::weight).reversed());
-        return animals.stream().limit(Math.min(k, animals.size())).collect(Collectors.toList());
+        if (k < 0) {
+            throw new IllegalArgumentException(WRONG_K_MESSAGE);
+        }
+
+        return animals.stream().sorted(Comparator.comparingInt(Animal::weight).reversed()).toList()
+            .stream().limit(Math.min(k, animals.size())).collect(Collectors.toList());
     }
 
     @NotNull
     public static Map<Animal.Type, Integer> animalsToDictionary(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         Map<Animal.Type, Integer> dict = new HashMap<>();
@@ -54,7 +64,7 @@ public class AnimalUtils {
     @Nullable
     public static Animal getLargestNamedAnimal(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().max(Comparator.comparingInt(a -> a.name().length())).orElse(null);
@@ -63,7 +73,7 @@ public class AnimalUtils {
     @NotNull
     public static Animal.Sex getTheMostNumerousSex(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return 2 * animals.stream().filter(a -> a.sex() == Animal.Sex.M).count() >= animals.size()
@@ -74,7 +84,7 @@ public class AnimalUtils {
     @NotNull
     public static Map<Animal.Type, Animal> getTheHeaviestAnimalOfEachTypes(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         Map<Animal.Type, Animal> types = new HashMap<>();
@@ -91,20 +101,22 @@ public class AnimalUtils {
     @NotNull
     public static Animal getKOldest(List<Animal> animals, int k) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         if (k <= 0 || k > animals.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(WRONG_K_MESSAGE);
         }
 
-        return animals.stream().toList().stream().sorted().toList().get(animals.size() - k);
+        return animals.stream().toList()
+            .stream().sorted(Comparator.comparingInt(Animal::weight)).toList()
+            .get(animals.size() - k);
     }
 
     @NotNull
     public static Optional<Animal> getHeaviestAnimalBelowKSM(List<Animal> animals, int k) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().filter(a -> a.height() < k).max(Comparator.comparingInt(Animal::weight));
@@ -112,7 +124,7 @@ public class AnimalUtils {
 
     public static int countPaws(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().mapToInt(Animal::paws).sum();
@@ -121,7 +133,7 @@ public class AnimalUtils {
     @NotNull
     public static List<Animal> getAnimalsWhoseAgeDoesNotMatchTheNumberOfPaws(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().filter(a -> a.age() != a.paws()).collect(Collectors.toList());
@@ -130,7 +142,7 @@ public class AnimalUtils {
     @NotNull
     public static List<Animal> getAnimalsThatCanBiteAndHigher100SM(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().filter(a -> a.height() > 100 && a.bites()).collect(Collectors.toList());
@@ -138,7 +150,7 @@ public class AnimalUtils {
 
     public static int getCountOfAnimalsWhoseWeightExceedsTheirHeight(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return Math.toIntExact(animals.stream().filter(a -> a.weight() > a.height()).count());
@@ -147,7 +159,7 @@ public class AnimalUtils {
     @NotNull
     public static List<Animal> getAnimalsWhoseNamesConsistOfMoreThanTwoWords(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
         final int WORD_COUNT = 2;
 
@@ -156,19 +168,19 @@ public class AnimalUtils {
 
     public static boolean isThereADogOnTheListTallerThanKSM(List<Animal> animals, int k) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
-        return animals.stream().anyMatch(a -> a.height() > k);
+        return animals.stream().filter(a -> a.type() == Animal.Type.DOG).anyMatch(a -> a.height() > k);
     }
 
     public static int countTotalWeightOfAnimalsThatAreFromKToLYearsOld(List<Animal> animals, int k, int l) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         if (k > l) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(WRONG_K_AND_L_MESSAGE);
         }
 
         return animals.stream().filter(a -> a.age() >= k && a.age() <= l).mapToInt(Animal::weight).sum();
@@ -177,22 +189,18 @@ public class AnimalUtils {
     @NotNull
     public static List<Animal> sortAnimalsByTypeSexAndName(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
-        List<Animal> result = new ArrayList<>(animals);
-        result.sort(Comparator
+        return animals.stream().sorted(Comparator
             .comparing(Animal::type)
             .thenComparing(Animal::sex)
-            .thenComparing(Animal::name)
-        );
-
-        return result;
+            .thenComparing(Animal::name)).collect(Collectors.toList());
     }
 
     public static boolean isSpidersBiteMoreOftenThanDogs(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         return animals.stream().mapToInt(a -> switch (a.type()) {
@@ -204,13 +212,16 @@ public class AnimalUtils {
 
     @Nullable
     public static Animal getHeaviestFist(List<List<Animal>> lists) {
-        if (lists == null || lists.size() < 2) {
-            throw new NullPointerException();
+        if (lists == null) {
+            throw new NullPointerException(LIST_OF_ANIMAL_LISTS_IS_NULL_MESSAGE);
+        }
+        if (lists.size() < 2) {
+            throw new IllegalArgumentException(WRONG_LIST_COUNT_MESSAGE);
         }
 
         for (List<Animal> animals : lists) {
             if (animals == null) {
-                throw new NullPointerException();
+                throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
             }
         }
 
@@ -243,7 +254,7 @@ public class AnimalUtils {
     @NotNull
     public static Map<Animal, Set<ValidationError>> wrongAnimals(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         Map<Animal, Set<ValidationError>> animalToErrors = new HashMap<>();
@@ -255,7 +266,7 @@ public class AnimalUtils {
     @NotNull
     public static Map<String, String> wrongAnimalsInString(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException();
+            throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
         Map<String, String> animalToErrors = new HashMap<>();
@@ -349,9 +360,7 @@ public class AnimalUtils {
         private static String errorsToString(Set<ValidationError> errors) {
             return Arrays.toString(errors.toArray());
         }
-
     }
-
 }
 
 
