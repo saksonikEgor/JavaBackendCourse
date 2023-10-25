@@ -1,14 +1,24 @@
 package edu.hw4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class AnimalUtils {
+    private static final int LATIN_LOWERCASE_ASCII_LOWER_BOUND = 97;
+    private static final int LATIN_LOWERCASE_ASCII_UPPER_BOUND = 122;
+    private static final int LATIN_UPPERCASE_ASCII_LOWER_BOUND = 65;
+    private static final int LATIN_UPPERCASE_ASCII_UPPER_BOUND = 90;
+
     private AnimalUtils() {
     }
 
@@ -20,6 +30,7 @@ public class AnimalUtils {
         animals.sort(Comparator.comparingInt(Animal::height));
     }
 
+    @NotNull
     public static List<Animal> getFirstKHeaviest(List<Animal> animals, int k) {
         if (k < 0) {
             throw new IllegalArgumentException();
@@ -29,6 +40,7 @@ public class AnimalUtils {
         return animals.stream().limit(Math.min(k, animals.size())).collect(Collectors.toList());
     }
 
+    @NotNull
     public static Map<Animal.Type, Integer> animalsToDictionary(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -39,6 +51,7 @@ public class AnimalUtils {
         return dict;
     }
 
+    @Nullable
     public static Animal getLargestNamedAnimal(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -47,6 +60,7 @@ public class AnimalUtils {
         return animals.stream().max(Comparator.comparingInt(a -> a.name().length())).orElse(null);
     }
 
+    @NotNull
     public static Animal.Sex getTheMostNumerousSex(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -57,6 +71,7 @@ public class AnimalUtils {
             : Animal.Sex.F;
     }
 
+    @NotNull
     public static Map<Animal.Type, Animal> getTheHeaviestAnimalOfEachTypes(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -73,18 +88,20 @@ public class AnimalUtils {
         return types;
     }
 
+    @NotNull
     public static Animal getKOldest(List<Animal> animals, int k) {
         if (animals == null) {
             throw new NullPointerException();
         }
 
-        if (k < 0 || k > animals.size()) {
+        if (k <= 0 || k > animals.size()) {
             throw new IllegalArgumentException();
         }
 
         return animals.stream().toList().stream().sorted().toList().get(animals.size() - k);
     }
 
+    @NotNull
     public static Optional<Animal> getHeaviestAnimalBelowKSM(List<Animal> animals, int k) {
         if (animals == null) {
             throw new NullPointerException();
@@ -101,6 +118,7 @@ public class AnimalUtils {
         return animals.stream().mapToInt(Animal::paws).sum();
     }
 
+    @NotNull
     public static List<Animal> getAnimalsWhoseAgeDoesNotMatchTheNumberOfPaws(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -109,6 +127,7 @@ public class AnimalUtils {
         return animals.stream().filter(a -> a.age() != a.paws()).collect(Collectors.toList());
     }
 
+    @NotNull
     public static List<Animal> getAnimalsThatCanBiteAndHigher100SM(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -125,6 +144,7 @@ public class AnimalUtils {
         return Math.toIntExact(animals.stream().filter(a -> a.weight() > a.height()).count());
     }
 
+    @NotNull
     public static List<Animal> getAnimalsWhoseNamesConsistOfMoreThanTwoWords(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -154,6 +174,7 @@ public class AnimalUtils {
         return animals.stream().filter(a -> a.age() >= k && a.age() <= l).mapToInt(Animal::weight).sum();
     }
 
+    @NotNull
     public static List<Animal> sortAnimalsByTypeSexAndName(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException();
@@ -181,34 +202,155 @@ public class AnimalUtils {
         }).sum() > 0;
     }
 
-//    public static Animal getHeaviestFist(List<List<Animal>> lists) {
-//        if (lists == null || lists.size() < 2) {
-//            throw new NullPointerException();
-//        }
-//
-//        for (List<Animal> animals : lists) {
-//            if (animals == null) {
-//                throw new NullPointerException();
-//            }
-//        }
-//
-//        return lists.stream().max((animals1, animals2) -> {
-//            int weight1 = Integer.MIN_VALUE;
-//            int weight2 = Integer.MIN_VALUE;
-//
-//            var fish1 = animals1.stream().max(Comparator.comparingInt(Animal::weight));
-//            var fish2 = animals2.stream().max(Comparator.comparingInt(Animal::weight));
-//
-//            if (fish1.isPresent()) {
-//                weight1 = fish1.get().weight();
-//            }
-//            if (fish2.isPresent()) {
-//                weight2 = fish2.get().weight();
-//            }
-//
-//            return Integer.compare(weight1, weight2);
-//        }).get();
-//    }
+    @Nullable
+    public static Animal getHeaviestFist(List<List<Animal>> lists) {
+        if (lists == null || lists.size() < 2) {
+            throw new NullPointerException();
+        }
+
+        for (List<Animal> animals : lists) {
+            if (animals == null) {
+                throw new NullPointerException();
+            }
+        }
+
+        var animalsWithHeaviestFist = lists.stream().max((animals1, animals2) -> {
+            int weight1 = Integer.MIN_VALUE;
+            int weight2 = Integer.MIN_VALUE;
+
+            var fish1 = animals1.stream()
+                .filter(a -> a.type() == Animal.Type.FISH)
+                .max(Comparator.comparingInt(Animal::weight));
+            var fish2 = animals2.stream()
+                .filter(a -> a.type() == Animal.Type.FISH)
+                .max(Comparator.comparingInt(Animal::weight));
+
+            if (fish1.isPresent()) {
+                weight1 = fish1.get().weight();
+            }
+            if (fish2.isPresent()) {
+                weight2 = fish2.get().weight();
+            }
+
+            return Integer.compare(weight1, weight2);
+        });
+
+        return animalsWithHeaviestFist.flatMap(animals -> animals.stream()
+            .filter(a -> a.type() == Animal.Type.FISH)
+            .max(Comparator.comparingInt(Animal::weight))).orElse(null);
+    }
+
+    @NotNull
+    public static Map<Animal, Set<ValidationError>> wrongAnimals(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        Map<Animal, Set<ValidationError>> animalToErrors = new HashMap<>();
+        animals.forEach(a -> animalToErrors.put(a, ValidationError.validate(a)));
+
+        return animalToErrors;
+    }
+
+    @NotNull
+    public static Map<String, String> wrongAnimalsInString(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException();
+        }
+
+        Map<String, String> animalToErrors = new HashMap<>();
+        animals.forEach(a -> {
+            var entry = ValidationError.concatenateNameAndErrors(a);
+            animalToErrors.put(entry.getKey(), entry.getValue());
+        });
+
+        return animalToErrors;
+    }
+
+    public enum ValidationError {
+        ANIMAL_IS_NULL,
+        WRONG_NAME,
+        WRONG_TYPE,
+        WRONG_SEX,
+        WRONG_HEIGHT,
+        WRONG_WEIGHT;
+
+        @NotNull
+        public static Set<ValidationError> validate(Animal animal) {
+            Set<ValidationError> errors = new HashSet<>();
+            if (animal == null) {
+                return Set.of(ANIMAL_IS_NULL);
+            }
+
+            if (validateName(animal.name())) {
+                errors.add(WRONG_NAME);
+            }
+            if (validateType(animal.type())) {
+                errors.add(WRONG_TYPE);
+            }
+            if (validateSex(animal.sex())) {
+                errors.add(WRONG_SEX);
+            }
+            if (validateHeight(animal.height())) {
+                errors.add(WRONG_HEIGHT);
+            }
+            if (validateWeight(animal.weight())) {
+                errors.add(WRONG_WEIGHT);
+            }
+            return errors;
+        }
+
+        private static boolean validateName(String name) {
+            if (name == null || name.isEmpty()) {
+                return false;
+            }
+
+            String[] words = name.split(" ");
+            if (words.length > 2) {
+                return false;
+            }
+
+            return Arrays.stream(words)
+                .allMatch(str -> str.chars().allMatch(ValidationError::characterIsLatin));
+        }
+
+        private static boolean characterIsLatin(int ascii) {
+            return LATIN_LOWERCASE_ASCII_LOWER_BOUND <= ascii && ascii <= LATIN_LOWERCASE_ASCII_UPPER_BOUND
+                || LATIN_UPPERCASE_ASCII_LOWER_BOUND <= ascii && ascii <= LATIN_UPPERCASE_ASCII_UPPER_BOUND;
+        }
+
+        private static boolean validateType(Animal.Type type) {
+            return type != null;
+        }
+
+        private static boolean validateSex(Animal.Sex sex) {
+            return sex != null;
+        }
+
+        private static boolean validateHeight(int height) {
+            return height > 0;
+        }
+
+        private static boolean validateWeight(int weight) {
+            return weight > 0;
+        }
+
+        @NotNull
+        public static Map.Entry<String, String> concatenateNameAndErrors(Animal animal) {
+            Set<ValidationError> errors = validate(animal);
+
+            return Map.entry(
+                errors.contains(ANIMAL_IS_NULL) ? null : animal.name(),
+                errorsToString(errors)
+            );
+        }
+
+        @NotNull
+        private static String errorsToString(Set<ValidationError> errors) {
+            return Arrays.toString(errors.toArray());
+        }
+
+    }
 
 }
 
