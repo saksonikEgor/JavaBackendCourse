@@ -13,16 +13,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AnimalUtils {
-    private static final int LATIN_LOWERCASE_ASCII_LOWER_BOUND = 97;
-    private static final int LATIN_LOWERCASE_ASCII_UPPER_BOUND = 122;
-    private static final int LATIN_UPPERCASE_ASCII_LOWER_BOUND = 65;
-    private static final int LATIN_UPPERCASE_ASCII_UPPER_BOUND = 90;
     public static final String ANIMALS_IS_NULL_MESSAGE = "List of animals cant be null";
     public static final String LIST_OF_ANIMAL_LISTS_IS_NULL_MESSAGE = "List of animal lists cant be null";
     public static final String WRONG_K_MESSAGE = "Wrong k value";
     public static final String WRONG_K_AND_L_MESSAGE = "Wrong k and l value";
     public static final String WRONG_LIST_COUNT_MESSAGE = "Wrong list count";
-
+    private static final int LATIN_LOWERCASE_ASCII_LOWER_BOUND = 97;
+    private static final int LATIN_LOWERCASE_ASCII_UPPER_BOUND = 122;
+    private static final int LATIN_UPPERCASE_ASCII_LOWER_BOUND = 65;
+    private static final int LATIN_UPPERCASE_ASCII_UPPER_BOUND = 90;
 
     private AnimalUtils() {
     }
