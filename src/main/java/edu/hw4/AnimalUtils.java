@@ -143,8 +143,9 @@ public class AnimalUtils {
         if (animals == null) {
             throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
+        final int HEIGHT = 100;
 
-        return animals.stream().filter(a -> a.height() > 100 && a.bites()).collect(Collectors.toList());
+        return animals.stream().filter(a -> a.height() > HEIGHT && a.bites()).collect(Collectors.toList());
     }
 
     public static int getCountOfAnimalsWhoseWeightExceedsTheirHeight(List<Animal> animals) {
