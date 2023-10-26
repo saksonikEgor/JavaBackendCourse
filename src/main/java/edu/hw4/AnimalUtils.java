@@ -18,6 +18,7 @@ public class AnimalUtils {
     public static final String WRONG_K_MESSAGE = "Wrong k value";
     public static final String WRONG_K_AND_L_MESSAGE = "Wrong k and l value";
     public static final String WRONG_LIST_COUNT_MESSAGE = "Wrong list count";
+    public static final String NAME_OF_NULL_ANIMAL = "NULL";
     private static final int LATIN_LOWERCASE_ASCII_LOWER_BOUND = 97;
     private static final int LATIN_LOWERCASE_ASCII_UPPER_BOUND = 122;
     private static final int LATIN_UPPERCASE_ASCII_LOWER_BOUND = 65;
@@ -252,13 +253,16 @@ public class AnimalUtils {
     }
 
     @NotNull
-    public static Map<Animal, Set<ValidationError>> wrongAnimals(List<Animal> animals) {
+    public static Map<String, Set<ValidationError>> wrongAnimals(List<Animal> animals) {
         if (animals == null) {
             throw new NullPointerException(ANIMALS_IS_NULL_MESSAGE);
         }
 
-        Map<Animal, Set<ValidationError>> animalToErrors = new HashMap<>();
-        animals.forEach(a -> animalToErrors.put(a, ValidationError.validate(a)));
+        Map<String, Set<ValidationError>> animalToErrors = new HashMap<>();
+        animals.forEach(a -> {
+            var entry = ValidationError.validate(a);
+            animalToErrors.put(entry.getKey(), entry.getValue());
+        });
 
         return animalToErrors;
     }
@@ -283,35 +287,43 @@ public class AnimalUtils {
         WRONG_NAME,
         WRONG_TYPE,
         WRONG_SEX,
+        WRONG_AGE,
         WRONG_HEIGHT,
         WRONG_WEIGHT;
 
         @NotNull
-        public static Set<ValidationError> validate(Animal animal) {
+        public static Map.Entry<String, Set<ValidationError>> validate(Animal animal) {
             Set<ValidationError> errors = new HashSet<>();
             if (animal == null) {
-                return Set.of(ANIMAL_IS_NULL);
+                return Map.entry(NAME_OF_NULL_ANIMAL, Set.of(ANIMAL_IS_NULL));
             }
 
-            if (validateName(animal.name())) {
+            if (!nameIsValid(animal.name())) {
                 errors.add(WRONG_NAME);
             }
-            if (validateType(animal.type())) {
+            if (!typeIsValid(animal.type())) {
                 errors.add(WRONG_TYPE);
             }
-            if (validateSex(animal.sex())) {
+            if (!sexIsValid(animal.sex())) {
                 errors.add(WRONG_SEX);
             }
-            if (validateHeight(animal.height())) {
+            if (!ageIsValid(animal.age())) {
+                errors.add(WRONG_AGE);
+            }
+            if (!heightIsValid(animal.height())) {
                 errors.add(WRONG_HEIGHT);
             }
-            if (validateWeight(animal.weight())) {
+            if (!weightIsValid(animal.weight())) {
                 errors.add(WRONG_WEIGHT);
             }
-            return errors;
+
+            return Map.entry(
+                animal.name() == null ? NAME_OF_NULL_ANIMAL : animal.name(),
+                errors
+            );
         }
 
-        private static boolean validateName(String name) {
+        private static boolean nameIsValid(String name) {
             if (name == null || name.isEmpty()) {
                 return false;
             }
@@ -330,29 +342,35 @@ public class AnimalUtils {
                 || LATIN_UPPERCASE_ASCII_LOWER_BOUND <= ascii && ascii <= LATIN_UPPERCASE_ASCII_UPPER_BOUND;
         }
 
-        private static boolean validateType(Animal.Type type) {
+        private static boolean typeIsValid(Animal.Type type) {
             return type != null;
         }
 
-        private static boolean validateSex(Animal.Sex sex) {
+        private static boolean sexIsValid(Animal.Sex sex) {
             return sex != null;
         }
 
-        private static boolean validateHeight(int height) {
+        private static boolean ageIsValid(int age) {
+            final int AGE_UPPER_BOUND = 100;
+
+            return age > 0 && age < AGE_UPPER_BOUND;
+        }
+
+        private static boolean heightIsValid(int height) {
             return height > 0;
         }
 
-        private static boolean validateWeight(int weight) {
+        private static boolean weightIsValid(int weight) {
             return weight > 0;
         }
 
         @NotNull
         public static Map.Entry<String, String> concatenateNameAndErrors(Animal animal) {
-            Set<ValidationError> errors = validate(animal);
+            Map.Entry<String, Set<ValidationError>> errors = validate(animal);
 
             return Map.entry(
-                errors.contains(ANIMAL_IS_NULL) ? null : animal.name(),
-                errorsToString(errors)
+                errors.getKey(),
+                errorsToString(errors.getValue())
             );
         }
 

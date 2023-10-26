@@ -3,6 +3,7 @@ package edu.hw4;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -490,5 +491,58 @@ public class AnimalUtilTest {
     @Test
     @DisplayName("Получение информации об ошибках")
     void wrongAnimals() {
+        assertEquals(
+            Map.of(
+                "", Set.of(AnimalUtils.ValidationError.WRONG_NAME),
+                "A", Set.of(AnimalUtils.ValidationError.WRONG_AGE),
+                "Qweee", Set.of(),
+                "Ronaldo White", Set.of(AnimalUtils.ValidationError.WRONG_AGE),
+                "Puppy Pop Pip", Set.of(AnimalUtils.ValidationError.WRONG_NAME),
+                "Zach Adam Dmitrievich", Set.of(
+                    AnimalUtils.ValidationError.WRONG_NAME,
+                    AnimalUtils.ValidationError.WRONG_AGE,
+                    AnimalUtils.ValidationError.WRONG_SEX
+                )
+            ),
+            AnimalUtils.wrongAnimals(List.of(
+                new Animal("", Animal.Type.DOG, Animal.Sex.F, 4, 15, 1, false),
+                new Animal("A", Animal.Type.FISH, Animal.Sex.F, -3, 22, 2, false),
+                new Animal("Ronaldo White", Animal.Type.FISH, Animal.Sex.M, 312, 15, 3, false),
+                new Animal("Qweee", Animal.Type.DOG, Animal.Sex.F, 12, 281, 42, true),
+                new Animal("Puppy Pop Pip", Animal.Type.CAT, Animal.Sex.F, 4, 340, 5, false),
+                new Animal("Zach Adam Dmitrievich", Animal.Type.BIRD, null, -1, 181, 62, true)
+            ))
+        );
+
+        assertThatThrownBy(() -> AnimalUtils.wrongAnimals(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(AnimalUtils.ANIMALS_IS_NULL_MESSAGE);
+    }
+
+    @Test
+    @DisplayName("Получение информации об ошибках в виде строки")
+    void wrongAnimalsInString() {
+        assertEquals(
+            Map.of(
+                "", "[WRONG_NAME]",
+                "A", "[WRONG_AGE]",
+                "Qweee", "[]",
+                "Ronaldo White", "[WRONG_AGE]",
+                "Puppy Pop Pip", "[WRONG_NAME]"
+            ),
+            AnimalUtils.wrongAnimalsInString(
+                List.of(
+                    new Animal("", Animal.Type.DOG, Animal.Sex.F, 4, 15, 1, false),
+                    new Animal("A", Animal.Type.FISH, Animal.Sex.F, -3, 22, 2, false),
+                    new Animal("Ronaldo White", Animal.Type.FISH, Animal.Sex.M, 312, 15, 3, false),
+                    new Animal("Qweee", Animal.Type.DOG, Animal.Sex.F, 12, 281, 42, true),
+                    new Animal("Puppy Pop Pip", Animal.Type.CAT, Animal.Sex.F, 4, 340, 5, false)
+                ))
+
+        );
+
+        assertThatThrownBy(() -> AnimalUtils.wrongAnimalsInString(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(AnimalUtils.ANIMALS_IS_NULL_MESSAGE);
     }
 }
