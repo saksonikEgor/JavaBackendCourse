@@ -19,60 +19,36 @@ public class Task2 {
         if (str.isEmpty()) {
             return new String[] {""};
         }
-        if (!isValidParentheses(str)) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
 
         Deque<Character> stack = new ArrayDeque<>();
+        Deque<Character> validationStack = new ArrayDeque<>();
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
         for (char c : str.toCharArray()) {
-            switch (c) {
-                case ')', ']', '}' -> {
-                    stack.poll();
-                    sb.append(c);
-                    if (stack.isEmpty()) {
-                        result.add(sb.toString());
-                        sb = new StringBuilder();
-                    }
+            if (c == ')') {
+                Character polled = validationStack.poll();
+                if (polled == null || polled != '(') {
+                    throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
                 }
-                default -> {
-                    sb.append(c);
-                    stack.push(c);
+                stack.poll();
+                sb.append(c);
+
+                if (stack.isEmpty()) {
+                    result.add(sb.toString());
+                    sb.setLength(0);
                 }
+            } else {
+                validationStack.push(c);
+                sb.append(c);
+                stack.push(c);
             }
         }
+
+        if (!validationStack.isEmpty()) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+        }
+
         return result.toArray(new String[0]);
     }
-
-    private static boolean isValidParentheses(String str) {
-        Deque<Character> stack = new ArrayDeque<>();
-
-        for (char c : str.toCharArray()) {
-            switch (c) {
-                case ')' -> {
-                    Character polled = stack.poll();
-                    if (polled == null || polled != '(') {
-                        return false;
-                    }
-                }
-                case '}' -> {
-                    Character polled = stack.poll();
-                    if (polled == null || polled != '{') {
-                        return false;
-                    }
-                }
-                case ']' -> {
-                    Character polled = stack.poll();
-                    if (polled == null || polled != '[') {
-                        return false;
-                    }
-                }
-                default -> stack.push(c);
-            }
-        }
-        return stack.isEmpty();
-    }
-
 }

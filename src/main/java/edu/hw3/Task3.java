@@ -16,7 +16,7 @@ public class Task3 {
         }
 
         Map<T, Integer> freqDict = new HashMap<>();
-        list.forEach(el -> freqDict.put(el, freqDict.getOrDefault(el, 0) + 1));
+        list.forEach(el -> freqDict.merge(el, 1, Integer::sum));
         return freqDict;
     }
 }
