@@ -23,7 +23,7 @@ public class Task3Test {
         ).getMessage());
 
         Assertions.assertEquals("Arrays cannot be null", Assertions.assertThrows(NullPointerException.class,
-                () -> Task3.isNestable(null, null), "NullPointerException was expected"
+            () -> Task3.isNestable(null, null), "NullPointerException was expected"
         ).getMessage());
     }
 }
