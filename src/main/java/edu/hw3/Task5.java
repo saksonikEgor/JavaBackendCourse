@@ -25,7 +25,10 @@ public class Task5 {
                 throw new IllegalArgumentException(FULLNAME_IS_INVALID_EXCEPTION_MESSAGE);
             }
             String[] words = fullName.split(" ");
-            contacts[idx++] = new Contact(words[0], words[1]);
+            contacts[idx++] = new Contact(
+                words[0],
+                words.length == 1 ? null : words[1]
+            );
         }
 
         return switch (Key.valueOf(keyWord)) {
@@ -44,14 +47,24 @@ public class Task5 {
 
     private static Contact[] ascendingSort(Contact[] contacts) {
         return Arrays.stream(contacts)
-            .sorted((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.surname, o2.surname))
-            .toList().toArray(new Contact[] {});
+            .sorted((c1, c2) -> String.CASE_INSENSITIVE_ORDER.compare(
+                getCompareStringForContact(c1),
+                getCompareStringForContact(c2)
+            ))
+            .toArray(Contact[]::new);
     }
 
     private static Contact[] descendingSort(Contact[] contacts) {
         return Arrays.stream(contacts)
-            .sorted((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o2.surname, o1.surname))
-            .toList().toArray(new Contact[] {});
+            .sorted((c1, c2) -> String.CASE_INSENSITIVE_ORDER.compare(
+                getCompareStringForContact(c2),
+                getCompareStringForContact(c1)
+            ))
+            .toArray(Contact[]::new);
+    }
+
+    private static String getCompareStringForContact(Contact contact) {
+        return contact.surname == null ? contact.name : contact.surname;
     }
 
     public enum Key {

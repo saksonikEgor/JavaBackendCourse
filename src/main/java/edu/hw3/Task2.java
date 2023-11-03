@@ -23,7 +23,7 @@ public class Task2 {
         Deque<Character> stack = new ArrayDeque<>();
         Deque<Character> validationStack = new ArrayDeque<>();
         List<String> result = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(str.length());
 
         for (char c : str.toCharArray()) {
             if (c == ')') {
@@ -36,7 +36,7 @@ public class Task2 {
 
                 if (stack.isEmpty()) {
                     result.add(sb.toString());
-                    sb.setLength(0);
+                    sb.delete(0, sb.length());
                 }
             } else {
                 validationStack.push(c);
