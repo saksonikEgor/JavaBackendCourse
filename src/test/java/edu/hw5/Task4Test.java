@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task4Test {
-    private static Stream<Arguments> provideParseDate() {
+    private static Stream<Arguments> providePasswordIsValid() {
         return Stream.of(
             Arguments.of(false, "398hd29h81h"),
             Arguments.of(false, "7857236013"),
@@ -29,9 +29,9 @@ public class Task4Test {
     }
 
     @ParameterizedTest
-    @DisplayName("Валидация даты")
-    @MethodSource("provideParseDate")
-    void parseDate(boolean expected, String input) {
+    @DisplayName("Проверка пароля на валидность")
+    @MethodSource("providePasswordIsValid")
+    void passwordIsValid(boolean expected, String input) {
         assertEquals(expected, Task4.passwordIsValid(input));
 
         assertThatThrownBy(() -> Task4.passwordIsValid(null))
