@@ -1,5 +1,6 @@
 package edu.hw5;
 
+import java.time.Duration;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +24,7 @@ public class Task1Test {
                 2022-06-01, 21:30 - 2022-06-02, 02:20"""),
             Arguments.of("00:20", "2022-03-12, 20:20 - 2022-03-12, 20:40"),
             Arguments.of("00:00", "1111-11-11, 11:11 - 1111-11-11, 11:11")
-            );
+        );
 
     }
 
@@ -31,7 +32,8 @@ public class Task1Test {
     @DisplayName("Подсчет среднего времени")
     @MethodSource("provideCalculateAvg")
     void calculateAvg(String expected, String input) {
-        assertEquals(expected, Task1.calculateAvg(input));
+        Duration avg = Task1.calculateAvg(input);
+        assertEquals(expected, String.format("%02d:%02d", avg.toHours(), avg.toMinutesPart()));
 
         assertThatThrownBy(() -> Task1.calculateAvg(null))
             .isInstanceOf(NullPointerException.class)
