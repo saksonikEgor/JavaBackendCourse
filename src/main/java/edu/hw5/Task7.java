@@ -1,8 +1,8 @@
 package edu.hw5;
 
 public class Task7 {
-    private static final String PATTERN = "0[0-1]0";
     public static final String NULL_POINTER_EXCEPTION_MESSAGE = "String \"s\" cant be null";
+    private static final String PATTERN = "0[0-1]0";
 
     private Task7() {
     }

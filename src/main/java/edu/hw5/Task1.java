@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Task1 {
-    private static final String INPUT_DATA_PATTERN = "yyyy-MM-dd, HH:mm";
     public static final String NULL_POINTER_EXCEPTION_MESSAGE = "String \"s\" cant be null";
     public static final String ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "String \"s\" cant be empty";
+    private static final String INPUT_DATA_PATTERN = "yyyy-MM-dd, HH:mm";
 
     private Task1() {
     }

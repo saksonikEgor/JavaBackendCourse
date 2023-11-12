@@ -29,17 +29,6 @@ public class Task2Test {
         );
     }
 
-    @ParameterizedTest
-    @DisplayName("Поиск всех пятниц 13")
-    @MethodSource("provideGetAllFridays13thInTheCurrentYear")
-    void getAllFridays13thInTheCurrentYear(LocalDate[] expected, Year input) {
-        assertArrayEquals(expected, Task2.getAllFridays13thInTheCurrentYear(input));
-
-        assertThatThrownBy(() -> Task2.getAllFridays13thInTheCurrentYear(null))
-            .isInstanceOf(NullPointerException.class)
-            .hasMessageContaining(Task2.YEAR_NULL_POINTER_EXCEPTION_MESSAGE);
-    }
-
     private static Stream<Arguments> provideGetNextFridays13th() {
         return Stream.of(
             Arguments.of(
@@ -61,6 +50,27 @@ public class Task2Test {
         );
     }
 
+    private static LocalDate[] parseStringToLocalDateArray(String s) {
+        return Arrays.stream(s.split(", "))
+            .map(Task2Test::parseStringToLocalDate)
+            .toArray(LocalDate[]::new);
+    }
+
+    private static LocalDate parseStringToLocalDate(String s) {
+        return LocalDate.parse(s, formatter);
+    }
+
+    @ParameterizedTest
+    @DisplayName("Поиск всех пятниц 13")
+    @MethodSource("provideGetAllFridays13thInTheCurrentYear")
+    void getAllFridays13thInTheCurrentYear(LocalDate[] expected, Year input) {
+        assertArrayEquals(expected, Task2.getAllFridays13thInTheCurrentYear(input));
+
+        assertThatThrownBy(() -> Task2.getAllFridays13thInTheCurrentYear(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining(Task2.YEAR_NULL_POINTER_EXCEPTION_MESSAGE);
+    }
+
     @ParameterizedTest
     @DisplayName("Поиск ближайшей пятницы 13")
     @MethodSource("provideGetNextFridays13th")
@@ -70,15 +80,5 @@ public class Task2Test {
         assertThatThrownBy(() -> Task2.getNextFriday13th(null))
             .isInstanceOf(NullPointerException.class)
             .hasMessageContaining(Task2.DATE_NULL_POINTER_EXCEPTION_MESSAGE);
-    }
-
-    private static LocalDate[] parseStringToLocalDateArray(String s) {
-        return Arrays.stream(s.split(", "))
-            .map(Task2Test::parseStringToLocalDate)
-            .toArray(LocalDate[]::new);
-    }
-
-    private static LocalDate parseStringToLocalDate(String s) {
-        return LocalDate.parse(s, formatter);
     }
 }
