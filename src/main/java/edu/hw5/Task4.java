@@ -2,7 +2,7 @@ package edu.hw5;
 
 public class Task4 {
     private static final String PATTERN = "(.*)(~|!|@|#|\\$|%|\\^|&|\\*|\\|)(.*)";
-    public static final String NULL_POINTER_EXCEPTION_MESSAGE = "String cant be null";
+    public static final String NULL_POINTER_EXCEPTION_MESSAGE = "String \"s\" cant be null";
 
     private Task4() {
     }
