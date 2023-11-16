@@ -21,7 +21,7 @@ public class Task2 {
         if (path == null) {
             throw new NullPointerException(NULL_POINTER_EXCEPTION_MESSAGE);
         }
-        if (!Files.exists(path)) {
+        if (Files.notExists(path)) {
             throw new FileNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE);
         }
 
