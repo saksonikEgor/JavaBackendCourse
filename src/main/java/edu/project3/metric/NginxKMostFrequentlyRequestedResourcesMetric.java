@@ -1,6 +1,6 @@
 package edu.project3.metric;
 
-import edu.project3.util.NginxLogParserUtils;
+import edu.project3.model.NginxLogRecord;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +13,8 @@ public class NginxKMostFrequentlyRequestedResourcesMetric {
         this.kMostFrequency = kMostFrequency;
     }
 
-    public void takeStock(String log) {
-        String resource = NginxLogParserUtils.getResourceFromLog(log);
+    public void takeStock(NginxLogRecord log) {
+        String resource = log.resource();
         freqDict.put(resource, freqDict.getOrDefault(resource, 0) + 1);
     }
 

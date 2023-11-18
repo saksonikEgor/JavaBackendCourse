@@ -1,6 +1,6 @@
 package edu.project3.metric;
 
-import edu.project3.util.NginxLogParserUtils;
+import edu.project3.model.NginxLogRecord;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +13,8 @@ public class NginxKMostFrequentlyResponseStatusCodeMetric {
         this.kMostFrequency = kMostFrequency;
     }
 
-    public void takeStock(String log) {
-        int statusCode = NginxLogParserUtils.getResponseStatusCode(log);
+    public void takeStock(NginxLogRecord log) {
+        int statusCode = log.responseCodeStatus();
         freqDict.put(statusCode, freqDict.getOrDefault(statusCode, 0) + 1);
     }
 
