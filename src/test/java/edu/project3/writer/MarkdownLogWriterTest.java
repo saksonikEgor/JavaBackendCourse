@@ -2,8 +2,6 @@ package edu.project3.writer;
 
 import edu.project3.model.NginxLogReport;
 import edu.project3.writer.markdown.MarkdownLogWriter;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,11 +11,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static edu.project3.properties.ApplicationProperties.LOG_DATE_PATTERN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MarkdownLogWriterTest {
     private static final String PATHNAME = "src/test/resources/project3/output.md";
+
+    private static String readOutput() {
+        StringBuilder sb = new StringBuilder();
+
+        try (
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(PATHNAME))
+            )) {
+            while (bufferedReader.ready()) {
+                sb.append(bufferedReader.readLine()).append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sb.toString();
+    }
 
     @Test
     @DisplayName("Сохранение статистики в adoc формате")
@@ -68,22 +85,5 @@ public class MarkdownLogWriterTest {
             | 200 | OK | 13
             | 404 | Not found | 10
             """, readOutput());
-    }
-
-    private static String readOutput() {
-        StringBuilder sb = new StringBuilder();
-
-        try (
-            BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(PATHNAME))
-            )) {
-            while (bufferedReader.ready()) {
-                sb.append(bufferedReader.readLine()).append("\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return sb.toString();
     }
 }

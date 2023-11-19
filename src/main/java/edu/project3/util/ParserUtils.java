@@ -2,7 +2,11 @@ package edu.project3.util;
 
 import edu.project3.exception.WrongInputLineException;
 import edu.project3.exception.WrongLogException;
-import edu.project3.model.*;
+import edu.project3.model.HttpRequestType;
+import edu.project3.model.InputArguments;
+import edu.project3.model.InputKey;
+import edu.project3.model.NginxLogRecord;
+import edu.project3.model.OutputFormat;
 import edu.project3.parser.LogParser;
 import edu.project3.parser.fileParser.NginxFileLogParser;
 import edu.project3.parser.urlParser.NginxURLLogParser;
@@ -13,10 +17,28 @@ import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static edu.project3.properties.ApplicationProperties.*;
+import static edu.project3.properties.ApplicationProperties.BODY_BYTES_SENT_GROUP;
+import static edu.project3.properties.ApplicationProperties.HTTP_USER_AGENT_GROUP;
+import static edu.project3.properties.ApplicationProperties.HTTP_VERSION_GROUP;
+import static edu.project3.properties.ApplicationProperties.INPUT_DATE_PATTERN;
+import static edu.project3.properties.ApplicationProperties.LOG_DATE_PATTERN;
+import static edu.project3.properties.ApplicationProperties.NGINX_LOG_PATTERN;
+import static edu.project3.properties.ApplicationProperties.REMOTE_IP_GROUP;
+import static edu.project3.properties.ApplicationProperties.REQUEST_TYPE_GROUP;
+import static edu.project3.properties.ApplicationProperties.RESOURCE_GROUP;
+import static edu.project3.properties.ApplicationProperties.RESPONSE_CODE_STATUS_GROUP;
+import static edu.project3.properties.ApplicationProperties.TIME_LOCAL_GROUP;
+import static edu.project3.properties.ApplicationProperties.URL_PREFIX_PATTERN;
+import static edu.project3.properties.ApplicationProperties.VALID_GROUP_COUNT;
 
 public class ParserUtils {
     private ParserUtils() {

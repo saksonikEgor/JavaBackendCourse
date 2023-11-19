@@ -4,7 +4,6 @@ import edu.project3.model.HttpRequestType;
 import edu.project3.model.NginxLogRecord;
 import edu.project3.parser.fileParser.NginxFileLogParser;
 import edu.project3.parser.urlParser.NginxURLLogParser;
-
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +12,8 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static edu.project3.properties.ApplicationProperties.LOG_DATE_PATTERN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

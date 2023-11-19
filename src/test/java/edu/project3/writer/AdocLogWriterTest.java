@@ -19,6 +19,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AdocLogWriterTest {
     private static final String PATHNAME = "src/test/resources/project3/output.adoc";
 
+    private static String readOutput() {
+        StringBuilder sb = new StringBuilder();
+
+        try (
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(PATHNAME))
+            )) {
+            while (bufferedReader.ready()) {
+                sb.append(bufferedReader.readLine()).append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sb.toString();
+    }
+
     @Test
     @DisplayName("Сохранение статистики в adoc формате")
     void adocWrite() {
@@ -71,22 +88,5 @@ public class AdocLogWriterTest {
             | 404 | Not found | 10
             |===
             """, readOutput());
-    }
-
-    private static String readOutput() {
-        StringBuilder sb = new StringBuilder();
-
-        try (
-            BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(PATHNAME))
-            )) {
-            while (bufferedReader.ready()) {
-                sb.append(bufferedReader.readLine()).append("\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return sb.toString();
     }
 }

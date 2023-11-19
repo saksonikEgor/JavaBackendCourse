@@ -3,15 +3,13 @@ package edu.project3.filter;
 import edu.project3.filter.dateFilter.NginxLogsDateFilter;
 import edu.project3.model.HttpRequestType;
 import edu.project3.model.NginxLogRecord;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static edu.project3.properties.ApplicationProperties.LOG_DATE_PATTERN;
 import static org.assertj.core.api.Assertions.assertThat;
 
