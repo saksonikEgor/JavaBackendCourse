@@ -9,6 +9,7 @@ public class MarkdownLogWriter extends LogWriter {
         super(report, path);
     }
 
+    @Override
     public String getGeneralInfo() {
         StringBuilder sb = new StringBuilder();
 
@@ -25,12 +26,19 @@ public class MarkdownLogWriter extends LogWriter {
             .append(report.totalCount()).append("\n")
 
             .append("| Средний размер ответа | ")
-            .append(report.avgBodyBytesSent()).append("\n").append("\n");
+            .append(report.avgBodyBytesSent()).append("\n")
+
+            .append("| Максимальное количество переданных байт | ")
+            .append(report.maxBudyBytesSent()).append("\n")
+
+            .append("| Самый популярный день недели | ")
+            .append(report.mostPopularDayOfWeek()).append("\n").append("\n");
         return sb.toString();
     }
 
     @SuppressWarnings("MultipleStringLiterals")
-    public String getResources() {
+    @Override
+    public String getMostFreqentlyResources() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("#### Запрашиваемые ресурсы\n\n")
@@ -46,7 +54,8 @@ public class MarkdownLogWriter extends LogWriter {
         return sb.toString();
     }
 
-    public String getCodes() {
+    @Override
+    public String getMostfrequntlyStatusCodes() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("#### Коды ответа\n\n")

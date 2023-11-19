@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
@@ -59,7 +60,9 @@ public class MarkdownLogWriterTest {
             23,
             mostFreqRes.entrySet().stream().toList(),
             mostFreqStatusCode.entrySet().stream().toList(),
-            240
+            240,
+            380,
+            DayOfWeek.FRIDAY
         ), PATHNAME).write();
 
         assertEquals("""
@@ -71,6 +74,8 @@ public class MarkdownLogWriterTest {
             | Конечная дата | 2015-05-17T08:05:24Z
             | Количество запросов | 23
             | Средний размер ответа | 240
+            | Максимальное количество переданных байт | 380
+            | Самый популярный день недели | FRIDAY
 
             #### Запрашиваемые ресурсы
 

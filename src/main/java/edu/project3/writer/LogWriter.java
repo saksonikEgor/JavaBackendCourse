@@ -17,8 +17,8 @@ public abstract class LogWriter {
     public void write() {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(path))) {
             writer.write(getGeneralInfo());
-            writer.write(getResources());
-            writer.write(getCodes());
+            writer.write(getMostFreqentlyResources());
+            writer.write(getMostfrequntlyStatusCodes());
 
             writer.flush();
         } catch (IOException e) {
@@ -28,7 +28,7 @@ public abstract class LogWriter {
 
     public abstract String getGeneralInfo();
 
-    public abstract String getResources();
+    public abstract String getMostFreqentlyResources();
 
-    public abstract String getCodes();
+    public abstract String getMostfrequntlyStatusCodes();
 }
