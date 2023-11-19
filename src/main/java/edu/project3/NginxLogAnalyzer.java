@@ -4,9 +4,12 @@ import edu.project3.analyze.NginxLogStatisticsCollector;
 import edu.project3.filter.LogFilter;
 import edu.project3.filter.dateFilter.NginxLogsDateFilter;
 import edu.project3.model.InputArguments;
-import edu.project3.model.NginxLogRecord;
 import edu.project3.model.NginxLogReport;
+import edu.project3.properties.ApplicationProperties;
 import edu.project3.util.ParserUtils;
+import edu.project3.writer.LogWriter;
+import edu.project3.writer.adoc.AdocLogWriter;
+import edu.project3.writer.markdown.MarkdownLogWriter;
 
 public class NginxLogAnalyzer {
     private final InputArguments inputArguments;
@@ -28,64 +31,13 @@ public class NginxLogAnalyzer {
         }
 
         NginxLogReport report = statisticsCollector.getReport(inputArguments.from(), inputArguments.to());
-
-
-
-
+        getWriter(report).write();
     }
 
-
-
-
-//    private final String pathString;
-//
-//    public NginxLogAnalyzer(String pathString) {
-//        this.pathString = pathString;
-//    }
-//
-//    public List<Path> getFilesFromPath() throws FileNotFoundException {
-//        if (this.pathString.contains("*")) {
-//            return findAllPaths();
-//        } else {
-//            return getSinglePath();
-//        }
-//    }
-//
-//    private List<Path> getSinglePath() throws FileNotFoundException {
-//        Path path = Paths.get(this.pathString);
-//        if (path.toFile().exists()) {
-//            return List.of(path);
-//        } else {
-//            throw new FileNotFoundException("File not exists!");
-//        }
-//    }
-//
-//    private List<Path> findAllPaths() {
-//        List<Path> matchingPaths = new ArrayList<>();
-//        PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + this.pathString);
-//
-//        String startDir = getStartDir(this.pathString);
-//
-//        try {
-//            Files.walkFileTree(Path.of(startDir), new SimpleFileVisitor<>() {
-//                @Override
-//                public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
-//                    if (pathMatcher.matches(filePath)) {
-//                        matchingPaths.add(filePath);
-//                    }
-//                    return FileVisitResult.CONTINUE;
-//                }
-//            });
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        return matchingPaths;
-//    }
-//
-//    private String getStartDir(String path) {
-//        int firstAsteriskIndex = path.indexOf("*");
-//        int lastSlashIndex = path.lastIndexOf("/", firstAsteriskIndex);
-//        return path.substring(0, lastSlashIndex);
-//    }
+    private LogWriter getWriter(NginxLogReport report) {
+        return switch (inputArguments.outputType()) {
+            case adoc -> new AdocLogWriter(report, ApplicationProperties.ADOC_WRITE_PATH);
+            case markdown -> new MarkdownLogWriter(report, ApplicationProperties.MARKDOWN_WRITE_PATH);
+        };
+    }
 }
