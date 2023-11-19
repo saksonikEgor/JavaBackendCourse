@@ -2,11 +2,7 @@ package edu.project3.util;
 
 import edu.project3.exception.WrongInputLineException;
 import edu.project3.exception.WrongLogException;
-import edu.project3.model.HttpRequestType;
-import edu.project3.model.InputArguments;
-import edu.project3.model.InputKey;
-import edu.project3.model.NginxLogRecord;
-import edu.project3.model.OutputFormat;
+import edu.project3.model.*;
 import edu.project3.parser.LogParser;
 import edu.project3.parser.fileParser.NginxFileLogParser;
 import edu.project3.parser.urlParser.NginxURLLogParser;
@@ -16,12 +12,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,13 +40,16 @@ public class ParserUtils {
         Pattern patternLog = Pattern.compile(NGINX_LOG_PATTERN);
         Matcher matcher = patternLog.matcher(line);
 
-        if (matcher.find() && matcher.groupCount() != VALID_GROUP_COUNT) {
+        if (!matcher.find() || matcher.groupCount() != VALID_GROUP_COUNT) {
             throw new WrongLogException("Cant parse log: " + line);
         }
 
         return new NginxLogRecord(
             matcher.group(REMOTE_IP_GROUP),
-            OffsetDateTime.parse(matcher.group(TIME_LOCAL_GROUP), DateTimeFormatter.ofPattern(LOG_DATE_PATTERN)),
+            OffsetDateTime.parse(
+                matcher.group(TIME_LOCAL_GROUP),
+                DateTimeFormatter.ofPattern(LOG_DATE_PATTERN, Locale.ENGLISH)
+            ),
             HttpRequestType.valueOf(matcher.group(REQUEST_TYPE_GROUP)),
             matcher.group(RESOURCE_GROUP),
             matcher.group(HTTP_VERSION_GROUP),
@@ -97,10 +91,18 @@ public class ParserUtils {
             throw new WrongInputLineException("Key --path is required");
         }
 
+        Optional<OffsetDateTime> from = afterPathParams.containsKey(InputKey.From)
+            ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.From.toString())))
+            : Optional.empty();
+
+        Optional<OffsetDateTime> to = afterPathParams.containsKey(InputKey.To)
+            ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.To.toString())))
+            : Optional.empty();
+
         return new InputArguments(
             paths.toArray(new String[] {}),
-            Optional.of(parseStringToDate(afterPathParams.get(InputKey.From.toString()))),
-            Optional.of(parseStringToDate(afterPathParams.get(InputKey.To.toString()))),
+            from,
+            to,
             getOutTypeOrDefault(afterPathParams.get(InputKey.Format.toString()))
         );
     }
@@ -132,5 +134,4 @@ public class ParserUtils {
             }
         }
     }
-
 }
