@@ -12,6 +12,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NginxLogAnalyzerTest {
+    private static String readOutput() {
+        StringBuilder sb = new StringBuilder();
+
+        try (
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(ApplicationProperties.ADOC_WRITE_PATH))
+            )) {
+            while (bufferedReader.ready()) {
+                sb.append(bufferedReader.readLine()).append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sb.toString();
+    }
+
     @Test
     @DisplayName("Анализ логов")
     void analyze() {
@@ -70,22 +87,5 @@ public class NginxLogAnalyzerTest {
                 }
             ).analyse())
             .isInstanceOf(WrongInputLineException.class);
-    }
-
-    private static String readOutput() {
-        StringBuilder sb = new StringBuilder();
-
-        try (
-            BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(ApplicationProperties.ADOC_WRITE_PATH))
-            )) {
-            while (bufferedReader.ready()) {
-                sb.append(bufferedReader.readLine()).append("\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return sb.toString();
     }
 }

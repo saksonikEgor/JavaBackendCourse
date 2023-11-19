@@ -34,6 +34,7 @@ public class AdocLogWriter extends LogWriter {
         return sb.toString();
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     public String getResources() {
         StringBuilder sb = new StringBuilder();
 

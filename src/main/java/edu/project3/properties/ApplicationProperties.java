@@ -19,6 +19,7 @@ public class ApplicationProperties {
         416, "Requested Range Not Satisfiable",
         505, "HTTP Version Not Supported"
     );
+    @SuppressWarnings("MultipleStringLiterals")
     public static final String LOG_DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
     public static final String INPUT_DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
     public static final String NGINX_LOG_PATTERN =
