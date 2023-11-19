@@ -37,7 +37,7 @@ public class MarkdownLogWriterTest {
     }
 
     @Test
-    @DisplayName("Сохранение статистики в adoc формате")
+    @DisplayName("Сохранение статистики в md формате")
     void adocWrite() {
         var mostFreqRes = new LinkedHashMap<String, Long>();
         var mostFreqStatusCode = new LinkedHashMap<Integer, Long>();

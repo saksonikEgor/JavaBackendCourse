@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -103,24 +104,29 @@ public class ParserUtils {
             throw new WrongInputLineException("Key --path is required");
         }
 
-        Optional<OffsetDateTime> from = afterPathParams.containsKey(InputKey.From)
-            ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.From.toString())))
-            : Optional.empty();
+        try {
+            Optional<OffsetDateTime> from = afterPathParams.containsKey(InputKey.From.toString())
+                ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.From.toString())))
+                : Optional.empty();
 
-        Optional<OffsetDateTime> to = afterPathParams.containsKey(InputKey.To)
-            ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.To.toString())))
-            : Optional.empty();
-
-        return new InputArguments(
-            paths.toArray(new String[] {}),
-            from,
-            to,
-            getOutTypeOrDefault(afterPathParams.get(InputKey.Format.toString()))
-        );
+            Optional<OffsetDateTime> to = afterPathParams.containsKey(InputKey.To.toString())
+                ? Optional.of(parseStringToDate(afterPathParams.get(InputKey.To.toString())))
+                : Optional.empty();
+            return new InputArguments(
+                paths.toArray(new String[] {}),
+                from,
+                to,
+                getOutTypeOrDefault(afterPathParams.get(InputKey.Format.toString()))
+            );
+        } catch (DateTimeParseException e) {
+            throw new WrongInputLineException("Wrong input date");
+        }
     }
 
     private static OffsetDateTime parseStringToDate(String date) {
-        return date == null ? null : OffsetDateTime.parse(date, DateTimeFormatter.ofPattern(INPUT_DATE_PATTERN));
+        return date == null
+            ? null
+            : OffsetDateTime.parse(date, DateTimeFormatter.ofPattern(INPUT_DATE_PATTERN, Locale.ENGLISH));
     }
 
     private static OutputFormat getOutTypeOrDefault(String format) {

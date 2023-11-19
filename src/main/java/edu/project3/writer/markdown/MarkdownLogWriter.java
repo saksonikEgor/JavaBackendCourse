@@ -37,7 +37,7 @@ public class MarkdownLogWriter extends LogWriter {
             .append("|:---------------:|-----------:|\n");
 
         for (var resource : report.mostFrequentlyResources()) {
-            sb.append("| ").append(resource.getKey()).append(" | ").append(resource.getValue());
+            sb.append("| ").append(resource.getKey()).append(" | ").append(resource.getValue()).append("\n");
         }
 
         sb.append("\n\n");
@@ -53,12 +53,13 @@ public class MarkdownLogWriter extends LogWriter {
             .append("|:---:|:---------------------:|-----------:|\n");
 
         for (var statusCode : report.mostFrequentlyStatusCode()) {
-            sb.append(String.format(
-                "| %d | %s | %d\n",
-                statusCode.getKey(),
-                WriterUtils.getNameByCode(statusCode.getKey()),
-                statusCode.getValue()
-            ));
+            sb.append("| ")
+                .append(statusCode.getKey())
+                .append(" | ")
+                .append(WriterUtils.getNameByCode(statusCode.getKey()))
+                .append(" | ")
+                .append(statusCode.getValue())
+                .append("\n");
         }
 
         return sb.toString();

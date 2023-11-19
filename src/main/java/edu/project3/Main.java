@@ -1,7 +1,10 @@
 package edu.project3;
 
 public class Main {
-    public static void main(String[] args) {
+    private Main() {
+    }
 
+    public static void main(String[] args) {
+        new NginxLogAnalyzer(args).analyse();
     }
 }

@@ -8,11 +8,11 @@ public class ApplicationProperties {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final int MOST_FREQUENTLY_RESOURCE_COUNT = 5;
     public static final int MOST_FREQUENTLY_STATUS_CODE_COUNT = 5;
-    public static final String ADOC_WRITE_PATH = "";
-    public static final String MARKDOWN_WRITE_PATH = "";
+    public static final String ADOC_WRITE_PATH = "src/test/resources/project3/bigOutput.adoc";
+    public static final String MARKDOWN_WRITE_PATH = "src/test/resources/project3/bigOutput.md";
     public static final Map<Integer, String> HTTP_STATUS = Map.of(
         200, "OK",
-        404, "Not found",
+        404, "Not Found",
         304, "Not Modified",
         206, "Partial Content",
         403, "Forbidden",
@@ -20,7 +20,7 @@ public class ApplicationProperties {
         505, "HTTP Version Not Supported"
     );
     public static final String LOG_DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
-    public static final String INPUT_DATE_PATTERN = "yyyy-MM-dd";
+    public static final String INPUT_DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
     public static final String NGINX_LOG_PATTERN =
         "^((\\d+\\.?)+).+(?<=\\[)(.+?)(?=\\]).+\\\"(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)"
             + "\\s(.+?)\\s(.+?)\\\"\\s(\\d+)\\s(\\d+).+\\\"(.+)(?=\\\")";
