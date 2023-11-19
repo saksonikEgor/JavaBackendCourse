@@ -29,10 +29,9 @@ public class NginxFileLogParser implements LogParser {
         List<NginxLogRecord> records = new ArrayList<>();
 
         try (
-            InputStream inputStream = new FileInputStream(String.valueOf(path));
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader)
-        ) {
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(String.valueOf(path)))
+            )) {
             while (bufferedReader.ready()) {
                 records.add(ParserUtils.parseLog(bufferedReader.readLine()));
             }
