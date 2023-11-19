@@ -15,24 +15,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static edu.project3.properties.ApplicationProperties.*;
 
 public class ParserUtils {
-    private static final String LOG_DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
-    private static final String INPUT_DATE_PATTERN = "yyyy-MM-dd";
-    private static final String NGINX_LOG_PATTERN =
-        "^((\\d+\\.?)+).+(?<=\\[)(.+?)(?=\\]).+\\\"(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)"
-            + "\\s(.+?)\\s(.+?)\\\"\\s(\\d+)\\s(\\d+).+\\\"(.+)(?=\\\")";
-    private static final int VALID_GROUP_COUNT = 9;
-    private static final int REMOTE_IP_GROUP = 1;
-    private static final int TIME_LOCAL_GROUP = 3;
-    private static final int REQUEST_TYPE_GROUP = 4;
-    private static final int RESOURCE_GROUP = 5;
-    private static final int HTTP_VERSION_GROUP = 6;
-    private static final int RESPONSE_CODE_STATUS_GROUP = 7;
-    private static final int BODY_BYTES_SENT_GROUP = 8;
-    private static final int HTTP_USER_AGENT_GROUP = 9;
-    private static final String URL_PREFIX_PATTERN = "http?s://.*";
-
     private ParserUtils() {
     }
 
