@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,19 +30,23 @@ public class ParserUtils {
             throw new WrongLogException("Cant parse log: " + line);
         }
 
-        return new NginxLogRecord(
-            matcher.group(REMOTE_IP_GROUP),
-            OffsetDateTime.parse(
-                matcher.group(TIME_LOCAL_GROUP),
-                DateTimeFormatter.ofPattern(LOG_DATE_PATTERN, Locale.ENGLISH)
-            ),
-            HttpRequestType.valueOf(matcher.group(REQUEST_TYPE_GROUP)),
-            matcher.group(RESOURCE_GROUP),
-            matcher.group(HTTP_VERSION_GROUP),
-            Integer.parseInt(matcher.group(RESPONSE_CODE_STATUS_GROUP)),
-            Integer.parseInt(matcher.group(BODY_BYTES_SENT_GROUP)),
-            matcher.group(HTTP_USER_AGENT_GROUP)
-        );
+        try {
+            return new NginxLogRecord(
+                matcher.group(REMOTE_IP_GROUP),
+                OffsetDateTime.parse(
+                    matcher.group(TIME_LOCAL_GROUP),
+                    DateTimeFormatter.ofPattern(LOG_DATE_PATTERN, Locale.ENGLISH)
+                ),
+                HttpRequestType.valueOf(matcher.group(REQUEST_TYPE_GROUP)),
+                matcher.group(RESOURCE_GROUP),
+                matcher.group(HTTP_VERSION_GROUP),
+                Integer.parseInt(matcher.group(RESPONSE_CODE_STATUS_GROUP)),
+                Integer.parseInt(matcher.group(BODY_BYTES_SENT_GROUP)),
+                matcher.group(HTTP_USER_AGENT_GROUP)
+            );
+        } catch (IllegalArgumentException | DateTimeParseException e) {
+            throw new WrongLogException("Wrong log content");
+        }
     }
 
     public static InputArguments parseInput(String[] args) {

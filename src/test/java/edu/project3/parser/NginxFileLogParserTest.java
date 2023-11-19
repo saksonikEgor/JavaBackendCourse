@@ -4,7 +4,6 @@ import edu.project3.exception.WrongLogException;
 import edu.project3.model.HttpRequestType;
 import edu.project3.model.NginxLogRecord;
 import edu.project3.parser.fileParser.NginxFileLogParser;
-import edu.project3.util.ParserUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
@@ -18,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NginxFileLogParserTest {
-    private static final String PATHNAME = "src/test/resources/project3/goodLogs.txt";
+    private static final String GOOD_LOGS_PATHNAME = "src/test/resources/project3/goodLogs.txt";
+    private static final String BAD_LOGS_PATHNAME = "src/test/resources/project3/badLogs.txt";
 
     @Test
     @DisplayName("Чтение логов из файла")
@@ -52,9 +52,12 @@ public class NginxFileLogParserTest {
                     "Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)"
                 )
             )
-        ).hasSameElementsAs(new NginxFileLogParser(Path.of(PATHNAME)).parseLogs());
+        ).hasSameElementsAs(new NginxFileLogParser(Path.of(GOOD_LOGS_PATHNAME)).parseLogs());
 
         assertThatThrownBy(() -> new NginxFileLogParser(Path.of("wrong")).parseLogs())
             .isInstanceOf(FileNotFoundException.class);
+
+        assertThatThrownBy(() -> new NginxFileLogParser(Path.of(BAD_LOGS_PATHNAME)).parseLogs())
+            .isInstanceOf(WrongLogException.class);
     }
 }

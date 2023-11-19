@@ -21,7 +21,7 @@ import static edu.project3.properties.ApplicationProperties.LOG_DATE_PATTERN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class NginxUTLLogParserTest {
+public class NginxURLLogParserTest {
     private static final String URL = "https://raw.githubusercontent.com/elastic/examples/master/"
         + "Common%20Data%20Formats/nginx_logs/nginx_logs";
 
