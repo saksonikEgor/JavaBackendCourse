@@ -7,6 +7,7 @@ public class ApplicationProperties {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final int MOST_FREQUENTLY_RESOURCE_COUNT = 5;
     public static final int MOST_FREQUENTLY_STATUS_CODE_COUNT = 5;
-
+    public static final String ADOC_WRITE_PATH = "";
+    public static final String MARKDOWN_WRITE_PATH = "";
 
 }

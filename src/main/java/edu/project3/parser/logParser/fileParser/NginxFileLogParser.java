@@ -4,7 +4,6 @@ import edu.project3.model.NginxLogRecord;
 import edu.project3.parser.logParser.LogParser;
 import edu.project3.util.ParserUtils;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -4,10 +4,6 @@ import edu.project3.model.NginxLogReport;
 import edu.project3.util.WriterUtils;
 import edu.project3.writer.LogWriter;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 public class AdocLogWriter extends LogWriter {
     private static final String SEPARATOR = "|===\n";
     private static final String HEADER = "[options=\"header\"]\n";

@@ -5,8 +5,6 @@ import edu.project3.util.WriterUtils;
 import edu.project3.writer.LogWriter;
 
 public class MarkdownLogWriter extends LogWriter {
-    private static final String TWO_ARGS_LINE = "| %s | %d |\n";
-
     public MarkdownLogWriter(NginxLogReport report, String path) {
         super(report, path);
     }

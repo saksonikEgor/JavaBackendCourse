@@ -2,20 +2,26 @@ package edu.project3.util;
 
 import edu.project3.exception.WrongInputLineException;
 import edu.project3.exception.WrongLogException;
-import edu.project3.model.*;
+import edu.project3.model.HttpRequestType;
+import edu.project3.model.InputArguments;
+import edu.project3.model.InputKey;
+import edu.project3.model.NginxLogRecord;
+import edu.project3.model.OutputFormat;
 import edu.project3.parser.logParser.LogParser;
 import edu.project3.parser.logParser.fileParser.NginxFileLogParser;
 import edu.project3.parser.logParser.urlParser.NginxURLLogParser;
-
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,7 +102,7 @@ public class ParserUtils {
             Optional.of(parseStringToDate(afterPathParams.get(InputKey.From.toString()))),
             Optional.of(parseStringToDate(afterPathParams.get(InputKey.To.toString()))),
             getOutTypeOrDefault(afterPathParams.get(InputKey.Format.toString()))
-            );
+        );
     }
 
     private static OffsetDateTime parseStringToDate(String date) {

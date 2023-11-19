@@ -9,7 +9,6 @@ public abstract class LogWriter {
     protected final NginxLogReport report;
     protected final String path;
 
-
     protected LogWriter(NginxLogReport report, String path) {
         this.report = report;
         this.path = path;
