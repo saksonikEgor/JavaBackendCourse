@@ -1,4 +1,4 @@
-package edu.project3.metric;
+package edu.project3.analyze.metrics;
 
 import edu.project3.model.NginxLogRecord;
 

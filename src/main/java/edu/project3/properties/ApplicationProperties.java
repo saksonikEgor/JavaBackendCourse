@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public class ApplicationProperties {
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final String DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
-    public static final String REQUEST_PATTERN = ".+ (/.+)+ HTTP/[^\"]+";
-    public static final String HTTP_RESPONSE_STATUS_AND_BODY_BYTES_SEND_PATTERN = "[1-5][0-9]{2} [0-9]+";
+    public static final int MOST_FREQUENTLY_RESOURCE_COUNT = 5;
+    public static final int MOST_FREQUENTLY_STATUS_CODE_COUNT = 5;
+
 
 }
