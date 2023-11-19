@@ -1,7 +1,7 @@
-package edu.project3.parser.logParser.fileParser;
+package edu.project3.parser.fileParser;
 
 import edu.project3.model.NginxLogRecord;
-import edu.project3.parser.logParser.LogParser;
+import edu.project3.parser.LogParser;
 import edu.project3.util.ParserUtils;
 import java.io.BufferedReader;
 import java.io.FileInputStream;

@@ -1,4 +1,4 @@
-package edu.project3.parser.logParser;
+package edu.project3.parser;
 
 import edu.project3.model.NginxLogRecord;
 import java.util.List;

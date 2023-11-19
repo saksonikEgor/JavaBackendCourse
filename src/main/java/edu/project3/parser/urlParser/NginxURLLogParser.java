@@ -1,7 +1,7 @@
-package edu.project3.parser.logParser.urlParser;
+package edu.project3.parser.urlParser;
 
 import edu.project3.model.NginxLogRecord;
-import edu.project3.parser.logParser.LogParser;
+import edu.project3.parser.LogParser;
 import edu.project3.util.ParserUtils;
 import java.io.IOException;
 import java.net.URI;
