@@ -34,4 +34,7 @@ public class ApplicationProperties {
     public static final int BODY_BYTES_SENT_GROUP = 8;
     public static final int HTTP_USER_AGENT_GROUP = 9;
     public static final String URL_PREFIX_PATTERN = "http?s://.*";
+
+    private ApplicationProperties() {
+    }
 }

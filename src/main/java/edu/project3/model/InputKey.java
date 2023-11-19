@@ -8,6 +8,7 @@ public enum InputKey {
     To,
     Format;
 
+    @SuppressWarnings("MultipleStringLiterals")
     public static Set<String> getSetOfKeysName() {
         return Set.of("--path", "--from", "--to", "--format");
     }

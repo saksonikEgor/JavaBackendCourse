@@ -25,7 +25,7 @@ public class MarkdownLogWriter extends LogWriter {
             .append(report.totalCount()).append("\n")
 
             .append("| Средний размер ответа | ")
-            .append(report.avgBodyBytesSent()).append("\n\n");
+            .append(report.avgBodyBytesSent()).append("\n").append("\n");
         return sb.toString();
     }
 
