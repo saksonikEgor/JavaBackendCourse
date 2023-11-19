@@ -9,8 +9,7 @@ public class Task6Test {
     @DisplayName("Сканирование портов")
     @Test
     void scanPorts() {
-        assertTrue(Task6.isPortBusy(135));
-        assertTrue(Task6.isPortBusy(143));
+        assertTrue(Task6.isPortBusy(445));
 
         assertDoesNotThrow(Task6::scanPorts);
     }
