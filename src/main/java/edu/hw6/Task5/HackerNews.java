@@ -10,12 +10,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HackerNews {
+    public static final String ILLEGAL_ARGUMENT_EXCEPTION = "Wrong input. No match for current id";
     private static final String TOP_STORIES_URI = "https://hacker-news.firebaseio.com/v0/topstories.json";
     private static final String NEW_BY_ID_URI_PREFIX = "https://hacker-news.firebaseio.com/v0/item/";
     private static final String JSON_SUFFIX = ".json";
     private static final String NEW_NAME_PATTERN = "\"title\":\"(.*?)\"";
     private static final String ARRAY_SEPARATORS = ",";
-    public static final String ILLEGAL_ARGUMENT_EXCEPTION = "Wrong input. No match for current id";
 
     private HackerNews() {
     }

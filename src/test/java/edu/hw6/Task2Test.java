@@ -18,6 +18,27 @@ public class Task2Test {
     private static final String PATH_NAME_2 = "src/test/resources/hw6/task2/file2.txt";
     private static final String PATH_NAME_3 = "src/test/resources/hw6/task2/file3.txt";
 
+    private static void deleteFilesIfExists(List<String> fileNames) {
+        fileNames.forEach(name -> {
+            try {
+                Files.deleteIfExists(Path.of(DIR_PATH).resolve(name));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private static Set<String> getFilesInDir() {
+        try {
+            return Files
+                .list(Path.of(DIR_PATH))
+                .map(p -> p.getFileName().toString())
+                .collect(Collectors.toSet());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @DisplayName("Клонирование файла")
     @Test
     void cloneFile() {
@@ -91,26 +112,5 @@ public class Task2Test {
         assertThatThrownBy(() -> Task2.cloneFile(Path.of("wrong path")))
             .isInstanceOf(FileNotFoundException.class)
             .hasMessageContaining(Task2.FILE_NOT_FOUND_EXCEPTION_MESSAGE);
-    }
-
-    private static void deleteFilesIfExists(List<String> fileNames) {
-        fileNames.forEach(name -> {
-            try {
-                Files.deleteIfExists(Path.of(DIR_PATH).resolve(name));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    private static Set<String> getFilesInDir() {
-        try {
-            return Files
-                .list(Path.of(DIR_PATH))
-                .map(p -> p.getFileName().toString())
-                .collect(Collectors.toSet());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

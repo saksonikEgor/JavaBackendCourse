@@ -14,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class DiskMap implements Map<String, String> {
-    private final Path path;
-    private final Map<String, String> data;
     private static final char SEPARATION_SYMBOL = ':';
     private static final Logger LOGGER = LogManager.getLogger();
+    private final Path path;
+    private final Map<String, String> data;
 
     public DiskMap(Map<String, String> data, Path path) {
         this.path = path;

@@ -23,6 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task3Test {
     private static final String PATHNAME = "src/test/resources/hw6/task3";
 
+    private static Set<String> directoryStreamToPathSet(DirectoryStream<Path> ds) {
+        return StreamSupport
+            .stream(ds.spliterator(), false)
+            .map(Path::toString)
+            .collect(Collectors.toSet());
+    }
+
     @DisplayName("Фильтрация файлов")
     @Test
     void filterFiles() {
@@ -50,12 +57,5 @@ public class Task3Test {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static Set<String> directoryStreamToPathSet(DirectoryStream<Path> ds) {
-        return StreamSupport
-            .stream(ds.spliterator(), false)
-            .map(Path::toString)
-            .collect(Collectors.toSet());
     }
 }

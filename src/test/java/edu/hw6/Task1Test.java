@@ -14,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class Task1Test {
     private static final String PATHNAME = "src/test/resources/hw6/task1/storage";
 
+    private static void clearFile() throws IOException {
+        new FileWriter(PATHNAME, false).close();
+    }
+
     @DisplayName("Изменение содержимого хранилища")
     @Test
     void modificationStorage() {
@@ -76,9 +80,5 @@ public class Task1Test {
         mapDiskMap.clear();
 
         assertTrue(new DiskMap(new HashMap<>(), Path.of(PATHNAME)).isEmpty());
-    }
-
-    private static void clearFile() throws IOException {
-        new FileWriter(PATHNAME, false).close();
     }
 }
