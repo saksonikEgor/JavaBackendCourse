@@ -78,14 +78,16 @@ public class AdocLogWriterTest {
             [options="header"]
             |===
             | Ресурс | Количество
-            | fist/another/logs.log | 13| tee/nginxLong.log | 10|===
+            | fist/another/logs.log | 13
+            | tee/nginxLong.log | 10
+            |===
             ==== Коды ответа
 
             [options="header"]
             |===
             | Код | Имя | Количество
             | 200 | OK | 13
-            | 404 | Not found | 10
+            | 404 | Not Found | 10
             |===
             """, readOutput());
     }
