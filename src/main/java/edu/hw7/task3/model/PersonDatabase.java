@@ -1,4 +1,4 @@
-package edu.hw7.task3;
+package edu.hw7.task3.model;
 
 import org.jetbrains.annotations.Nullable;
 

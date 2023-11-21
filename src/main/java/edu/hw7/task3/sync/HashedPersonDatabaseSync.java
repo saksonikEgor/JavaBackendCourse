@@ -1,16 +1,19 @@
-package edu.hw7.task3;
+package edu.hw7.task3.sync;
+
+import edu.hw7.task3.model.Person;
+import edu.hw7.task3.model.PersonDatabase;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.jetbrains.annotations.Nullable;
 
-public class HashedPersonDatabase implements PersonDatabase {
+public class HashedPersonDatabaseSync implements PersonDatabase {
     private final Map<Integer, Person> ids;
     private final Map<String, Person> names;
     private final Map<String, Person> addresses;
     private final Map<String, Person> phoneNumbers;
 
-    public HashedPersonDatabase(
+    public HashedPersonDatabaseSync(
         Map<Integer, Person> ids,
         Map<String, Person> names,
         Map<String, Person> addresses,
@@ -22,7 +25,7 @@ public class HashedPersonDatabase implements PersonDatabase {
         this.phoneNumbers = phoneNumbers;
     }
 
-    public HashedPersonDatabase() {
+    public HashedPersonDatabaseSync() {
         this(new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
     }
 
@@ -66,17 +69,17 @@ public class HashedPersonDatabase implements PersonDatabase {
     }
 
     @Override
-    public @Nullable Person findByName(String name) {
+    public synchronized @Nullable Person findByName(String name) {
         return names.get(name);
     }
 
     @Override
-    public @Nullable Person findByAddress(String address) {
+    public synchronized @Nullable Person findByAddress(String address) {
         return addresses.get(address);
     }
 
     @Override
-    public @Nullable Person findByPhone(String phone) {
+    public synchronized @Nullable Person findByPhone(String phone) {
         return phoneNumbers.get(phone);
     }
 }
