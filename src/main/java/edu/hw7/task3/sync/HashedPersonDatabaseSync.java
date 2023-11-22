@@ -52,7 +52,7 @@ public class HashedPersonDatabaseSync implements PersonDatabase {
         ids.put(person.id(), person);
         names.put(person.name(), person);
         addresses.put(person.address(), person);
-        phoneNumbers.put(person.address(), person);
+        phoneNumbers.put(person.phoneNumber(), person);
     }
 
     @Override
