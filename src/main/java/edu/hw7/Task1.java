@@ -3,7 +3,6 @@ package edu.hw7;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 public class Task1 {
     private final AtomicInteger count = new AtomicInteger(0);

@@ -2,10 +2,9 @@ package edu.hw7.task3.sync;
 
 import edu.hw7.task3.model.Person;
 import edu.hw7.task3.model.PersonDatabase;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 public class HashedPersonDatabaseSync implements PersonDatabase {
     private final Map<Integer, Person> ids;
@@ -30,6 +29,7 @@ public class HashedPersonDatabaseSync implements PersonDatabase {
     }
 
     @Override
+    @SuppressWarnings("MultipleStringLiterals")
     public synchronized void add(Person person) {
         if (person.name() == null || person.address() == null || person.phoneNumber() == null) {
             throw new NullPointerException("Persons fields cant be null");

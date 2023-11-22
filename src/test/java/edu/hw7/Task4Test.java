@@ -1,24 +1,15 @@
 package edu.hw7;
 
 import edu.hw7.task4.util.PiCounter;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task4Test {
-    @Test
-    @DisplayName("Проверка на убывание погрешности при увеличении количества испытаний для одного потока")
-    void faultDESCSingleThread() {
-        assertTrue(PiCounter.countPiSingleThreadingMetric(10).fault()
-            > PiCounter.countPiSingleThreadingMetric(1000000).fault());
-    }
-
     private static Stream<Arguments> provideFaultDESCMultithreading() {
         return Stream.of(
             Arguments.of(2),
@@ -27,6 +18,23 @@ public class Task4Test {
             Arguments.of(5),
             Arguments.of(6)
         );
+    }
+
+    private static Stream<Arguments> provideDurationDESCMultithreading() {
+        return Stream.of(
+            Arguments.of(2),
+            Arguments.of(3),
+            Arguments.of(4),
+            Arguments.of(5),
+            Arguments.of(6)
+        );
+    }
+
+    @Test
+    @DisplayName("Проверка на убывание погрешности при увеличении количества испытаний для одного потока")
+    void faultDESCSingleThread() {
+        assertTrue(PiCounter.countPiSingleThreadingMetric(10).fault()
+            > PiCounter.countPiSingleThreadingMetric(1000000).fault());
     }
 
     @ParameterizedTest
@@ -42,16 +50,6 @@ public class Task4Test {
     void durationDESCSingleThread() {
         assertTrue(PiCounter.countPiSingleThreadingMetric(1000000).duration()
             > PiCounter.countPiSingleThreadingMetric(10).duration());
-    }
-
-    private static Stream<Arguments> provideDurationDESCMultithreading() {
-        return Stream.of(
-            Arguments.of(2),
-            Arguments.of(3),
-            Arguments.of(4),
-            Arguments.of(5),
-            Arguments.of(6)
-        );
     }
 
     @ParameterizedTest

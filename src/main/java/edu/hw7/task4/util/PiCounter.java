@@ -11,40 +11,9 @@ import java.util.stream.IntStream;
 public class PiCounter {
     private static final double RADIUS = 0.5;
     private static final Point CIRCLE_CENTER = new Point(RADIUS, RADIUS);
+    private static final int RATIO_OF_THE_AREA_OF_A_SQUARE_TO_THE_CIRCLE = 4;
 
     private PiCounter() {
-    }
-
-    static class MonteCarloWorker extends Thread {
-        private final int iterCount;
-        private int inCircleCount = 0;
-        private int totalCount = 0;
-
-        public MonteCarloWorker(int iterCount) {
-            this.iterCount = iterCount;
-        }
-
-        @Override
-        public void run() {
-            Random random = ThreadLocalRandom.current();
-            final double diameter = RADIUS * 2;
-
-            for (int i = 0; i < iterCount; i++) {
-                if (isInCircle(new Point(random.nextDouble(diameter), random.nextDouble(diameter)))) {
-                    inCircleCount++;
-                }
-            }
-
-            totalCount = iterCount;
-        }
-
-        public int getInCircleCount() {
-            return inCircleCount;
-        }
-
-        public int getTotalCount() {
-            return totalCount;
-        }
     }
 
     private static boolean isInCircle(Point point) {
@@ -52,6 +21,7 @@ public class PiCounter {
             <= Math.pow(RADIUS, 2);
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     public static double countPiMultiThreading(int threadCount, int iterCount) {
         if (threadCount <= 0) {
             throw new IllegalArgumentException("\"threadCount\" must be greater than 0");
@@ -87,7 +57,7 @@ public class PiCounter {
             totalCount += w.getTotalCount();
         }
 
-        return 4 * ((double) inCircleCount / totalCount);
+        return RATIO_OF_THE_AREA_OF_A_SQUARE_TO_THE_CIRCLE * ((double) inCircleCount / totalCount);
     }
 
     public static double countPiSingleThreading(int iterCount) {
@@ -104,10 +74,8 @@ public class PiCounter {
             }
         }
 
-        return 4 * ((double) inCircleCount / iterCount);
+        return RATIO_OF_THE_AREA_OF_A_SQUARE_TO_THE_CIRCLE * ((double) inCircleCount / iterCount);
     }
-
-    //-----------------METRICS
 
     public static CounterResponse countPiMultiThreadingMetric(int threadCount, int iterCount) {
         if (threadCount <= 0) {
@@ -141,6 +109,8 @@ public class PiCounter {
         return new CounterResponse(pi, stop - start, Math.abs(Math.PI - pi), threadCount, iterCount);
     }
 
+    //-----------------METRICS
+
     public static CounterResponse countPiSingleThreadingMetric(int iterCount) {
         if (iterCount <= 0) {
             throw new IllegalArgumentException("\"iterCount\" must be greater than 0");
@@ -157,11 +127,43 @@ public class PiCounter {
             }
         }
 
-        double pi = 4 * ((double) inCircleCount / iterCount);
+        double pi = RATIO_OF_THE_AREA_OF_A_SQUARE_TO_THE_CIRCLE * ((double) inCircleCount / iterCount);
 
         long stop = System.nanoTime();
 
         return new CounterResponse(pi, stop - start, Math.abs(Math.PI - pi), 1, iterCount);
+    }
+
+    static class MonteCarloWorker extends Thread {
+        private final int iterCount;
+        private int inCircleCount = 0;
+        private int totalCount = 0;
+
+        MonteCarloWorker(int iterCount) {
+            this.iterCount = iterCount;
+        }
+
+        @Override
+        public void run() {
+            Random random = ThreadLocalRandom.current();
+            final double diameter = RADIUS * 2;
+
+            for (int i = 0; i < iterCount; i++) {
+                if (isInCircle(new Point(random.nextDouble(diameter), random.nextDouble(diameter)))) {
+                    inCircleCount++;
+                }
+            }
+
+            totalCount = iterCount;
+        }
+
+        public int getInCircleCount() {
+            return inCircleCount;
+        }
+
+        public int getTotalCount() {
+            return totalCount;
+        }
     }
 
 }

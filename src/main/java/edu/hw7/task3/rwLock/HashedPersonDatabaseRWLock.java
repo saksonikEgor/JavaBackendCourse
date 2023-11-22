@@ -2,10 +2,10 @@ package edu.hw7.task3.rwLock;
 
 import edu.hw7.task3.model.Person;
 import edu.hw7.task3.model.PersonDatabase;
-import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.jetbrains.annotations.Nullable;
 
 public class HashedPersonDatabaseRWLock implements PersonDatabase {
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
@@ -31,6 +31,7 @@ public class HashedPersonDatabaseRWLock implements PersonDatabase {
     }
 
     @Override
+    @SuppressWarnings("MultipleStringLiterals")
     public void add(Person person) {
         if (person.name() == null || person.address() == null || person.phoneNumber() == null) {
             throw new NullPointerException("Persons fields cant be null");

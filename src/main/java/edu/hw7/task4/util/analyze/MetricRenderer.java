@@ -31,6 +31,7 @@ public class MetricRenderer {
     private MetricRenderer() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void visualAllDependencies() {
         List<CounterResponse> single = new ArrayList<>();
         List<CounterResponse> two = new ArrayList<>();
@@ -48,6 +49,7 @@ public class MetricRenderer {
         plotFaultChart(single, two, four, six);
     }
 
+    @SuppressWarnings({"MultipleStringLiterals", "MagicNumber"})
     private static void plotDurationChart(
         List<CounterResponse> single, List<CounterResponse> two,
         List<CounterResponse> four, List<CounterResponse> six
@@ -115,6 +117,7 @@ public class MetricRenderer {
         frame.setVisible(true);
     }
 
+    @SuppressWarnings({"MultipleStringLiterals", "MagicNumber"})
     private static void plotFaultChart(
         List<CounterResponse> single, List<CounterResponse> two,
         List<CounterResponse> four, List<CounterResponse> six
@@ -140,17 +143,6 @@ public class MetricRenderer {
 
         XYPlot plot = chart.getXYPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-
-//        rangeAxis.setRange(new Range(
-//            0,
-//            Stream.concat(
-//                    Stream.concat(single.stream(), two.stream()),
-//                    Stream.concat(single.stream(), two.stream())
-//                )
-//                .map(CounterResponse::fault)
-//                .max(Comparator.comparingDouble(Double::doubleValue))
-//                .get()
-//        ));
         rangeAxis.setRange(new Range(
             0,
             0.1
@@ -186,7 +178,7 @@ public class MetricRenderer {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        visualAllDependencies();
-    }
+//    public static void main(String[] args) {
+//        visualAllDependencies();
+//    }
 }
