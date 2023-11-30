@@ -175,107 +175,6 @@ public class ConsoleMaze {
         System.out.println(ApplicationProperties.ENTER_COMMAND_TO_EXIT_MESSAGE);
     }
 
-//    @SuppressWarnings("RegexpSinglelineJava")
-//    public void run() {
-//        while (true) {
-//            while (!selectGenerator()) {
-//                System.out.println(ApplicationProperties.INVALID_NUMBER_INPUT_MESSAGE);
-//            }
-//
-//            while (!selectMazeSizeAndGenerateTheMaze()) {
-//                System.out.println(ApplicationProperties.INVALID_MAZE_SIZE_MESSAGE);
-//            }
-//            displayGeneratedMaze();
-//
-//            while (!selectSolverAndSolveTheMaze()) {
-//                System.out.println(ApplicationProperties.INVALID_NUMBER_INPUT_MESSAGE);
-//            }
-//            displaySolvedMaze();
-//        }
-//    }
-//
-//    private boolean selectGenerator() {
-//        displaySuggestionToSelectAGenerationAlgorithm();
-//
-//        try {
-//            ApplicationProperties.GenerationAlgorithm[] generationAlgorithms =
-//                ApplicationProperties.GenerationAlgorithm.values();
-//
-//            String line = scanner.nextLine();
-//            if (!line.matches(NUMBER_REGEX)) {
-//                return false;
-//            }
-//
-//            int choice = Integer.parseInt(line);
-//            if (choice == 0) {
-//                exit();
-//            }
-//
-//            if (choice < 0 || choice > generationAlgorithms.length) {
-//                return false;
-//            }
-//            generator = generationAlgorithms[choice - 1].getGenerator(generationRandom);
-//        } catch (InputMismatchException e) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    @SuppressWarnings("RegexpSinglelineJava")
-//    private boolean selectMazeSizeAndGenerateTheMaze() {
-//        displaySuggestionToSelectAMazeSize();
-//
-//        try {
-//            String line = scanner.nextLine();
-//            String[] split = line.split(" ");
-//
-//            if (!Arrays.stream(split).allMatch(str -> str.matches(NUMBER_REGEX))
-//                || split.length < 1 || split.length > 2) {
-//                return false;
-//            }
-//            if (split.length == 1) {
-//                int choice = parseInt(split[0]);
-//
-//                if (choice == 0) {
-//                    exit();
-//                }
-//                maze = generator.generate(choice, choice);
-//            } else {
-//                maze = generator.generate(parseInt(split[0]), parseInt(split[1]));
-//            }
-//        } catch (InputMismatchException | IllegalArgumentException e) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private boolean selectSolverAndSolveTheMaze() {
-//        displaySuggestionToSelectASolvingAlgorithm();
-//        try {
-//            ApplicationProperties.SolvingAlgorithm[] solvingAlgorithms =
-//                ApplicationProperties.SolvingAlgorithm.values();
-//
-//            String line = scanner.nextLine();
-//            if (!line.matches(NUMBER_REGEX)) {
-//                return false;
-//            }
-//
-//            int choice = Integer.parseInt(line);
-//            if (choice == 0) {
-//                exit();
-//            }
-//
-//            if (choice < 0 || choice > solvingAlgorithms.length) {
-//                return false;
-//            }
-//            Solver solver = solvingAlgorithms[choice - 1].getSolver();
-//            path = solver.solve(maze, maze.getEntrance(), maze.getExit());
-//        } catch (InputMismatchException e) {
-//            return false;
-//        }
-//        return true;
-//    }
-
     @SuppressWarnings("RegexpSinglelineJava")
     private void displaySuggestionToSelectASolvingAlgorithm() {
         System.out.println(ApplicationProperties.SELECT_A_MAZE_SOLVING_ALGORITHM_MESSAGE);
@@ -313,11 +212,4 @@ public class ConsoleMaze {
         SelectSolver,
         EnterMazeSize
     }
-
-//    @SuppressWarnings("RegexpSinglelineJava")
-//    private void exit() {
-//        displayFarewellMessage();
-//        scanner.close();
-//        System.exit(0);
-//    }
 }
