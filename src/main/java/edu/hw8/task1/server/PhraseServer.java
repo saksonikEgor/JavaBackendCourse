@@ -10,8 +10,6 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import edu.hw8.task1.model.PhraseDictionary;
@@ -19,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PhraseServer implements AutoCloseable {
-    private static final int PORT = 8088;
+    private static int port;
     private static final int THREAD_COUNT = 4;
     private static final int BYTE_BUFFER_CAPACITY = 1024;
     private Selector selector;
@@ -29,6 +27,11 @@ public class PhraseServer implements AutoCloseable {
     private final static Logger LOGGER = LogManager.getLogger();
 
     public PhraseServer() {
+        port = 8088;
+    }
+
+    public PhraseServer(int port) {
+        PhraseServer.port = port;
     }
 
     public void start() {
@@ -36,7 +39,7 @@ public class PhraseServer implements AutoCloseable {
             selector = Selector.open();
 
             serverSocketChannel = ServerSocketChannel.open();
-            serverSocketChannel.bind(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
+            serverSocketChannel.bind(new InetSocketAddress(InetAddress.getLocalHost(), port));
             serverSocketChannel.configureBlocking(false);
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
