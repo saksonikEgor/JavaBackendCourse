@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import edu.hw8.task1.model.PhraseDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,18 +25,7 @@ public class PhraseServer implements AutoCloseable {
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
-    private static final ConcurrentHashMap<String, String> WORD_TO_PHRASE = new ConcurrentHashMap<>(
-        Map.of(
-            "личности",
-            "Не переходи на личности там, где их нет",
-            "оскорбления",
-            "Если твои противники перешли на личные оскорбления, будь уверена — твоя победа не за горами",
-            "глупый",
-            "А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма.",
-            "интеллект",
-            "Чем ниже интеллект, тем громче оскорбления"
-        )
-    );
+    private final PhraseDictionary phraseDictionary = new PhraseDictionary();
     private final static Logger LOGGER = LogManager.getLogger();
 
     public PhraseServer() {
@@ -108,7 +98,7 @@ public class PhraseServer implements AutoCloseable {
     }
 
     private ByteBuffer getPhraseByWord(ByteBuffer buffer) {
-        String answer = WORD_TO_PHRASE.getOrDefault(
+        String answer = phraseDictionary.getOrDefault(
             StandardCharsets.UTF_8.decode(buffer).toString(),
             ""
         ) + "\n";
