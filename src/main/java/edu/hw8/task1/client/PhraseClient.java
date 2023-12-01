@@ -13,8 +13,8 @@ import org.apache.logging.log4j.Logger;
 public class PhraseClient implements AutoCloseable {
     private static final int PORT = 8088;
     private final Socket socket;
-    private final BufferedWriter writer;
     private final BufferedReader reader;
+    private final BufferedWriter writer;
     private final static Logger LOGGER = LogManager.getLogger();
 
     public PhraseClient() {
@@ -41,7 +41,7 @@ public class PhraseClient implements AutoCloseable {
         String message;
         try {
             message = reader.readLine();
-            LOGGER.info("CLIENT | Received message from server " + message);
+            LOGGER.info("CLIENT -> received phrase: " + message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,8 +1,5 @@
 package edu.hw8.task1.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -14,10 +11,11 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PhraseServer implements AutoCloseable {
     private static final int PORT = 8088;
@@ -46,6 +44,7 @@ public class PhraseServer implements AutoCloseable {
     public void start() {
         try {
             selector = Selector.open();
+
             serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.bind(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
             serverSocketChannel.configureBlocking(false);
@@ -57,64 +56,62 @@ public class PhraseServer implements AutoCloseable {
                 selector.select();
 
                 if (!selector.isOpen()) {
-                    return;
+                    continue;
                 }
 
-                Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                Iterator<SelectionKey> iter = selectedKeys.iterator();
+                Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
 
-                while (iter.hasNext()) {
-                    SelectionKey key = iter.next();
+                while (keyIterator.hasNext()) {
+                    SelectionKey key = keyIterator.next();
 
                     if (!key.isValid()) {
-                        iter.remove();
+                        keyIterator.remove();
                         continue;
                     }
                     if (key.isAcceptable()) {
                         register(selector, serverSocketChannel);
                     }
                     if (key.isReadable()) {
-                        this.executorService.submit(
-                            () -> {
-                                try {
-                                    answer(ByteBuffer.allocate(BYTE_BUFFER_CAPACITY), key);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        );
+                        executorService.submit(answer(ByteBuffer.allocate(BYTE_BUFFER_CAPACITY), key));
                     }
                 }
             }
+            LOGGER.info("SERVER -> closing");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void answer(ByteBuffer buffer, SelectionKey key) throws IOException {
-        SocketChannel socketChannel = (SocketChannel) key.channel();
+    private Runnable answer(ByteBuffer buffer, SelectionKey key) throws IOException {
+        return () -> {
+            try {
+                SocketChannel socketChannel = (SocketChannel) key.channel();
+                int numBytesRead = socketChannel.read(buffer);
 
-        int numBytesRead = socketChannel.read(buffer);
-        while (numBytesRead != -1) {
-            buffer.flip();
-            while (buffer.hasRemaining()) {
-                ByteBuffer result = getResponseByHandler(buffer);
+                while (numBytesRead != -1) {
+                    buffer.flip();
 
-                socketChannel.write(result);
+                    while (buffer.hasRemaining()) {
+                        socketChannel.write(getPhraseByWord(buffer));
 
-                LOGGER.info("SERVER -> answered to the client");
+                        LOGGER.info("SERVER -> answered to the client");
+                    }
+
+                    buffer.clear();
+                    numBytesRead = socketChannel.read(buffer);
+                }
+                socketChannel.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            buffer.clear();
-
-            numBytesRead = socketChannel.read(buffer);
-        }
-
-        socketChannel.close();
+        };
     }
 
-    private ByteBuffer getResponseByHandler(ByteBuffer buffer) {
-        String message = StandardCharsets.UTF_8.decode(buffer).toString();
-        String answer = WORD_TO_PHRASE.getOrDefault(message, "") + "\n";
+    private ByteBuffer getPhraseByWord(ByteBuffer buffer) {
+        String answer = WORD_TO_PHRASE.getOrDefault(
+            StandardCharsets.UTF_8.decode(buffer).toString(),
+            ""
+        ) + "\n";
 
         return ByteBuffer.wrap(answer.getBytes(StandardCharsets.UTF_8));
     }
@@ -124,7 +121,6 @@ public class PhraseServer implements AutoCloseable {
         SocketChannel socketChannel = serverSocket.accept();
 
         if (socketChannel != null) {
-
             socketChannel.configureBlocking(false);
             socketChannel.register(selector, SelectionKey.OP_READ);
 
@@ -134,7 +130,8 @@ public class PhraseServer implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        serverSocketChannel.close();
         selector.close();
+        serverSocketChannel.close();
+        executorService.shutdown();
     }
 }
