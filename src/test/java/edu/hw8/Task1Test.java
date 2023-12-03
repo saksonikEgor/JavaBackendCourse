@@ -21,6 +21,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class Task1Test {
     private static final int SERVER_PORT = 8088;
 
+    private static Stream<Arguments> provideGettingPhraseByWord() {
+        return Stream.of(
+            Arguments.of(
+                List.of("интеллект", "wrong"),
+                List.of("интеллект", "интеллект", "интеллект", "интеллект", "интеллект", "интеллект"),
+                List.of("глупый", "оскорбления", "интеллект", "личности"),
+                List.of("личности", "оскорбления", "0-0-0-0-0-=0--00-")
+            )
+        );
+    }
+
     @Test
     @DisplayName("Активация сервера")
     void serverGettingStarted() throws Exception {
@@ -35,17 +46,6 @@ public class Task1Test {
 
         server.close();
         serverThread.join();
-    }
-
-    private static Stream<Arguments> provideGettingPhraseByWord() {
-        return Stream.of(
-            Arguments.of(
-                List.of("интеллект", "wrong"),
-                List.of("интеллект", "интеллект", "интеллект", "интеллект", "интеллект", "интеллект"),
-                List.of("глупый", "оскорбления", "интеллект", "личности"),
-                List.of("личности", "оскорбления", "0-0-0-0-0-=0--00-")
-            )
-        );
     }
 
     @ParameterizedTest

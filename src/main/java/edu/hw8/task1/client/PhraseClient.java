@@ -12,10 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 public class PhraseClient implements AutoCloseable {
     private static final int PORT = 8088;
+    private final static Logger LOGGER = LogManager.getLogger();
     private final Socket socket;
     private final BufferedReader reader;
     private final BufferedWriter writer;
-    private final static Logger LOGGER = LogManager.getLogger();
 
     public PhraseClient() {
         try {

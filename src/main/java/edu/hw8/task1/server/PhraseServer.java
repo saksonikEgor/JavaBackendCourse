@@ -1,5 +1,6 @@
 package edu.hw8.task1.server;
 
+import edu.hw8.task1.model.PhraseDictionary;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -12,20 +13,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import edu.hw8.task1.model.PhraseDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PhraseServer implements AutoCloseable {
-    private static int port;
     private static final int THREAD_COUNT = 4;
     private static final int BYTE_BUFFER_CAPACITY = 1024;
-    private Selector selector;
-    private ServerSocketChannel serverSocketChannel;
+    private final static Logger LOGGER = LogManager.getLogger();
+    private static int port;
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     private final PhraseDictionary phraseDictionary = new PhraseDictionary();
-    private final static Logger LOGGER = LogManager.getLogger();
+    private Selector selector;
+    private ServerSocketChannel serverSocketChannel;
 
+    @SuppressWarnings("MagicNumber")
     public PhraseServer() {
         port = 8088;
     }
