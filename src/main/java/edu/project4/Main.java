@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class Main {
+    private Main() {
+    }
+
+    @SuppressWarnings("MagicNumber")
     public static void single() throws IOException {
         FractalFlame fractalFlame = new FractalFlame(1000, 1000, new DiskTransformation());
         fractalFlame.render(1, 1000, (short) 100);
-        fractalFlame.saveToFile(Path.of("src/test/resources/project4/test.png"), ImageFormat.PNG);
+        fractalFlame.saveToFile(Path.of("src/test/resources/project4/singleDisk.png"), ImageFormat.PNG);
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void multi() throws IOException {
         FractalFlame fractalFlame1 = new FractalFlame(1920, 1080, new DiskTransformation(), 4);
         fractalFlame1.render(5, 100_000, (short) 1_00);
@@ -39,7 +44,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        single();
+//        single();
         multi();
     }
 }

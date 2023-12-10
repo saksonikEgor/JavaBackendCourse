@@ -37,11 +37,11 @@ public class MultiThreadedRenderer implements Renderer {
             Variation variation = variations.get(
                 ThreadLocalRandom.current().nextInt(variations.size())
             );
-            point = RenderUtils.transform(point, variation);
+            Point nextPoint = RenderUtils.transform(point, variation);
 
             for (int s = 0; s < symmetry; s++) {
                 double theta = s * Math.PI * 2 / symmetry;
-                Point rotadedPoint = rotate(point, theta);
+                Point rotadedPoint = rotate(nextPoint, theta);
 
                 int x = (int) (
                     -((X_BOUND - rotadedPoint.x()) / (X_BOUND * MULTIPLIER)) * image.width()
