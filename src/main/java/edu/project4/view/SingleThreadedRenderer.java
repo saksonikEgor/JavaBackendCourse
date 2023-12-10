@@ -4,13 +4,13 @@ import edu.project4.model.FractalImage;
 import edu.project4.model.Pixel;
 import edu.project4.model.Point;
 import edu.project4.model.Variation;
-import edu.project4.util.RandomUtils;
-import edu.project4.util.RenderUtils;
+import edu.project4.utils.RandomUtils;
+import edu.project4.utils.RenderUtils;
 import java.util.List;
 import static edu.project4.properties.ApplicationProperties.MULTIPLIER;
 import static edu.project4.properties.ApplicationProperties.X_BOUND;
 import static edu.project4.properties.ApplicationProperties.Y_BOUND;
-import static edu.project4.util.RenderUtils.rotate;
+import static edu.project4.utils.RenderUtils.rotate;
 
 public class SingleThreadedRenderer implements Renderer {
     @Override

@@ -1,4 +1,4 @@
-package edu.project4.util;
+package edu.project4.utils;
 
 import edu.project4.model.FractalImage;
 import edu.project4.model.ImageFormat;

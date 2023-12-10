@@ -1,10 +1,9 @@
-package edu.project4.util;
+package edu.project4.utils;
 
 import edu.project4.model.Color;
 import edu.project4.model.Point;
 import edu.project4.model.Shift;
 import edu.project4.model.Variation;
-import edu.project4.properties.ApplicationProperties;
 import edu.project4.transformations.Transformation;
 import java.util.ArrayList;
 import java.util.List;

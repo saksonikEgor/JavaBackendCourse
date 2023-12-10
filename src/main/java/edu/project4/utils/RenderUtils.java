@@ -1,4 +1,4 @@
-package edu.project4.util;
+package edu.project4.utils;
 
 import edu.project4.model.Point;
 import edu.project4.model.Variation;
