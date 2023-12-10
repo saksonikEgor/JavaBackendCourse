@@ -1,4 +1,4 @@
-package edu.project4.transformation;
+package edu.project4.transformations;
 
 import edu.project4.model.Point;
 import java.util.function.Function;

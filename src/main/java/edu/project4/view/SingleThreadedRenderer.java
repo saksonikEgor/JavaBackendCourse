@@ -3,110 +3,69 @@ package edu.project4.view;
 import edu.project4.model.FractalImage;
 import edu.project4.model.Pixel;
 import edu.project4.model.Point;
-import edu.project4.model.Rectangle;
-import edu.project4.transformation.Transformation;
+import edu.project4.model.Variation;
 import edu.project4.util.RandomUtils;
+import edu.project4.util.RenderUtils;
 import java.util.List;
-import java.util.Random;
+import static edu.project4.properties.ApplicationProperties.MULTIPLIER;
+import static edu.project4.properties.ApplicationProperties.X_BOUND;
+import static edu.project4.properties.ApplicationProperties.Y_BOUND;
+import static edu.project4.util.RenderUtils.rotate;
 
 public class SingleThreadedRenderer implements Renderer {
     @Override
-    public FractalImage render(
-        FractalImage canvas,
-        Rectangle world,
-        List<Transformation> variations,
-        int samples,
-        short iterPerSample,
-        long seed
+    public void render(
+        FractalImage image,
+        List<Variation> variations,
+        int symmetry,
+        int sampleCount,
+        short iterPerSample
     ) {
-        for (int num = 0; num < samples; ++num) {
-            final int symmetry = 10; // ??
+        for (int num = 0; num < sampleCount; num++) {
+            Point point = RandomUtils.getRandomPoint();
 
-            Point pw = RandomUtils.nextPointInRectangle(world);
+            for (int step = 0; step < iterPerSample; step++) {
+                Variation variation = variations.get(RandomUtils.RANDOM.nextInt(variations.size()));
+                point = RenderUtils.transform(point, variation);
 
-            for (short step = 0; step < iterPerSample; ++step) {
-                Transformation transformation = RandomUtils.nextTransformation(variations);
+                for (int s = 0; s < symmetry; s++) {
+                    double theta = s * Math.PI * 2 / symmetry;
+                    Point rotadedPoint = rotate(point, theta);
 
-                pw = transformation.apply(pw);
+                    int x = (int) (
+                        -((X_BOUND - rotadedPoint.x()) / (X_BOUND * MULTIPLIER)) * image.width()
+                            + image.width()
+                    );
+                    int y = (int) (
+                        -((Y_BOUND - rotadedPoint.y()) / (Y_BOUND * MULTIPLIER)) * image.height()
+                            + image.height()
+                    );
 
-                double theta2 = 0.0;
-                for (int s = 0; s < symmetry; theta2 += Math.PI * 2 / symmetry, ++s) {
-                    Point pwr = rotate(pw, theta2);
-                    if (!world.contains(pwr)) {
+                    Pixel pixel = image.pixel(x, y);
+                    if (pixel == null) {
                         continue;
                     }
 
-//                    Pixel pixel = mapRange(world, pwr, canvas);
-//                    Pixel pixel = canvas.pixel(pwr.x(), pwr.y());
-//                    if (pixel == null) {
-//                        continue;
-//                    }
-
-                    // 1. делаем лок на время работы с пикселем
-                    // 2. подмешиваем цвет и увеличиваем hit count
+                    image.setPixel(getNextPixel(pixel, variation), x, y);
                 }
             }
         }
-        return canvas;
     }
 
-    Point rotate(Point point, double theta) {
-        return new Point(
-            point.x() * Math.cos(theta) + point.y() * Math.sin(theta),
-            -point.x() * Math.sin(theta) + point.y() * Math.cos(theta)
-        );
+    private static Pixel getNextPixel(Pixel pixel, Variation variation) {
+        Pixel nextPixel;
+        if (pixel.hitCount() == 0) {
+            nextPixel =
+                new Pixel(variation.red(), variation.green(), variation.blue(), 0, 1);
+        } else {
+            nextPixel = new Pixel(
+                (variation.red() + pixel.r()) / 2,
+                (variation.green() + pixel.g()) / 2,
+                (variation.blue() + pixel.b()) / 2,
+                pixel.normal(),
+                pixel.hitCount() + 1
+            );
+        }
+        return nextPixel;
     }
-
-//    void r(int n, int eqCount, int it, int xRes, int yRes) {
-////        Генерируем eqCount аффинных преобразований со стартовыми цветами;
-//        Random random = new Random();
-//        int XMIN = -1;
-//        int XMAX = 1;
-//        int YMIN = -1;
-//        int YMAX = 1;
-//
-//        for (int num = 0; num < n; num++) {
-//            //Для изображения размером 1920х1080 можно
-//            //взять XMIN=-1.777,XMAX=1.777,YMIN=-1,YMAX=1
-//            //В этом случае в большинстве нелинейных преобразований с боков не будет оставаться черных областей
-//            double newX = random.nextDouble(-1, 1);
-//            double newY = random.nextDouble(-1, 1);
-//            //Первые 20 итераций точку не рисуем, т.к. сначала надо найти начальную
-//            for (int i = 0; i < 20; i++) {
-//                newX = coeff[i].a * newX + coeff[i].b * newY + coeff[i].c;
-//                newY = coeff[i].d * newX + coeff[i].e * newY + coeff[i].f;
-//            }
-//
-//            for (int step = 0; step < it; step++) {
-//                //Выбираем одно из аффинных преобразований
-//                int i = random.nextInt(0, eqCount);
-//                //и применяем его
-//                newX = coeff[i].a * newX + coeff[i].b * newY + coeff[i].c;
-//                newY = coeff[i].d * newX + coeff[i].e * newY + coeff[i].f;
-////                Применяем нелинейное преобразование;
-//                if (newX >= XMIN && newX <= XMAX && newY >= YMIN && newY <= YMAX) {
-//                    //Вычисляем координаты точки, а затем задаем цвет
-//                    double x1 = xRes - Trunc(((XMAX - newX) / (XMAX - XMIN)) * xRes);
-//                    double y1 = yRes - Trunc(((YMAX - newY) / (YMAX - YMIN)) * yRes);
-//                    //Если точка попала в область изображения
-//                    if (x1 < xRes && y1 < yRes) {
-//                        //то проверяем, первый ли раз попали в нее
-//                        if (pixels[x1][y1].counter == 0) {
-//                            //Попали в первый раз, берем стартовый цвет у соответствующего аффинного преобразования
-//                            pixels[x1][y1].red = coeff[i].red;
-//                            pixels[x1][y1].green = coeff[i].green;
-//                            pixels[x1][y1].blue = coeffs[i].blue;
-//                        } else {
-//                            //Попали не в первый раз, считаем так:
-//                            pixels[x1][y1].red = (pixels[x1][y1].red + coeff[i].red) / 2;
-//                            pixels[x1][y1].green = (pixels[x1][y1].green + coeff[i].green) / 2;
-//                            pixels[x1][y1].blue = (pixels[x1][y1].blue + coeff[i].blue) / 2;
-//                        }
-//                        //Увеличиваем счетчик точки на единицу
-//                        pixels[x1][y1].counter++;
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
