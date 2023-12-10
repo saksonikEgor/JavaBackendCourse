@@ -54,7 +54,7 @@ public class StatsCollector {
             var sumFuture = executorService.submit(() -> Metric.SUM.getFunction()
                 .update(sum, valueCount, subList));
             var avgFuture = executorService.submit(() -> Metric.AVG.getFunction()
-                .update(avg, valueCount,subList));
+                .update(avg, valueCount, subList));
             var maxFuture = executorService.submit(() -> Metric.MAX.getFunction()
                 .update(max, valueCount, subList));
             var minFuture = executorService.submit(() -> Metric.MIN.getFunction()

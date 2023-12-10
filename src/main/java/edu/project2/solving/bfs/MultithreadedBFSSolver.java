@@ -52,7 +52,7 @@ public class MultithreadedBFSSolver implements Solver {
         private final Node cur;
         private final Node end;
 
-        public BFSSolvingTask(Node cur, Node end) {
+        BFSSolvingTask(Node cur, Node end) {
             this.cur = cur;
             this.end = end;
         }
