@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import static edu.project4.properties.ApplicationProperties.ALPHA_SHIFT;
 import static edu.project4.properties.ApplicationProperties.BLACK;
+import static edu.project4.properties.ApplicationProperties.BLUE_SHIFT;
 import static edu.project4.properties.ApplicationProperties.COLOR_COMPONENT_UPPER_BOUND;
 import static edu.project4.properties.ApplicationProperties.GREEN_SHIFT;
 import static edu.project4.properties.ApplicationProperties.RED_SHIFT;
@@ -42,7 +43,7 @@ public final class ImageUtils {
                     continue;
                 }
                 int color = ((COLOR_COMPONENT_UPPER_BOUND - 1) << ALPHA_SHIFT) | (pixel.r() << RED_SHIFT)
-                    | (pixel.g() << GREEN_SHIFT) | pixel.b();
+                    | (pixel.g() << GREEN_SHIFT) | (pixel.b() << BLUE_SHIFT);
                 bufferedImage.setRGB(x, y, color);
             }
         }

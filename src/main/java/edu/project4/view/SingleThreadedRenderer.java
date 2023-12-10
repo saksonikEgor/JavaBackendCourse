@@ -13,6 +13,23 @@ import static edu.project4.properties.ApplicationProperties.Y_BOUND;
 import static edu.project4.utils.RenderUtils.rotate;
 
 public class SingleThreadedRenderer implements Renderer {
+    private static Pixel getNextPixel(Pixel pixel, Variation variation) {
+        Pixel nextPixel;
+        if (pixel.hitCount() == 0) {
+            nextPixel =
+                new Pixel(variation.red(), variation.green(), variation.blue(), 0, 1);
+        } else {
+            nextPixel = new Pixel(
+                (variation.red() + pixel.r()) / 2,
+                (variation.green() + pixel.g()) / 2,
+                (variation.blue() + pixel.b()) / 2,
+                pixel.normal(),
+                pixel.hitCount() + 1
+            );
+        }
+        return nextPixel;
+    }
+
     @Override
     public void render(
         FractalImage image,
@@ -50,22 +67,5 @@ public class SingleThreadedRenderer implements Renderer {
                 }
             }
         }
-    }
-
-    private static Pixel getNextPixel(Pixel pixel, Variation variation) {
-        Pixel nextPixel;
-        if (pixel.hitCount() == 0) {
-            nextPixel =
-                new Pixel(variation.red(), variation.green(), variation.blue(), 0, 1);
-        } else {
-            nextPixel = new Pixel(
-                (variation.red() + pixel.r()) / 2,
-                (variation.green() + pixel.g()) / 2,
-                (variation.blue() + pixel.b()) / 2,
-                pixel.normal(),
-                pixel.hitCount() + 1
-            );
-        }
-        return nextPixel;
     }
 }

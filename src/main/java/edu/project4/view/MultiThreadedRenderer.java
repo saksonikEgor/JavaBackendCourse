@@ -26,33 +26,6 @@ public class MultiThreadedRenderer implements Renderer {
         this.threadCount = threadCount;
     }
 
-    @Override
-    public void render(
-        FractalImage image,
-        List<Variation> variations,
-        int symmetry,
-        int sampleCount,
-        short iterPerSample
-    ) {
-        try (ExecutorService service = Executors.newFixedThreadPool(threadCount)) {
-            for (int num = 0; num < sampleCount; num++) {
-                Point point = RandomUtils.getRandomPoint();
-
-                service.submit(
-                    () -> IntStream
-                        .range(0, threadCount)
-                        .forEach(i -> renderSample(
-                            image,
-                            variations,
-                            point,
-                            symmetry,
-                            iterPerSample / threadCount
-                        ))
-                );
-            }
-        }
-    }
-
     private static void renderSample(
         FractalImage image,
         List<Variation> variations,
@@ -80,6 +53,7 @@ public class MultiThreadedRenderer implements Renderer {
                 );
 
                 Pixel pixel;
+
                 try {
                     LOCK.readLock().lock();
                     pixel = image.pixel(x, y);
@@ -110,6 +84,33 @@ public class MultiThreadedRenderer implements Renderer {
                 } finally {
                     LOCK.writeLock().unlock();
                 }
+            }
+        }
+    }
+
+    @Override
+    public void render(
+        FractalImage image,
+        List<Variation> variations,
+        int symmetry,
+        int sampleCount,
+        short iterPerSample
+    ) {
+        try (ExecutorService service = Executors.newFixedThreadPool(threadCount)) {
+            for (int num = 0; num < sampleCount; num++) {
+                Point point = RandomUtils.getRandomPoint();
+
+                service.submit(
+                    () -> IntStream
+                        .range(0, threadCount)
+                        .forEach(i -> renderSample(
+                            image,
+                            variations,
+                            point,
+                            symmetry,
+                            iterPerSample / threadCount
+                        ))
+                );
             }
         }
     }
