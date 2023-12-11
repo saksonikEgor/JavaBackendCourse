@@ -21,7 +21,8 @@ public class NginxLogStatisticsCollector {
     private final List<Metric> metrics;
 
     public NginxLogStatisticsCollector() {
-        metrics = new ArrayList<>(List.of( // order is important
+        // order is important
+        metrics = new ArrayList<>(List.of(
             new NginxTotalCountMetric(),
             new NginxKMostFrequentlyRequestedResourcesMetric(ApplicationProperties.MOST_FREQUENTLY_RESOURCE_COUNT),
             new NginxKMostFrequentlyResponseStatusCodeMetric(ApplicationProperties.MOST_FREQUENTLY_STATUS_CODE_COUNT),
