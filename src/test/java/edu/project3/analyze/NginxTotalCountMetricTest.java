@@ -60,6 +60,6 @@ public class NginxTotalCountMetricTest {
             "Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)"
         ));
 
-        assertEquals(3, metric.getTotalCount());
+        assertEquals(3, metric.getStockedResult());
     }
 }

@@ -66,6 +66,6 @@ public class NginxKMostFrequentlyRequestedResourcesMetricTest {
         mostFreqRes.put("/downloads/product_2", 1L);
 
         assertThat(mostFreqRes.entrySet().stream().toList())
-            .hasSameElementsAs(metric.getMostFrequencyResources());
+            .hasSameElementsAs(metric.getStockedResult());
     }
 }

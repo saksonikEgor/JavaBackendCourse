@@ -60,6 +60,6 @@ public class NginxAverageBodyBytesSentMetricTest {
             "Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)"
         ));
 
-        assertEquals(293, metric.getAverageBodyBytesSent());
+        assertEquals(293, metric.getStockedResult());
     }
 }

@@ -66,6 +66,6 @@ public class NginxKMostFrequentlyResponseStatusCodeMetricTest {
         mostFreqRes.put(200, 1L);
 
         assertThat(mostFreqRes.entrySet().stream().toList())
-            .hasSameElementsAs(metric.getMostFrequencyResponseStatusCodes());
+            .hasSameElementsAs(metric.getStockedResult());
     }
 }

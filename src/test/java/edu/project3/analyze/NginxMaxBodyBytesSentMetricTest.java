@@ -60,6 +60,6 @@ public class NginxMaxBodyBytesSentMetricTest {
             "Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)"
         ));
 
-        assertEquals(380, metric.getMax());
+        assertEquals(380, metric.getStockedResult());
     }
 }

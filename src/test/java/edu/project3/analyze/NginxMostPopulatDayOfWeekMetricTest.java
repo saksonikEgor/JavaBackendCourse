@@ -1,6 +1,6 @@
 package edu.project3.analyze;
 
-import edu.project3.analyze.metrics.NginxMostPopulatDayOfWeekMetric;
+import edu.project3.analyze.metrics.NginxMostPopularDayOfWeekMetric;
 import edu.project3.model.HttpRequestType;
 import edu.project3.model.NginxLogRecord;
 import java.time.DayOfWeek;
@@ -16,7 +16,7 @@ public class NginxMostPopulatDayOfWeekMetricTest {
     @Test
     @DisplayName("Подсчет максимального количества переданный байт")
     void countAvgBodyBytes() {
-        var metric = new NginxMostPopulatDayOfWeekMetric();
+        var metric = new NginxMostPopularDayOfWeekMetric();
 
         metric.takeStock(new NginxLogRecord(
             "31.22.86.126",
@@ -61,6 +61,6 @@ public class NginxMostPopulatDayOfWeekMetricTest {
             "Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)"
         ));
 
-        assertEquals(DayOfWeek.SUNDAY, metric.getMostPopularDayOfWeek());
+        assertEquals(DayOfWeek.SUNDAY, metric.getStockedResult());
     }
 }
