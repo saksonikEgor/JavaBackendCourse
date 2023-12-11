@@ -21,10 +21,10 @@ public class AbstractFiltersUtil {
     }
 
     public static AbstractFilter globMatches(String glob) {
-        return p -> Pattern
-            .compile(".*\\." + glob.substring(glob.indexOf(".") + 1))
-            .matcher(p.toString())
-            .matches();
+        return p -> p.getParent()
+            .getFileSystem()
+            .getPathMatcher("glob:" + glob)
+            .matches(p.getFileName());
     }
 
     public static AbstractFilter regexContains(String regex) {
