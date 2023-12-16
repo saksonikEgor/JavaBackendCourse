@@ -1,4 +1,4 @@
-package edu.hw11;
+package edu.hw11.task1;
 
 import java.lang.reflect.InvocationTargetException;
 import net.bytebuddy.ByteBuddy;
@@ -18,8 +18,7 @@ public class Task1 {
             .intercept(FixedValue.value(toStringReturnValue))
             .make();
 
-        Class<?> dynamicType = unloadedType.load(Task1.class
-                .getClassLoader())
+        Class<?> dynamicType = unloadedType.load(Task1.class.getClassLoader())
             .getLoaded();
 
         return dynamicType.getDeclaredConstructor().newInstance();
