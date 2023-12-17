@@ -1,4 +1,4 @@
-package edu.porject2.generation;
+package edu.project2.generation;
 
 import edu.project2.generation.bfs.BFSGenerator;
 import edu.project2.model.Cell;

@@ -1,16 +1,16 @@
-package edu.porject2.solving;
+package edu.project2.solving;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
-import edu.project2.solving.dfs.DFSSolver;
+import edu.project2.solving.bfs.BFSSolver;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DFSSolvingTest {
+public class BFSSolvingTest {
     private static String deleteEverySecondCharacter(String str) {
         StringBuilder sb = new StringBuilder(str);
         for (int i = 1; i < sb.length(); i++) {
@@ -42,8 +42,8 @@ public class DFSSolvingTest {
     }
 
     @Test
-    @DisplayName("Нахождение пути в квадратном лабиринте алгоритмом dfs")
-    void dfsSquareSolving() {
+    @DisplayName("Нахождение пути в квадратном лабиринте алгоритмом bfs")
+    void bfsSquareSolving() {
         Maze maze;
 
         maze = new Maze(generateGridByString("""
@@ -58,7 +58,7 @@ public class DFSSolvingTest {
             ██▓▓██  ██
             ██▓▓▓▓▓▓██
             ██████▓▓██""", 5, 5))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████████████████████████████████████
@@ -102,7 +102,7 @@ public class DFSSolvingTest {
             ██      ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓████
             ██████████████████████████████████▓▓████
             ██████████████████████████████████  ████""", 20, 20))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ██████████████████████████████████████████████████████████████████
@@ -176,7 +176,7 @@ public class DFSSolvingTest {
             ██  ██████████  ██  ██  ██████████████  ██  ██████▓▓██████  ██████████
             ██                  ██              ██      ██    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██
             ██████████████████████████████████████████████████████████████████▓▓██""", 35, 35))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
     }
 
     @Test
@@ -194,7 +194,7 @@ public class DFSSolvingTest {
             ██▓▓▓▓▓▓██
             ██████▓▓██
             ██████  ██""", 4, 5))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████
@@ -208,7 +208,7 @@ public class DFSSolvingTest {
             ██▓▓████
             ██▓▓████
             ██▓▓████""", 5, 4))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████████████████████████████████████
@@ -232,7 +232,7 @@ public class DFSSolvingTest {
             ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        ▓▓████
             ██████████████████████████████████▓▓████
             ██████████████████████████████████  ████""", 10, 20))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
                 ██  ██████████████████████████████████████████████████████████████████████████████████████
@@ -280,7 +280,7 @@ public class DFSSolvingTest {
                 ██████████████████████████████████████████████████████████████████████████████████████  ██""",
             20, 45
         ))
-            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new BFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
     }
 
     public List<Cell> extractPathByString(String maze, int height, int width) {

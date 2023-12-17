@@ -1,6 +1,5 @@
-package edu.porject2.util;
+package edu.project2.util;
 
-import edu.project2.util.ConsoleMaze;
 import java.util.Random;
 import java.util.Scanner;
 import org.junit.jupiter.api.DisplayName;

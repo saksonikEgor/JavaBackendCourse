@@ -1,6 +1,5 @@
-package edu.porject2.model;
+package edu.project2.model;
 
-import edu.project2.model.AlternatingCell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -1,8 +1,5 @@
-package edu.porject2.model;
+package edu.project2.model;
 
-import edu.project2.model.Cell;
-import edu.project2.model.Edge;
-import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
 import java.util.Collections;
 import java.util.List;

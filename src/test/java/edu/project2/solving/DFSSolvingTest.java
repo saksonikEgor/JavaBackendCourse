@@ -1,16 +1,16 @@
-package edu.porject2.solving;
+package edu.project2.solving;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.properties.ApplicationProperties;
-import edu.project2.solving.aStar.AStarSolver;
+import edu.project2.solving.dfs.DFSSolver;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AStarSolvingTest {
+public class DFSSolvingTest {
     private static String deleteEverySecondCharacter(String str) {
         StringBuilder sb = new StringBuilder(str);
         for (int i = 1; i < sb.length(); i++) {
@@ -42,8 +42,8 @@ public class AStarSolvingTest {
     }
 
     @Test
-    @DisplayName("Нахождение пути в квадратном лабиринте алгоритмом A*")
-    void aStarSquareSolving() {
+    @DisplayName("Нахождение пути в квадратном лабиринте алгоритмом dfs")
+    void dfsSquareSolving() {
         Maze maze;
 
         maze = new Maze(generateGridByString("""
@@ -58,7 +58,7 @@ public class AStarSolvingTest {
             ██▓▓██  ██
             ██▓▓▓▓▓▓██
             ██████▓▓██""", 5, 5))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████████████████████████████████████
@@ -102,7 +102,7 @@ public class AStarSolvingTest {
             ██      ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓████
             ██████████████████████████████████▓▓████
             ██████████████████████████████████  ████""", 20, 20))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ██████████████████████████████████████████████████████████████████
@@ -176,12 +176,12 @@ public class AStarSolvingTest {
             ██  ██████████  ██  ██  ██████████████  ██  ██████▓▓██████  ██████████
             ██                  ██              ██      ██    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██
             ██████████████████████████████████████████████████████████████████▓▓██""", 35, 35))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
     }
 
     @Test
-    @DisplayName("Нахождение пути в прямоугольном лабиринте алгоритмом A*")
-    void aStarRectangleSolving() {
+    @DisplayName("Нахождение пути в прямоугольном лабиринте алгоритмом bfs")
+    void bfsRectangleSolving() {
         Maze maze;
 
         maze = new Maze(generateGridByString("""
@@ -194,7 +194,7 @@ public class AStarSolvingTest {
             ██▓▓▓▓▓▓██
             ██████▓▓██
             ██████  ██""", 4, 5))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████
@@ -208,7 +208,7 @@ public class AStarSolvingTest {
             ██▓▓████
             ██▓▓████
             ██▓▓████""", 5, 4))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
             ██  ████████████████████████████████████
@@ -232,7 +232,7 @@ public class AStarSolvingTest {
             ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        ▓▓████
             ██████████████████████████████████▓▓████
             ██████████████████████████████████  ████""", 10, 20))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
 
         maze = new Maze(generateGridByString("""
                 ██  ██████████████████████████████████████████████████████████████████████████████████████
@@ -280,7 +280,7 @@ public class AStarSolvingTest {
                 ██████████████████████████████████████████████████████████████████████████████████████  ██""",
             20, 45
         ))
-            .hasSameElementsAs(new AStarSolver().solve(maze, maze.getEntrance(), maze.getExit()));
+            .hasSameElementsAs(new DFSSolver().solve(maze, maze.getEntrance(), maze.getExit()));
     }
 
     public List<Cell> extractPathByString(String maze, int height, int width) {

@@ -1,7 +1,5 @@
-package edu.porject2.model;
+package edu.project2.model;
 
-import edu.project2.model.Cell;
-import edu.project2.model.Node;
 import edu.project2.properties.ApplicationProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
