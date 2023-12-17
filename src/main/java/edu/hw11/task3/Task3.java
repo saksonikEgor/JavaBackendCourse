@@ -23,6 +23,7 @@ public class Task3 {
             .getLoaded();
     }
 
+    @SuppressWarnings({"LambdaBodyLength", "MagicNumber"})
     private static ByteCodeAppender getImplementation() {
         return (methodVisitor, context, methodDescription) -> {
             methodVisitor.visitCode();

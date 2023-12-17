@@ -1,12 +1,12 @@
 package edu.hw11.task2;
 
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.implementation.MethodDelegation;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import static net.bytebuddy.matcher.ElementMatchers.*;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.implementation.MethodDelegation;
+import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
+import static net.bytebuddy.matcher.ElementMatchers.named;
+import static net.bytebuddy.matcher.ElementMatchers.returns;
 
 public class Task2 {
     private Task2() {
