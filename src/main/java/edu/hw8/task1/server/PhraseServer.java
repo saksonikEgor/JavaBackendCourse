@@ -19,20 +19,19 @@ import org.apache.logging.log4j.Logger;
 public class PhraseServer implements AutoCloseable {
     private static final int THREAD_COUNT = 4;
     private static final int BYTE_BUFFER_CAPACITY = 1024;
+    @SuppressWarnings("MagicNumber")
+    private int port = 8088;
     private final static Logger LOGGER = LogManager.getLogger();
-    private static int port;
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     private final PhraseDictionary phraseDictionary = new PhraseDictionary();
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
 
-    @SuppressWarnings("MagicNumber")
     public PhraseServer() {
-        port = 8088;
     }
 
     public PhraseServer(int port) {
-        PhraseServer.port = port;
+        this.port = port;
     }
 
     public void start() {
